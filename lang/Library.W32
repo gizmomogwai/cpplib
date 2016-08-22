@@ -1,0 +1,18 @@
+Library::Library(std::string& filename) throw (Exception) {
+  fModule = ::LoadLibrary(filename.c_str());
+	if (0 == fModule ) {
+		throw Exception("could not load dll");
+	}
+}
+
+Library::~Library() {
+  
+}
+
+void* Library::getFunction(std::string& functionName) throw (Exception) {
+  void* res = (void *) ::GetProcAddress((HINSTANCE)fModule, functionName.c_str());
+  if (0 == res) {
+    throw Exception("function not found");
+  }
+  return res;
+}

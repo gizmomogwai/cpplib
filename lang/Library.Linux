@@ -1,0 +1,20 @@
+#include <dlfcn.h>
+
+Library::Library(std::string& fileName) throw (Exception) {
+  fHandle = ::dlopen(fileName.c_str(), RTLD_LAZY);
+  if (0 == fHandle) {
+    throw Exception("could not open lib");
+  }
+}
+
+Library::~Library() {
+}
+
+void* Library::getFunction(std::string& functionName) throw (Exception) {
+  void* res = dlsym(fHandle, functionName.c_str());
+  if (0 == res) {
+    throw Exception("could not open function");
+  }
+  return res;
+}
+
