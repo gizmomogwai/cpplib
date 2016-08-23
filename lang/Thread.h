@@ -30,20 +30,20 @@ class Thread : public Runnable {
   /** Erzeugt einen neuen Thread. */
   Thread()
     : runnable(0), threadHandle(0) {
-	}
+  }
 
   static int LOW;
   static int NORMAL;
   static int HIGH;
 
-	/** Erzeugt einen neuen Thread, der ein Runnable ausfuehrt.
-	 *
-	 * @param _runnable Runnableobjekt, das ausgefuehrt werden soll. Das
-	 *	 Runnable bleibt im Besitz des Callers, der Thread raeumt sich selbst
-	 *	 auf, sobald das Runnable fertig abgelaufen ist.
-	 */
-  Thread(Runnable* _runnable)
-    : runnable(_runnable), threadHandle(0) {
+  /** Erzeugt einen neuen Thread, der ein Runnable ausfuehrt.
+   *
+   * @param _runnable Runnableobjekt, das ausgefuehrt werden soll. Das
+   *    Runnable bleibt im Besitz des Callers, der Thread raeumt sich selbst
+   *    auf, sobald das Runnable fertig abgelaufen ist.
+   */
+ Thread(Runnable* _runnable)
+   : runnable(_runnable), threadHandle(0) {
 
     if (runnable == 0) {
       throw Exception("Runnable == 0", __FILE__, __LINE__);
@@ -59,16 +59,15 @@ class Thread : public Runnable {
    */
   void start();
 
-	/** wartet auf die beendigung des threads.
-	 */
-	void join();
+  /** wartet auf die beendigung des threads.
+   */
+  void join();
 
   /** Schickt den Thread eine Anzahl von Millisekunden schlafen.
    *
    * @param millis Millisekunden.
    */
   static void sleep(unsigned long millis);
-
 
   /** Gibt die Kontrolle an einen anderen zum laufen bereiten Thread.
    */
