@@ -52,22 +52,7 @@ class ServerSocket {
   Socket* accept();
   
  private:
-#ifdef WIN32
-  /** Wirft einen Exception, der den Fehlercode von WinSock genauer
-	 * auswertet.  
-   *
-   * @param base Basisstring zur fehlerbeschreibung, der um den 
-   *        spezifischen WinSockFehler erweitert wird.
-   */
-  void throwDetailedException(const char* base);
-
-  /** Intern verwendeter Socket, der nach aussen gebunden wird. */
-  SOCKET serverSocket;
-#endif // WIN32
-
-#ifdef LINUX
   /** Intern verwendeter Socket, der nach aussen gebunden wird. */
   int serverSocket;
-#endif // LINUX
   
 };

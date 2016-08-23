@@ -1,5 +1,3 @@
-#ifdef LINUX
-
 #include <net/ServerSocket.h>
 
 #include <lang/Exception.h>
@@ -60,5 +58,3 @@ Socket* ServerSocket::accept() {
       new Socket(acceptedSOCKET, remoteHost, ntohs(remoteAddr.sin_port));
   return (res);
 }
-
-#endif // LINUX

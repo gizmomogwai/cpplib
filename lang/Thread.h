@@ -1,19 +1,6 @@
 #pragma once
 
-#ifdef WIN32
-  #ifdef _AFX
-    #include <AfxWin.h>
-  #endif
-  #ifdef _COMMAND
-    #include <windows.h>
-  #endif
-#endif // WIN32
-
-#ifdef LINUX
-  #include <pthread.h>
-#endif // LINUX
-
-
+#include <pthread.h>
 #include <lang/Runnable.h>
 #include <lang/Exception.h>
 
@@ -41,8 +28,8 @@ class Thread : public Runnable {
   
  public:
   /** Erzeugt einen neuen Thread. */
-  Thread(int _priority=NORMAL) 
-    : runnable(0), priority(_priority), threadHandle(0) {
+  Thread() 
+    : runnable(0), threadHandle(0) {
 	}
 
   static int LOW;
@@ -55,8 +42,8 @@ class Thread : public Runnable {
 	 *	 Runnable bleibt im Besitz des Callers, der Thread raeumt sich selbst
 	 *	 auf, sobald das Runnable fertig abgelaufen ist.
 	 */
-  Thread(Runnable* _runnable, int _priority=NORMAL) 
-    : runnable(_runnable), priority(_priority), threadHandle(0) {
+  Thread(Runnable* _runnable) 
+    : runnable(_runnable), threadHandle(0) {
 
     if (runnable == 0) {
       throw(Exception("Runnable == 0", __FILE__, __LINE__));
@@ -86,45 +73,14 @@ class Thread : public Runnable {
    */
   static void yield();
   
-  /* Setzt die Prioritaet des Threads.
-   *
-   * @param p Prioritaet.
-   */
-  //      virtual void setPriority(int p);
-
   /** Muss ueberschrieben werden, um tatsaechlich etwas zu machen. */
   void run() {
   }
   
  private:
-   /** Das Runnableobject, das ausgefuehrt wird, falls gesetzt. */
-   Runnable* runnable;
-
-   /** Threadprioritaet. */
-  int priority;
-
-#ifdef WIN32
-
-  /** Handle auf den native thread. */
-  HANDLE threadHandle;
+  /** Das Runnableobject, das ausgefuehrt wird, falls gesetzt. */
+  Runnable* runnable;
   
-  /** Id des Native threads. */
-  unsigned long threadID;
-  
-  /** Statische Hilfsfunktion die verwendet wird um, run aufzurufen. 
-   *
-   * @param thread void* auf das Threadobject.
-   */
-  static unsigned long __stdcall startThread(void* thread);  
-
-  /** Statische Hilfsfunktion die verwendet wird um, run von Runnables aufzurufen.
-   *
-   * @param thread void* auf das Threadobject.
-   */
-  static unsigned long __stdcall startRunnable(void* thread);  
-#endif // WIN32
-  
-#ifdef LINUX
   /** Threadhandle. */
   pthread_t threadHandle;
   
@@ -140,6 +96,5 @@ class Thread : public Runnable {
    * @param thread void* auf das ThreadObject.
    */
   static void* startRunnable(void* arg);  
-#endif
 
 };

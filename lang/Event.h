@@ -1,19 +1,8 @@
 #pragma once
 
-#ifdef WIN32
-  #ifdef _AFX
-    #include <afx.h>
-  #endif
-  #ifdef _COMMAND
-    #include <windows.h>
-  #endif
-#endif // WIN32
-
-#ifdef LINUX
-  #include <pthread.h>
-  #include <lang/Mutex.h>
-  #include <errno.h>
-#endif // LINUX
+#include <pthread.h>
+#include <lang/Mutex.h>
+#include <errno.h>
 
 /** Klasse um einen Signalisierungsmechanismus anzubieten.
  *
@@ -60,12 +49,6 @@ class Event {
 
   
  private:
-#ifdef WIN32    
-  /** Windows Handle :) */
-  HANDLE event;    
-#endif // WIN32
-  
-#ifdef LINUX
   /** Mutex um die condition zu schuetzen. */
   Mutex* mutex;
 
@@ -74,6 +57,5 @@ class Event {
 
   /** Event gesetzt. */
   bool eventSet;
-#endif
 
 };

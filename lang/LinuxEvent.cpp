@@ -1,5 +1,3 @@
-#ifdef LINUX
-
 #include <lang/Event.h>
 #include <lang/Exception.h>
 #include <sys/time.h>
@@ -85,5 +83,3 @@ void Event::setEvent() {
   int res = pthread_cond_broadcast(&condition);
   assert(res == 0);
 }
-
-#endif // LINUX

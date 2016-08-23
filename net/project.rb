@@ -5,6 +5,6 @@ cxx_configuration do
 
   static_lib("net",
              sources: sources,
-             dependencies: ['lang']
+             dependencies: ['lang', 'io']
             )
 end

@@ -1,5 +1,3 @@
-#ifdef LINUX
-
 #include <cassert>
 #include <lang/Exception.h>
 #include <lang/Mutex.h>
@@ -48,5 +46,3 @@ void Mutex::unlock() {
 }
 
 pthread_mutex_t* Mutex::getMutex() { return (&mutex); }
-
-#endif // LINUX

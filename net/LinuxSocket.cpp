@@ -1,5 +1,3 @@
-#ifdef LINUX
-
 #include <lang/Exception.h>
 
 #include <net/Socket.h>
@@ -178,5 +176,3 @@ OutputStream& Socket::getOutputStream() throw(Exception) {
   }
   return *os;
 }
-
-#endif // LINUX

@@ -1,5 +1,3 @@
-#ifdef LINUX
-
 #include <lang/Exception.h>
 #include <lang/Thread.h>
 
@@ -59,5 +57,3 @@ void Thread::join() {
     throw Exception("could not join thread", __FILE__, __LINE__);
   }
 }
-
-#endif // LINUX
