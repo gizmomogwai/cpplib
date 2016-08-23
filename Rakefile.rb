@@ -2,7 +2,7 @@ require 'cxx'
 
 flags = {
 #  :DEFINES => ['UNIT_TEST','EXAMPLE=main'],
-  :FLAGS => ['-O0', '-g3', '-Wall']
+  :FLAGS => ['-O0', '-g3', '-Wall', '-Werror']
 }
 
 cxx(Dir['**/project.rb'], 'out', "gcc", './') do |tc|
