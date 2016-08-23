@@ -1,7 +1,7 @@
 #include <io/file/FileList.h>
 
-#include <util/ListIterator.h>
 #include <io/file/File.h>
+#include <util/ListIterator.h>
 
 FileList::~FileList() {
   VectorIterator<File*> i(this);

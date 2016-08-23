@@ -2,68 +2,62 @@
 
 #include <memory.h>
 
-BufferedOutputStream::BufferedOutputStream(OutputStream* _out, 
-                                           bool _handleStream, 
-                                           int _size)
-      : FilterOutputStream(_out, _handleStream), count(0) {
-    	
+BufferedOutputStream::BufferedOutputStream(OutputStream* _out,
+                                           bool _handleStream, int _size)
+    : FilterOutputStream(_out, _handleStream), count(0) {
+
   buffer = new ByteDataBuffer(_size);
 }
-
 
 BufferedOutputStream::~BufferedOutputStream() {
 
   flushBuffer();
-  
-  delete(buffer);
+
+  delete (buffer);
 }
 
-void BufferedOutputStream::write(int b) throw (IOException) {
-  
+void BufferedOutputStream::write(int b) throw(IOException) {
+
   if (count >= buffer->getSize()) {
     flushBuffer();
-	}
+  }
   unsigned char* help = (unsigned char*)(buffer->getData(count));
   count++;
   *help = (unsigned char)(b & 0xff);
-
 }
 
-void BufferedOutputStream::write(DataBuffer* _buffer, 
-                                 int _offset, 
-                                 int _length) throw (IOException) {
-	
+void BufferedOutputStream::write(DataBuffer* _buffer, int _offset,
+                                 int _length) throw(IOException) {
+
   if (_length >= buffer->getSize()) {
 
-  	flushBuffer();
+    flushBuffer();
 
-	  out->write(_buffer, _offset, _length);
+    out->write(_buffer, _offset, _length);
 
-	} else {
-	
+  } else {
+
     if (_length > (buffer->getSize() - count)) {
-	    flushBuffer();
-	  }
-	  
+      flushBuffer();
+    }
+
     void* src = _buffer->getData(_offset);
     void* dst = buffer->getData(count);
     count += _length;
 
     memcpy(dst, src, _length);
-	  
   }
 }
 
+void BufferedOutputStream::flush() throw(IOException) {
 
-void BufferedOutputStream::flush() throw (IOException) {
-    
   flushBuffer();
   FilterOutputStream::flush();
 }
 
-void BufferedOutputStream::flushBuffer() throw (IOException) {
+void BufferedOutputStream::flushBuffer() throw(IOException) {
   if (count > 0) {
     out->write(buffer, 0, count);
-	  count = 0;
+    count = 0;
   }
 }

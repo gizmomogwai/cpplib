@@ -7,17 +7,18 @@
 #include <io/InputStream.h>
 #include <io/OutputStream.h>
 
+#include <lang/SysError.h>
 #include <net/SocketInputStream.h>
 #include <net/SocketOutputStream.h>
-#include <lang/SysError.h>
-
 
 #include <iostream>
-Socket::Socket(const std::string& host, int _port) throw (Exception) : hostName(host), port(_port) {
+Socket::Socket(const std::string& host, int _port) throw(Exception)
+    : hostName(host), port(_port) {
   init();
 }
 
-Socket::Socket(const char* host, int _port) throw (Exception) : hostName(host), port(_port)  {
+Socket::Socket(const char* host, int _port) throw(Exception)
+    : hostName(host), port(_port) {
   init();
 }
 
@@ -28,7 +29,7 @@ public:
     memset(&hints, 0, sizeof(struct addrinfo));
     hints.ai_family = PF_UNSPEC;
     hints.ai_socktype = SOCK_STREAM;
-    
+
     if (getaddrinfo(host.c_str(), "20000", &hints, &fInfo) != 0) {
       throw Exception("getaddrinfo failed");
     }
@@ -38,8 +39,9 @@ public:
     if (fInfo == 0) {
       throw Exception("host not found");
     }
-    
-    int theSocket = socket(fInfo->ai_family, fInfo->ai_socktype, fInfo->ai_protocol);
+
+    int theSocket =
+        socket(fInfo->ai_family, fInfo->ai_socktype, fInfo->ai_protocol);
     if (theSocket == -1) {
       throw Exception("could not create socket", __FILE__, __LINE__);
     }
@@ -50,18 +52,16 @@ public:
     return theSocket;
   }
 
-  ~AddrInfo() {
-    freeaddrinfo(fInfo);
-  }
-    
+  ~AddrInfo() { freeaddrinfo(fInfo); }
+
 private:
   struct addrinfo* fInfo;
 };
-void Socket::init() throw (Exception) {
-	
+void Socket::init() throw(Exception) {
+
   is = 0;
   os = 0;
-	
+
   AddrInfo info(hostName);
   /*
   hostent* host;
@@ -83,23 +83,23 @@ void Socket::init() throw (Exception) {
     std::cout << hstrerror(h_errno);
     throw Exception("Unknown Host", __FILE__, __LINE__);
   }
- 
+
 
   u_long nRemoteAddr = *((u_long*)host->h_addr_list[0]);
-  
+
   // baue socket
   theSocket = socket(AF_INET, SOCK_STREAM, 0);
   if (theSocket == -1) {
     SysError::throwDetailedException("could not create socket");
   }
-  
+
   // initialisiere socket mit dem port und dem restlichen zeug
   sockaddr_in sinRemote;
   sinRemote.sin_family = AF_INET;
   sinRemote.sin_addr.s_addr = nRemoteAddr;
   std::cout << port << std::endl;
   sinRemote.sin_port = htons(port);
-  
+
   // connect
 */
   theSocket = info.connectToFirst();
@@ -107,7 +107,7 @@ void Socket::init() throw (Exception) {
 }
 
 Socket::Socket(int _theSocket, std::string _hostName, int _port) {
-  
+
   is = 0;
   os = 0;
 
@@ -129,27 +129,27 @@ void Socket::shutdownInput() {
 void Socket::shutdownOutput() {
   if (shutdown(theSocket, SHUT_WR) == -1) {
     std::cout << "shutdown output hat nicht gefunkt" << std::endl;
-    // SysError::throw(Exception("Socket::shutdownOutput end send not possible"));
+    // SysError::throw(Exception("Socket::shutdownOutput end send not
+    // possible"));
   }
   os = 0;
 }
 
 Socket::~Socket() {
-  
+
   if (os != 0) {
-    delete(os);
+    delete (os);
     os = 0;
   }
-  
+
   if (is != 0) {
-    delete(is);
+    delete (is);
     is = 0;
   }
-  
+
   if (close(theSocket) == -1) {
     SysError::throwDetailedException("Socket::~Socket - could not close");
   }
-  
 }
 
 void Socket::createStreams() {
@@ -163,21 +163,20 @@ void Socket::createStreams() {
   }
 }
 
-InputStream& Socket::getInputStream() throw (Exception) {
+InputStream& Socket::getInputStream() throw(Exception) {
   if (is == NULL) {
-    throw(Exception("Socket::getInputStream - InputStream already closed", 
-                    __FILE__, __LINE__)); 
+    throw(Exception("Socket::getInputStream - InputStream already closed",
+                    __FILE__, __LINE__));
   }
   return *is;
 }
 
-OutputStream& Socket::getOutputStream() throw (Exception) {
+OutputStream& Socket::getOutputStream() throw(Exception) {
   if (os == NULL) {
-    throw(Exception("Socket::getOutputStream - OutputStream already closed", 
-                    __FILE__, __LINE__)); 
+    throw(Exception("Socket::getOutputStream - OutputStream already closed",
+                    __FILE__, __LINE__));
   }
   return *os;
 }
-
 
 #endif // LINUX

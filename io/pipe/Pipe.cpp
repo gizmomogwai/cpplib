@@ -1,40 +1,26 @@
 #include <io/pipe/Pipe.h>
 
+#include <assert.h>
 #include <io/pipe/PipedInputStream.h>
 #include <io/pipe/PipedOutputStream.h>
-#include <assert.h>
 #include <iostream>
 
-Pipe::Pipe(int _bufferSize) 
-  : in(0), 
-    out(0),
-    bufferSize(_bufferSize),     
-    buffer(0),    
-    nextToRead(0), 
-    nextToWrite(0), 
-    empty(true) {
-  
+Pipe::Pipe(int _bufferSize)
+    : in(0), out(0), bufferSize(_bufferSize), buffer(0), nextToRead(0),
+      nextToWrite(0), empty(true) {
+
   buffer = new unsigned char[bufferSize];
   in = new PipedInputStream(this);
   out = new PipedOutputStream(this);
 }
 
-Pipe::~Pipe() {
+Pipe::~Pipe() { delete[](buffer); }
 
-  delete[](buffer);
-}
+InputStream* Pipe::getInputStream() { return (in); }
 
-InputStream* Pipe::getInputStream() {
+OutputStream* Pipe::getOutputStream() { return (out); }
 
-  return(in);
-}
-
-OutputStream* Pipe::getOutputStream() {
-
-  return(out);
-}
-
-int Pipe::read(unsigned char* byteVal) throw (IOException) {
+int Pipe::read(unsigned char* byteVal) throw(IOException) {
 
   bufferLock.lock();
 
@@ -56,8 +42,10 @@ int Pipe::read(unsigned char* byteVal) throw (IOException) {
     if (nextToRead == bufferSize) {
       nextToRead = 0;
     }
-    if (nextToRead == nextToWrite) empty = true;
-    else empty = false;
+    if (nextToRead == nextToWrite)
+      empty = true;
+    else
+      empty = false;
 
     res = 1;
 
@@ -66,10 +54,10 @@ int Pipe::read(unsigned char* byteVal) throw (IOException) {
 
   bufferLock.unlock();
 
-  return(res);
+  return (res);
 }
 
-void Pipe::write(unsigned char value) throw (IOException) {
+void Pipe::write(unsigned char value) throw(IOException) {
 
   bufferLock.lock();
 
@@ -79,7 +67,7 @@ void Pipe::write(unsigned char value) throw (IOException) {
   } else {
 
     if (nextToWrite == nextToRead) {
-      
+
       bufferLock.wait();
     }
 
@@ -87,19 +75,17 @@ void Pipe::write(unsigned char value) throw (IOException) {
   }
 
   bufferLock.unlock();
-
 }
 
 void Pipe::writeByteAndSignalReader(unsigned char value) {
 
-    buffer[nextToWrite++] = value;
-    if (nextToWrite == bufferSize) {
-      nextToWrite = 0;
-    }
-    empty = false;
+  buffer[nextToWrite++] = value;
+  if (nextToWrite == bufferSize) {
+    nextToWrite = 0;
+  }
+  empty = false;
 
-    bufferLock.notify();
-
+  bufferLock.notify();
 }
 
 void Pipe::deleteOutputStream() {
@@ -108,6 +94,6 @@ void Pipe::deleteOutputStream() {
   out = 0;
 
   bufferLock.notify();
-  
+
   bufferLock.unlock();
 }

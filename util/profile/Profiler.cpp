@@ -1,17 +1,16 @@
 #include <util/profile/Profiler.h>
 
-#include <util/profile/Profile.h>
 #include <iostream>
-#include <util/ListIterator.h>
-#include <util/profile/ProfileVisitor.h>
-#include <util/profile/PrintProfileVisitor.h>
-#include <util/profile/ClearProfileVisitor.h>
 #include <lang/CleanUpObject.h>
+#include <util/ListIterator.h>
+#include <util/profile/ClearProfileVisitor.h>
+#include <util/profile/PrintProfileVisitor.h>
+#include <util/profile/Profile.h>
+#include <util/profile/ProfileVisitor.h>
 
 Profiler Profiler::theProfiler;
 
-Profiler::~Profiler() {
-}
+Profiler::~Profiler() {}
 
 void Profiler::begin(std::string& key) {
 
@@ -21,21 +20,21 @@ void Profiler::begin(std::string& key) {
   if (profiles.isEmpty() == false) {
     parent = profiles.top();
   }
-  
+
   if (parent == 0) {
 
     profile = searchRootProfile(&key);
     if (profile == 0) {
       // root erzeugen
       profile = new Profile(0, &key);
-    
+
       // bei roots hinzufuegen
       roots.push_back(profile);
     }
   } else {
     // parent-profile am start .. mal schaun, ob mehr geht
     profile = parent->getProfile(&key);
-  
+
     // rootprofil am start
     if (profile == 0) {
       // kein konkretes Profil am start
@@ -43,12 +42,11 @@ void Profiler::begin(std::string& key) {
     }
   }
 
-  // oben auf stack 
+  // oben auf stack
   profiles.push(profile);
 
   // und los
   profile->setStart(stopper.getCurrent());
-  
 }
 
 Profile* Profiler::searchRootProfile(std::string* key) {
@@ -58,15 +56,14 @@ Profile* Profiler::searchRootProfile(std::string* key) {
   while (i->hasNext() == true) {
     Profile* current = i->next();
     if (current->equals(key) == true) {
-      return(current);
+      return (current);
     }
   }
-  
-  return(0);
+
+  return (0);
 }
 
-
-void Profiler::end(std::string& key) throw (Exception) {
+void Profiler::end(std::string& key) throw(Exception) {
 
   if (profiles.isEmpty() == true) {
     throw(Exception("So nicht", __FILE__, __LINE__));
@@ -74,31 +71,26 @@ void Profiler::end(std::string& key) throw (Exception) {
 
   Profile* top = profiles.top();
   if (top->equals(&key) == false) {
-    std::cout << "Was soll das???" 
-              << key << " top " 
-              << *(top->getKey()) << std::endl;
+    std::cout << "Was soll das???" << key << " top " << *(top->getKey())
+              << std::endl;
     throw(Exception("wrong begin end sequence", __FILE__, __LINE__));
   }
 
   top->setEnd(stopper.getCurrent());
-  top->addToTotal(stopper.getRealTime(top->getStart(), 
-                                      top->getEnd()));
+  top->addToTotal(stopper.getRealTime(top->getStart(), top->getEnd()));
 
   profiles.pop();
-  
 }
 
-void Profiler::accept(ProfileVisitor* v) {
-  v->visit(this);
-}
+void Profiler::accept(ProfileVisitor* v) { v->visit(this); }
 
 std::string Profiler::toString() {
-  
+
   PrintProfileVisitor visitor;
 
   applyVisitor2Childs(&visitor);
 
-  return(visitor.toString());
+  return (visitor.toString());
 }
 
 void Profiler::clear() {

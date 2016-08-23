@@ -1,9 +1,9 @@
 #include <util/profile/ClearProfileVisitor.h>
 
+#include <lang/CleanUpObject.h>
+#include <util/Iterator.h>
 #include <util/profile/Profile.h>
 #include <util/profile/Profiler.h>
-#include <util/Iterator.h>
-#include <lang/CleanUpObject.h>
 
 #include <util/ListIterator.h>
 
@@ -15,5 +15,5 @@ void ClearProfileVisitor::visit(Profile* profile) {
 }
 
 void ClearProfileVisitor::visit(Profiler* profiler) {
-  recurse(profiler->iterator()); 
+  recurse(profiler->iterator());
 }

@@ -1,19 +1,18 @@
 #include <io/ByteArrayInputStream.h>
 
-#include <lang/Exception.h>
 #include <lang/DataBuffer.h>
+#include <lang/Exception.h>
 #include <string.h>
 
-ByteArrayInputStream::ByteArrayInputStream(DataBuffer* _buffer, int _offset, int _available) {
+ByteArrayInputStream::ByteArrayInputStream(DataBuffer* _buffer, int _offset,
+                                           int _available) {
   buffer = (unsigned char*)(_buffer->getData(_offset));
   available = _available;
 }
 
-ByteArrayInputStream::~ByteArrayInputStream() {
-}
+ByteArrayInputStream::~ByteArrayInputStream() {}
 
-		
-int ByteArrayInputStream::read() throw (IOException) {
+int ByteArrayInputStream::read() throw(IOException) {
   int res = -1;
   if (available > 0) {
     res = *buffer;
@@ -23,8 +22,9 @@ int ByteArrayInputStream::read() throw (IOException) {
   return res;
 }
 #include <iostream>
-int ByteArrayInputStream::read(DataBuffer& b, int offset, int length) throw (IOException) {
-  
+int ByteArrayInputStream::read(DataBuffer& b, int offset,
+                               int length) throw(IOException) {
+
   unsigned char* target = (unsigned char*)(b.getData(offset));
   int max = 0;
   if (length < available) {
@@ -38,7 +38,7 @@ int ByteArrayInputStream::read(DataBuffer& b, int offset, int length) throw (IOE
   buffer += max;
   available -= max;
 
-  if (max == 0) max = -1;
-  return(max);
+  if (max == 0)
+    max = -1;
+  return (max);
 }
-

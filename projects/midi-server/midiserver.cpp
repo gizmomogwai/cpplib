@@ -2,9 +2,8 @@
 #include <cstdlib>
 #include <iostream>
 
-void mycallback(double deltatime,
-                std::vector<unsigned char> *message,
-                void *userData) {
+void mycallback(double deltatime, std::vector<unsigned char>* message,
+                void* userData) {
   unsigned int nBytes = message->size();
   for (unsigned int i = 0; i < nBytes; i++) {
     std::cout << "Byte " << i << " = " << (int)message->at(i) << ", ";
@@ -25,7 +24,7 @@ int main() {
   }
 
   midiin.openPort(0);
-  int i=1;
+  int i = 1;
   midiin.setCallback(&mycallback, &i);
   midiin.ignoreTypes(false, false, false);
   std::cout << "\nReading MIDI input ... press <enter> to quit.\n";

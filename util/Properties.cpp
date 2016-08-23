@@ -4,11 +4,9 @@
 #include <sstream>
 #include <util/StringTokenizer.h>
 
-Properties::Properties() {
-}
+Properties::Properties() {}
 
-Properties::~Properties() {
-}
+Properties::~Properties() {}
 
 void Properties::read(DataInputStream& in) {
   std::auto_ptr<std::string> line = in.readLine();
@@ -17,8 +15,8 @@ void Properties::read(DataInputStream& in) {
     if (line->length() > 0) {
       if (line->at(0) != '#') {
         StringTokenizer tokens(*line, "=");
-	std::auto_ptr<std::string> key = tokens.next();
-	std::auto_ptr<std::string> value = tokens.next();
+        std::auto_ptr<std::string> key = tokens.next();
+        std::auto_ptr<std::string> value = tokens.next();
 
         if ((key.get() != 0) && (value.get() != 0)) {
           setProperty(*key, *value);
@@ -28,7 +26,6 @@ void Properties::read(DataInputStream& in) {
     line = in.readLine();
   }
 }
-
 
 void Properties::write(DataOutputStream& out) {
   std::map<std::string, std::string>::iterator i = theMap.begin();
@@ -43,8 +40,8 @@ void Properties::write(DataOutputStream& out) {
   }
 }
 
-
-std::string Properties::getProperty(const std::string& key) throw (NoSuchElementException) {
+std::string
+Properties::getProperty(const std::string& key) throw(NoSuchElementException) {
   std::map<std::string, std::string>::iterator found = theMap.find(key);
   if (found == theMap.end()) {
     NoSuchElementException e(std::string("could not find property: ") + key);
@@ -54,27 +51,25 @@ std::string Properties::getProperty(const std::string& key) throw (NoSuchElement
   }
 }
 
-std::string Properties::getProperty(const std::string& key, const std::string& defaultValue) {
+std::string Properties::getProperty(const std::string& key,
+                                    const std::string& defaultValue) {
   std::map<std::string, std::string>::iterator found = theMap.find(key);
-	if (found == theMap.end()) {
-		return defaultValue;
-	} else {
-		return found->second;
-	}
+  if (found == theMap.end()) {
+    return defaultValue;
+  } else {
+    return found->second;
+  }
 }
-
-
 
 void Properties::setProperty(const std::string& key, const std::string& value) {
   std::map<std::string, std::string>::iterator found = theMap.find(key);
-  
+
   if (found != theMap.end()) {
-		found->second = value;
+    found->second = value;
   } else {
     theMap.insert(std::make_pair(key, value));
   }
 }
-
 
 std::string Properties::toString() {
   std::ostringstream help;
@@ -85,8 +80,8 @@ std::string Properties::toString() {
     i++;
   }
   help << std::ends;
-  
+
   std::string res(help.str());
 
-  return(res);
+  return (res);
 }

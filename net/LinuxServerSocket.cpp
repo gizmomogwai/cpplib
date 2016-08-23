@@ -9,8 +9,7 @@
 
 #include <lang/SysError.h>
 
-
-ServerSocket::ServerSocket(int port) throw (Exception) {
+ServerSocket::ServerSocket(int port) throw(Exception) {
 
   serverSocket = socket(AF_INET, SOCK_STREAM, 0);
   if (serverSocket == -1) {
@@ -33,13 +32,11 @@ ServerSocket::ServerSocket(int port) throw (Exception) {
   if (res == -1) {
     SysError::throwDetailedException("listening");
   }
-
 }
 
-
 ServerSocket::~ServerSocket() {
-  std::cout << "ServerSocket::~ServerSocket .... aufraeumen ... " <<
-    "z.b. serversocket schliessen etc...." << std::endl;
+  std::cout << "ServerSocket::~ServerSocket .... aufraeumen ... "
+            << "z.b. serversocket schliessen etc...." << std::endl;
   int res = close(serverSocket);
   if (res == -1) {
     SysError::throwDetailedException("ServerSocket::~ServerSocket()");
@@ -49,18 +46,19 @@ ServerSocket::~ServerSocket() {
 Socket* ServerSocket::accept() {
   sockaddr_in remoteAddr;
   socklen_t addrSize = sizeof(sockaddr_in);
-  int acceptedSOCKET = ::accept(serverSocket, (sockaddr*)(&remoteAddr), &addrSize);
+  int acceptedSOCKET =
+      ::accept(serverSocket, (sockaddr*)(&remoteAddr), &addrSize);
   if (acceptedSOCKET == -1) {
     SysError::throwDetailedException("accepting");
   }
 
-  std::cout << "Accepted connection from " << inet_ntoa(remoteAddr.sin_addr) <<
-    ":" << ntohs(remoteAddr.sin_port) << "." << std::endl;
+  std::cout << "Accepted connection from " << inet_ntoa(remoteAddr.sin_addr)
+            << ":" << ntohs(remoteAddr.sin_port) << "." << std::endl;
 
   std::string remoteHost(inet_ntoa(remoteAddr.sin_addr));
   Socket* res =
-    new Socket(acceptedSOCKET, remoteHost, ntohs(remoteAddr.sin_port));
-  return(res);
+      new Socket(acceptedSOCKET, remoteHost, ntohs(remoteAddr.sin_port));
+  return (res);
 }
 
 #endif // LINUX

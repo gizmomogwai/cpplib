@@ -7,33 +7,28 @@
 //#include <asm/errno.h> // for ETIMEDOUT
 #include <assert.h>
 
-
-Event::Event() : mutex(new Mutex()), eventSet(false)  {
+Event::Event() : mutex(new Mutex()), eventSet(false) {
   // klappt immer
   int res = pthread_cond_init(&condition, 0);
   assert(res == 0);
 }
 
-
 Event::~Event() {
   int res = pthread_cond_destroy(&condition);
   if (res != 0) {
-    throw(Exception("Event::~Event() - could not destroy cond - someones waiting!", 
-                    __FILE__, __LINE__));
+    throw(Exception(
+        "Event::~Event() - could not destroy cond - someones waiting!",
+        __FILE__, __LINE__));
   }
 
   if (mutex != 0) {
-    delete(mutex);
+    delete (mutex);
     mutex = 0;
   }
 }
 
-
-
-
-
 void Event::wait() {
-  AutoMutex lock(mutex);  
+  AutoMutex lock(mutex);
 
   if (eventSet == false) {
     // klappt immer
@@ -42,18 +37,14 @@ void Event::wait() {
   }
 }
 
-
-
-
-
 bool Event::wait(unsigned long time) {
   AutoMutex lock(mutex);
 
   int res = true;
   if (eventSet == false) {
 
-      // timeval hat sekunden und microsekunden
-      // simespec hat sekunden und nanosekunden
+    // timeval hat sekunden und microsekunden
+    // simespec hat sekunden und nanosekunden
     struct timeval now;
     struct timespec timeOut;
 
@@ -66,23 +57,19 @@ bool Event::wait(unsigned long time) {
     now.tv_sec += s;
     now.tv_usec += time * 1000;
 
-    // normalerweise mit TIMEVAL_TO_TIMESPEC .. 
+    // normalerweise mit TIMEVAL_TO_TIMESPEC ..
     // aber suse kann das nicht????
     timeOut.tv_sec = now.tv_sec;
     timeOut.tv_nsec = now.tv_usec * 1000;
 
-    int ret = pthread_cond_timedwait(&condition,
-				     mutex->getMutex(),
-				     &timeOut);
+    int ret = pthread_cond_timedwait(&condition, mutex->getMutex(), &timeOut);
     if (ret == ETIMEDOUT) {
       res = false;
-    } 
+    }
   }
 
-  return(res);
+  return (res);
 }
-
-
 
 void Event::notify() {
   AutoMutex lock(mutex);
@@ -100,5 +87,3 @@ void Event::setEvent() {
 }
 
 #endif // LINUX
-
-

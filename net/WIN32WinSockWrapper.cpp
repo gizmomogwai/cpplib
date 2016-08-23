@@ -2,8 +2,8 @@
 
 #include <net/WIN32WinSockWrapper.h>
 
-#include <lang/Exception.h>
 #include <iostream>
+#include <lang/Exception.h>
 
 Mutex WinSockWrapper::m;
 
@@ -25,7 +25,7 @@ void WinSockWrapper::deinit() {
   m.lock();
   refCount--;
   if (refCount == 0) {
-	  WSACleanup();
+    WSACleanup();
   }
   m.unlock();
 }

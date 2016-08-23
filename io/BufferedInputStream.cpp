@@ -1,27 +1,21 @@
 #include <io/BufferedInputStream.h>
 
-#include <lang/DataBuffer.h>
 #include <io/InputStream.h>
-#include <lang/ByteDataBuffer.h>
-#include <math.h>
 #include <iostream>
+#include <lang/ByteDataBuffer.h>
+#include <lang/DataBuffer.h>
+#include <math.h>
 #include <string.h>
 
-BufferedInputStream::BufferedInputStream(InputStream* _in, 
-                                         bool _handleStream, 
-                                         int _bufferSize) 
-  : FilterInputStream(_in, _handleStream), 
-    buffer(0), red(0), sourceData(0) {
+BufferedInputStream::BufferedInputStream(InputStream* _in, bool _handleStream,
+                                         int _bufferSize)
+    : FilterInputStream(_in, _handleStream), buffer(0), red(0), sourceData(0) {
   buffer = new ByteDataBuffer(_bufferSize);
 }
 
+BufferedInputStream::~BufferedInputStream() { delete (buffer); }
 
-BufferedInputStream::~BufferedInputStream() {
-  
-  delete(buffer);
-}
-
-int BufferedInputStream::read() throw (IOException) {
+int BufferedInputStream::read() throw(IOException) {
   if (red == 0) {
     red = in->read(*buffer);
     sourceData = (unsigned char*)buffer->getData();
@@ -32,16 +26,15 @@ int BufferedInputStream::read() throw (IOException) {
     int res = *sourceData;
     sourceData++;
     red--;
-    return(res);
+    return (res);
   }
 
-  return(-1);
+  return (-1);
 }
 
-int BufferedInputStream::read(DataBuffer& _targetBuffer, 
-			      int _offset, int _length) 
-  throw (IOException) {
-  
+int BufferedInputStream::read(DataBuffer& _targetBuffer, int _offset,
+                              int _length) throw(IOException) {
+
   if (red == 0) {
     red = in->read(*buffer);
     sourceData = (unsigned char*)(buffer->getData());
@@ -56,9 +49,7 @@ int BufferedInputStream::read(DataBuffer& _targetBuffer,
     red -= toCopy;
     sourceData += toCopy;
 
-    return(toCopy);
+    return (toCopy);
   }
-  return(-1);
+  return -1;
 }
-
-

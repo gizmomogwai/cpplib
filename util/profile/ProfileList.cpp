@@ -2,9 +2,8 @@
 
 #include <lang/CleanUpObject.h>
 
-ProfileIterator::ProfileIterator(ProfileList* list) 
-  : ListIterator<Profile*>(list) {
-}
+ProfileIterator::ProfileIterator(ProfileList* list)
+    : ListIterator<Profile*>(list) {}
 
 ProfileList::~ProfileList() {
 
@@ -12,21 +11,19 @@ ProfileList::~ProfileList() {
   CleanUpObject<ProfileIterator> cleaner(i);
 
   while (i->hasNext() == true) {
-    delete(i->next());
+    delete (i->next());
   }
-
 }
 
 Profile* ProfileList::getProfile(std::string* key) {
-	ListIterator<Profile*> i(this);
-		
-	while (i.hasNext() == true) {
-		Profile* current = i.next();
-			
-		if (current->equals(key) == true) {
-			return(current);
-		}
-	}
-	return(0);
-}
+  ListIterator<Profile*> i(this);
 
+  while (i.hasNext() == true) {
+    Profile* current = i.next();
+
+    if (current->equals(key) == true) {
+      return (current);
+    }
+  }
+  return (0);
+}

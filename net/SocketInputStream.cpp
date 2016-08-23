@@ -1,20 +1,18 @@
-#include <net/SocketInputStream.h>
 #include <net/Socket.h>
+#include <net/SocketInputStream.h>
 
 #if defined(WIN32)
-  #include <winsock2.h>
+#include <winsock2.h>
 #elif defined(LINUX) || defined(OSX)
-  #include <sys/types.h>
-  #include <sys/socket.h>
+#include <sys/socket.h>
+#include <sys/types.h>
 #else
-  #error "problems ahead"
+#error "problems ahead"
 #endif
 
 #include <iostream>
 
-SocketInputStream::SocketInputStream(Socket* _s) {
-  s = _s;
-}
+SocketInputStream::SocketInputStream(Socket* _s) { s = _s; }
 
 SocketInputStream::~SocketInputStream() {
   /*
@@ -26,7 +24,7 @@ SocketInputStream::~SocketInputStream() {
   s->shutdownInput();
 }
 
-int SocketInputStream::read() throw (IOException) {
+int SocketInputStream::read() throw(IOException) {
   char buffer[1];
   int newBytes = ::recv(s->theSocket, buffer, 1, 0);
   if (newBytes == 0) {
@@ -38,8 +36,8 @@ int SocketInputStream::read() throw (IOException) {
   }
 }
 
-int SocketInputStream::read(DataBuffer& _targetBuffer, 
-			    int _targetOffset, int _targetLength) throw (IOException) {
+int SocketInputStream::read(DataBuffer& _targetBuffer, int _targetOffset,
+                            int _targetLength) throw(IOException) {
 
   char* help = (char*)(_targetBuffer.getData(_targetOffset));
   int newBytes = ::recv(s->theSocket, help, _targetLength, 0);
