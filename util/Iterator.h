@@ -1,5 +1,4 @@
-#ifndef _Iterator_h_
-#define _Iterator_h_
+#pragma once
 
 /** Templateklasse (interface) fuer Iteratoren.
  *
@@ -33,7 +32,11 @@ class Iterator {
    * Sollte nur aufgerufen werden, wenn ein hasNext() true liefert.
    */
   virtual T next() = 0;
+
+  /**
+   * optional remove method that may be used while iterating over a
+   * collection.
+   */
+  virtual void remove() {}
   
 };
-
-#endif // _Iterator_h_

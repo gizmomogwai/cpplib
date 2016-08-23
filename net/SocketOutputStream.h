@@ -49,6 +49,5 @@ class SocketOutputStream : public OutputStream {
 
  private:
   /** Zugrundeliegender Socket. */
-  Socket* s;
-
+  Socket* socket;
 };

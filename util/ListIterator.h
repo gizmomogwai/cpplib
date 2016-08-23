@@ -1,5 +1,4 @@
-#ifndef ListIterator_h_
-#define ListIterator_h_
+#pragma once
 
 #include <lang/Exception.h>
 #include <util/Iterator.h>
@@ -28,9 +27,6 @@ using namespace std;
  *
  * Implementierung ist wegen vc6 im header.
  *
- * std::vector, std::list haben keine gemeinsame oberklasse, deswegen muss
- * man fuer verschiedene container den iterator komplett copy&pasten.
- *
  * <p>
  * Curriculum Vitae:
  * <ul>
@@ -57,7 +53,7 @@ class StlIterator : public Iterator<T> {
       throw Exception("cannot iterate over 0");
     }
 		fContainer = container;
-    
+    last = fContainer->end();
   	i = fContainer->begin();
 	}
 
@@ -78,16 +74,24 @@ class StlIterator : public Iterator<T> {
 	 * @return T Naechstes Element.
 	 */
 	virtual T next() {
+    last = i;
 		return *i++;
 	}
+  virtual void remove() {
+    if (last != fContainer->end()) {
+      i = fContainer->erase(last);
+      last = fContainer->end();
+    }
+  }
 
  protected:
 	/** zugrundeliegende stl-Liste. */
 	CT* fContainer;
 
-	/** zugrundeliegender stl-iterator. */
+	/** iterator to the next element that is returned. */
 	typename CT::iterator i;
-	
+  /** iteator to last returned element (if any). */
+	typename CT::iterator last;
 };
 
 
@@ -100,6 +104,4 @@ template <class T> class VectorIterator : public StlIterator<T, std::vector<T> >
   public:
     VectorIterator(std::vector<T>* container) : StlIterator<T, std::vector<T> >(container) {}  
 };
-
-#endif // ListIterator_h_
 

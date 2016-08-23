@@ -9,7 +9,6 @@
 #include <net/SocketInputStream.h>
 #include <net/SocketOutputStream.h>
 
-#include <iostream>
 Socket::Socket(const std::string& host, int _port) throw(Exception)
     : hostName(host), port(_port) {
   init();
@@ -55,8 +54,8 @@ public:
 private:
   struct addrinfo* fInfo;
 };
-void Socket::init() throw(Exception) {
 
+void Socket::init() throw(Exception) {
   is = 0;
   os = 0;
 
@@ -104,17 +103,12 @@ void Socket::init() throw(Exception) {
   createStreams();
 }
 
-Socket::Socket(int _theSocket, std::string _hostName, int _port) {
-
-  is = 0;
-  os = 0;
-
-  theSocket = _theSocket;
-  hostName = _hostName;
-  port = _port;
-
+Socket::Socket(int _theSocket, std::string _hostName,
+               int _port) throw(Exception)
+    : is(0), os(0), hostName(_hostName), theSocket(_theSocket), port(_port) {
   createStreams();
 }
+
 #include <iostream>
 void Socket::shutdownInput() {
   if (shutdown(theSocket, SHUT_RD) == -1) {
@@ -134,14 +128,13 @@ void Socket::shutdownOutput() {
 }
 
 Socket::~Socket() {
-
   if (os != 0) {
-    delete (os);
+    delete os;
     os = 0;
   }
 
   if (is != 0) {
-    delete (is);
+    delete is;
     is = 0;
   }
 
@@ -151,28 +144,30 @@ Socket::~Socket() {
 }
 
 void Socket::createStreams() {
+  // disable sigpipe, otherwise a server gets the signal if a client disconnects
+  const int set = 1;
+  setsockopt(theSocket, SOL_SOCKET, SO_NOSIGPIPE, &set, sizeof(set));
+
   if (is == 0) {
     is = new SocketInputStream(this);
-    std::cout << "is angelegt" << std::endl;
   }
   if (os == 0) {
     os = new SocketOutputStream(this);
-    std::cout << "os angelegt" << std::endl;
   }
 }
 
 InputStream& Socket::getInputStream() throw(Exception) {
-  if (is == NULL) {
-    throw(Exception("Socket::getInputStream - InputStream already closed",
-                    __FILE__, __LINE__));
+  if (is == 0) {
+    throw Exception("Socket::getInputStream - InputStream already closed",
+                    __FILE__, __LINE__);
   }
   return *is;
 }
 
 OutputStream& Socket::getOutputStream() throw(Exception) {
-  if (os == NULL) {
-    throw(Exception("Socket::getOutputStream - OutputStream already closed",
-                    __FILE__, __LINE__));
+  if (os == 0) {
+    throw Exception("Socket::getOutputStream - OutputStream already closed",
+                    __FILE__, __LINE__);
   }
   return *os;
 }

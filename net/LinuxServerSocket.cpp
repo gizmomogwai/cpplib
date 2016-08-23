@@ -8,12 +8,10 @@
 #include <lang/SysError.h>
 
 ServerSocket::ServerSocket(int port) throw(Exception) {
-
   serverSocket = socket(AF_INET, SOCK_STREAM, 0);
   if (serverSocket == -1) {
     SysError::throwDetailedException("creating socket");
   }
-  int res = 0;
 
   sockaddr_in serverSocketAddr;
   serverSocketAddr.sin_family = AF_INET;
@@ -21,7 +19,8 @@ ServerSocket::ServerSocket(int port) throw(Exception) {
   serverSocketAddr.sin_port = htons(port);
   memset(&(serverSocketAddr.sin_zero), 0, 8);
 
-  res = bind(serverSocket, (sockaddr*)(&serverSocketAddr), sizeof(sockaddr_in));
+  int res =
+      bind(serverSocket, (sockaddr*)(&serverSocketAddr), sizeof(sockaddr_in));
   if (res == -1) {
     SysError::throwDetailedException("binding");
   }
@@ -53,8 +52,6 @@ Socket* ServerSocket::accept() {
   std::cout << "Accepted connection from " << inet_ntoa(remoteAddr.sin_addr)
             << ":" << ntohs(remoteAddr.sin_port) << "." << std::endl;
 
-  std::string remoteHost(inet_ntoa(remoteAddr.sin_addr));
-  Socket* res =
-      new Socket(acceptedSOCKET, remoteHost, ntohs(remoteAddr.sin_port));
-  return (res);
+  return new Socket(acceptedSOCKET, inet_ntoa(remoteAddr.sin_addr),
+                    ntohs(remoteAddr.sin_port));
 }

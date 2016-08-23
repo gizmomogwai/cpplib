@@ -5,18 +5,12 @@
 #include <io/InputStream.h>
 #include <io/OutputStream.h>
 
-#if defined(WIN32)
-typedef unsigned int SOCKET;
-#endif
-
-#if defined(LINUX) || defined(OSX)
-  #include <sys/types.h>
-  #include <sys/socket.h>
-  #include <netdb.h>       // gethostbyname
-  #include <netinet/in.h>  // struct sockaddr_in
-  #include <unistd.h>      // for close
-  #include <arpa/inet.h>  // in_ntoa
-#endif
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netdb.h>       // gethostbyname
+#include <netinet/in.h>  // struct sockaddr_in
+#include <unistd.h>      // for close
+#include <arpa/inet.h>  // in_ntoa
 
 #include <lang/Exception.h>
 
@@ -68,25 +62,13 @@ class Socket {
    */
   Socket(const std::string& _host, int _port) throw (Exception);
 
-#if defined(WIN32)
-  /** Initialisiert den Socket mit einem verbundenen SOCKET.
-   *
-   * @param _theSocket WINSOCK-socket.
-   * @param _hostName Host.
-   * @param port Port.
-   */
-  Socket(SOCKET _theSocket, std::string _hostName, int port);
-#elif defined(LINUX) || defined(OSX)
   /** Initialisiert den Socket mit einem verbundenen SOCKET.
    *
    * @param _theSocket linux socket
    * @param _hostName HostName
    * @param port Port.
    */
-  Socket(int _theSocket, std::string _hostName, int port);
-#else
-  #error "so net"
-#endif
+  Socket(int _theSocket, std::string _hostName, int port) throw (Exception);
 
   /** Baut die Verbindung ab.
    *
@@ -147,15 +129,8 @@ class Socket {
   std::string hostName;
 
   /** Der zugrundeliegende Socket. */
-#if defined(WIN32)
-  SOCKET theSocket;
-#elif defined(LINUX) || defined(OSX)
   int theSocket;
-#else
-  #error "ohje"
-#endif
 
   /** Speichert den Port der Remote-verbindung. */
   int port;
-
 };

@@ -12,13 +12,13 @@ Thread::~Thread() {}
 void* Thread::startThread(void* arg) {
   Thread* thread = (Thread*)arg;
   thread->run();
-  return (0);
+  return 0;
 }
 
 void* Thread::startRunnable(void* arg) {
   Thread* thread = (Thread*)arg;
   thread->runnable->run();
-  return (0);
+  return 0;
 }
 
 void Thread::sleep(unsigned long millis) {
@@ -45,14 +45,13 @@ void Thread::start() {
                            this);                 // startargument
   }
   if (res != 0) {
-    throw(Exception("could not created thread", __FILE__, __LINE__));
+    throw Exception("could not created thread", __FILE__, __LINE__);
   }
 }
 
 void Thread::join() {
-  int res = 0;
   void* threadResult;
-  res = ::pthread_join(threadHandle, &threadResult);
+  int res = ::pthread_join(threadHandle, &threadResult);
   if (res != 0) {
     throw Exception("could not join thread", __FILE__, __LINE__);
   }

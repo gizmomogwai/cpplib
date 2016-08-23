@@ -1,5 +1,4 @@
-#ifndef _OutputStream_h_
-#define _OutputStream_h_
+#pragma once
 
 #include <io/IOException.h>
 #include <lang/DataBuffer.h>
@@ -33,7 +32,7 @@ class OutputStream {
 		 *
 		 * @exception Exception wenn was nicht klappt.
 		 */
-		virtual void write(int b) throw (Exception) = 0;
+		virtual void write(int b) throw (IOException) = 0;
 
     /** Schreibt den ganzen Datenpuffer. 
      *
@@ -51,8 +50,7 @@ class OutputStream {
 		 *
 		 * @exception Exception wenn was nicht klappt.
      */
-    virtual void write(DataBuffer* b, int offset, int length) 
-      throw(IOException) {
+    virtual void write(DataBuffer* b, int offset, int length) throw(IOException) {
       unsigned char* data = (unsigned char*)b->getData(offset);
       for (int i=0; i<length; i++) {
         write(*data++);
@@ -68,5 +66,3 @@ class OutputStream {
     }
 
 };
-
-#endif // _OutputStream_h_

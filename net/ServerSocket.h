@@ -47,6 +47,8 @@ class ServerSocket {
   
   /** Wartet auf ein connect und liefert den KommunikationsSocket zurueck.
    *
+   * @param sendFlags optional flags for the output stream.
+   *
    * @return Socket* gelieferter Socket.
    */
   Socket* accept();
