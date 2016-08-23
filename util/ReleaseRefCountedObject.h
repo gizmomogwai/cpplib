@@ -1,10 +1,7 @@
 #ifndef _ReleaseRefCountedObject_h_
 #define _ReleaseRefCountedObject_h_
 
-#include <util/UtilApi.h>
-
-
-template <class T> class UTIL_API ReleaseRefCountedObject {
+template <class T> class ReleaseRefCountedObject {
 	public:
 	  ReleaseRefCountedObject() : reference(0) {
 	  }

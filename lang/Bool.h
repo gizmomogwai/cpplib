@@ -1,5 +1,4 @@
-#ifndef _Bool_h_
-#define _Bool_h_
+#pragma once
 
 #include <string>
 
@@ -17,7 +16,7 @@
  *
  * @author cKgS, $Author: gizmo $
  */
-class LANG_API Bool {
+class Bool {
 
   public:
     /** Parst einen string in ein bool.
@@ -31,8 +30,7 @@ class LANG_API Bool {
     static bool parseBool(const std::string* in) {
 
       if (in == 0) {
-
-        throw(Exception("Float::parseFloat in == 0", __FILE__, __LINE__));
+        throw Exception("Float::parseFloat in == 0", __FILE__, __LINE__);
       }
 
       bool res = false;
@@ -44,5 +42,3 @@ class LANG_API Bool {
     }
 
 };
-
-#endif // _Bool_h_

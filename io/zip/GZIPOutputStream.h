@@ -1,9 +1,6 @@
 #ifndef _GZIPOutputStream_h_
 #define _GZIPOutputStream_h_
 
-#include <io/IoApi.h>
-
-
 #include <io/OutputStream.h>
 #include <io/IOException.h>
 #include <io/zip/DeflaterOutputStream.h>
@@ -24,7 +21,7 @@
  *
  * @author cK, $Author: koestlin $
  */
-class IO_API GZIPOutputStream : public DeflaterOutputStream {
+class GZIPOutputStream : public DeflaterOutputStream {
 
   public: 
     /** Erzeugt einen GZIPOutputStream.

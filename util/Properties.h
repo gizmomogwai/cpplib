@@ -1,10 +1,6 @@
 #ifndef _Properties_h_
 #define _Properties_h_
 
-#include <util/UtilApi.h>
-
-#include <pragmaincludes.h>
-
 #include <string>
 #include <map>
 
@@ -42,7 +38,7 @@
  *
  * @author cK, $Author: gizmo $
  */
-class UTIL_API Properties {
+class Properties {
   
  public:
   /** Erzeugt neue Properties. */

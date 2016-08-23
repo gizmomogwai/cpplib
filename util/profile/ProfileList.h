@@ -1,8 +1,6 @@
 #ifndef _ProfileList_h_
 #define _ProfileList_h_
 
-#include <util/UtilApi.h>
-
 #include <list>
 #include <util/profile/Profile.h>
 #include <util/ListIterator.h>
@@ -23,7 +21,7 @@ class ProfileList;
  *
  * @author cK $Author: gizmo $
  */
-class UTIL_API ProfileIterator : public ListIterator<Profile*> {
+class ProfileIterator : public ListIterator<Profile*> {
 
   public:
 	/** Erzeugt einen neuen ProfileIterator.

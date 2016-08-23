@@ -1,5 +1,4 @@
-#ifndef _SocketInputStream_h_
-#define _SocketInputStrean_h_
+#pragma once
 
 #include <net/Socket.h>
 #include <io/InputStream.h>
@@ -52,5 +51,3 @@ class SocketInputStream : public InputStream {
   Socket* s;
   
 };
-
-#endif // _SocketInputStream_h_

@@ -3,8 +3,8 @@ cxx_configuration do
     :DEFINES => ['OSX']
   }
 
-  source_lib("lang",
+  static_lib("lang",
              :sources => FileList['**/*.cpp'].delete_if{|f|f.index('WIN32')},
              :includes => ['..'],
-             :toolchain => Provider.modify_cpp_compiler("GCC", flags))
+             :toolchain => Provider.modify_cpp_compiler("gcc", flags))
 end

@@ -1,8 +1,6 @@
 #ifndef _ZipEncryptedInputStream_h_
 #define _ZipEncryptedInputStream_h_
 
-#include <io/IoApi.h>
-
 #include <assert.h>
 
 #include <string>
@@ -27,7 +25,7 @@
  *
  * @author cK $Author: koestlin $
  */
-class IO_API ZipEncryptedInputStream : public FilterInputStream {
+class ZipEncryptedInputStream : public FilterInputStream {
 
   public:
     /** Erzeugt den InputStream indem zunaechste die 

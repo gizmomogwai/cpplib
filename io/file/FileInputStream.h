@@ -1,8 +1,6 @@
 #ifndef _FileInputStream_h_
 #define _FileInputStream_h_
 
-#include <io/IoApi.h>
-
 #include <io/IOException.h>
 
 #include <io/InputStream.h>
@@ -24,7 +22,7 @@ class File;
  *
  * @version $Revision: 1.2 $, $Date: 2001/05/31 15:19:22 $
  */
-class IO_API FileInputStream : public InputStream {
+class FileInputStream : public InputStream {
   
  public:
   

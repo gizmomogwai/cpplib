@@ -1,7 +1,4 @@
-#ifndef _IOException_h_
-#define _IOException_h_
-
-#include <io/IoApi.h>
+#pragma once
 
 #include <lang/Exception.h>
 
@@ -18,7 +15,7 @@
  *
  * @author cK, $Author: koestlin $
  */
-class IO_API IOException : public Exception {  
+class IOException : public Exception {  
 
  public:
 	/** Erzeugt eine neue IOException.
@@ -40,5 +37,3 @@ class IO_API IOException : public Exception {
   }
 
 };
-
-#endif // _IOException_h_

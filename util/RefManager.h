@@ -1,10 +1,6 @@
 #ifndef _RefManager_h_
 #define _RefManager_h_
 
-#include <util/UtilApi.h>
-
-#include <pragmaincludes.h>
-
 class RefCountedObject;
 
 #include <iostream>
@@ -32,7 +28,7 @@ class RefCountedObject;
  *
  * @author cK, $Author: gizmo $
  */
-class UTIL_API RefManager {
+class RefManager {
 
  public:
     

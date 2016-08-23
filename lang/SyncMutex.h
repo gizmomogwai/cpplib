@@ -1,5 +1,4 @@
-#ifndef _SyncMutex_h_
-#define _SyncMutex_h_
+#pragma once
 
 #include <lang/Event.h>
 
@@ -84,5 +83,3 @@ class SyncMutex {
 #endif
 
 };
-
-#endif

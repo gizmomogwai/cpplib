@@ -1,7 +1,4 @@
-#ifndef _FilterOutputStream_h_
-#define _FilterOutputStream_h_
-
-#include <io/IoApi.h>
+#pragma once
 
 #include <io/OutputStream.h>
 #include <lang/DataBuffer.h>
@@ -28,7 +25,7 @@
  *
  * @author cK, $Author: koestlin $
  */
-class IO_API FilterOutputStream : public OutputStream {
+class FilterOutputStream : public OutputStream {
 
  public:
 	/** Erzeugt einen neuen FilterOutputStream auf einem zugrundeliegenden
@@ -60,5 +57,3 @@ class IO_API FilterOutputStream : public OutputStream {
 	bool handleStream;
 
 };
-
-#endif // _FilterOutputStream_h_

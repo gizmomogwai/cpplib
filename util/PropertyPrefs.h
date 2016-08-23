@@ -1,8 +1,6 @@
 #ifndef _PropertyPrefs_h_
 #define _PropertyPrefs_h_
 
-#include <util/UtilApi.h>
-
 #include <string>
 
 #include <io/DataInputStream.h>
@@ -32,7 +30,7 @@
  *
  * @author cK, $Author: gizmo $
  */
-class UTIL_API PropertyPrefs : public Preferences {
+class PropertyPrefs : public Preferences {
   
   public:
     /** Liest die Preferences ein. 

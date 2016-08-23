@@ -1,7 +1,4 @@
-#ifndef _StopWatch_h_
-#define _StopWatch_h_
-
-#include <lang/LangApi.h>
+#pragma once
 
 /** Stopuhr die GetTickCount verwendet.
  *
@@ -15,7 +12,7 @@
  *
  * @author cK, $Author: gizmo $
  */
-class LANG_API StopWatch {
+class StopWatch {
  public:
 	virtual ~StopWatch() {
 	}
@@ -34,6 +31,3 @@ class LANG_API StopWatch {
 	virtual double getDelta() = 0;
 
 };
-
-
-#endif // _StopWatch_h_

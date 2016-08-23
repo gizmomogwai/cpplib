@@ -1,10 +1,6 @@
 #ifndef _RarArchive_h_
 #define _RarArchive_h_
 
-#include <io/IoApi.h>
-
-#include <windowsinclude.h>
-
 #include <unrar.h>
 
 #include <string>
@@ -16,7 +12,7 @@ class InputStream;
  * Problem ist, dass man keinen wahlfreien zugriff auf einzelne dateien in
  * dem rar-archive hat. Insofern ist das uninteressant.
  */
-class IO_API RarArchive {
+class RarArchive {
 
 public:
 

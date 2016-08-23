@@ -1,8 +1,6 @@
 #ifndef _ZipCentralDirectory_h_
 #define _ZipCentralDirectory_h_
 
-#include <io/IoApi.h>
-
 #include <string>
 #include <sstream>
 #include <list>
@@ -33,7 +31,7 @@
  *
  * @version $Revision: 1.1 $ $Date: 2001/07/16 09:58:52 $
  */
-class IO_API ZipCentralDirectory {
+class ZipCentralDirectory {
   public:
     /** Erzeugt das Directory fuer ein Zip-File.
      *

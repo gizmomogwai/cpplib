@@ -20,21 +20,21 @@ void DataBuffer::setData(void* _data, int _length, bool _ownMem) {
 
 void* DataBuffer::getData() throw (Exception) {
   if (data == 0) {
-    throw(Exception("DataBuffer::getData() - data not set", 
-                    __FILE__, __LINE__));
+    throw Exception("DataBuffer::getData() - data not set", 
+                    __FILE__, __LINE__);
   }
-  return(data);
+  return data;
 }
 
 void* DataBuffer::getData(unsigned int offset) throw (Exception) {
-  if ((offset < 0) || (offset >= length)) { // eignetlich >=
-    throw(Exception("DataBuffer::getData(int) - out of range", 
-                    __FILE__, __LINE__));
+  if (offset >= length) { // eignetlich >=
+    throw Exception("DataBuffer::getData(int) - out of range", 
+                    __FILE__, __LINE__);
   }
   unsigned char* help = (unsigned char*)getData();
   help += offset;
 
-  return(help);
+  return help;
 }
 
 unsigned int DataBuffer::getSize() {

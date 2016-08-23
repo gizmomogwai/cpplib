@@ -1,5 +1,4 @@
-#ifndef _System_h_
-#define _System_h_
+#pragma once
 
 #ifdef WIN32
   #include <windows.h>
@@ -39,6 +38,3 @@ class System {
 #endif
   
 };
-
-
-#endif // _System_h_

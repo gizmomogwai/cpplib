@@ -1,5 +1,4 @@
-#ifndef _SysError_h_
-#define _SysError_h_
+#pragma once
 
 #include <string>
 #include <lang/Exception.h>
@@ -46,5 +45,3 @@ class SysError {
   static void throwDetailedException(std::string base) throw (Exception);
 
 };
-
-#endif // _SysError_h_

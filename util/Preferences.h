@@ -1,8 +1,6 @@
 #ifndef _Preferences_h_
 #define _Preferences_h_
 
-#include <util/UtilApi.h>
-
 #include <string>
 #include <util/NoSuchElementException.h>
 
@@ -26,7 +24,7 @@
  *
  * @author cK, $Author: gizmo $
  */
-class UTIL_API Preferences {
+class Preferences {
 
  public:
 

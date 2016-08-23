@@ -1,8 +1,6 @@
 #ifndef _ZipEntry_h_
 #define _ZipEntry_h_
 
-#include <io/IoApi.h>
-
 #include <lang/Exception.h>
 #include <io/file/File.h>
 #include <io/file/FileInputStream.h>
@@ -25,7 +23,7 @@
  *
  * @author cK $Author: koestlin $
  */
-class IO_API ZipEntry {
+class ZipEntry {
 	
   public:
     /** Erzeugt aus einer headerbeschreibung und einem File den

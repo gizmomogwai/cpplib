@@ -1,8 +1,6 @@
 #ifndef _ProfileObject_h_
 #define _ProfileObject_h_
 
-#include <util/UtilApi.h>
-
 #include <util/profile/Profiler.h>
 #include <string>
 
@@ -19,7 +17,7 @@
  *
  * @author cK $Author: gizmo $
  */
-class UTIL_API ProfileObject {
+class ProfileObject {
 
   public:
     /** Erzeugt ein ProfileObject mit einem Namen.

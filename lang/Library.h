@@ -1,7 +1,4 @@
-#ifndef Library_h_
-#define Library_h_
-
-#include <lang/LangApi.h>
+#pragma once
 
 #include <string>
 #include <lang/Exception.h>
@@ -12,7 +9,7 @@
   #include <windows.h> 
 #endif
 
-class LANG_API Library {
+class Library {
 
   public:
     Library(std::string& fileName) throw (Exception);  
@@ -27,5 +24,3 @@ class LANG_API Library {
 	  #endif
     
 };
-
-#endif

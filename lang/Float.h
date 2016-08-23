@@ -1,7 +1,4 @@
-#ifndef _Float_h_
-#define _Float_h_
-
-#include <lang/LangApi.h>
+#pragma once
 
 #include <string>
 #include <sstream>
@@ -22,7 +19,7 @@
  *
  * @author cK, $Author: gizmo $
  */
-class LANG_API Float {
+class Float {
   
  public:
   /** Parst ein float.
@@ -46,5 +43,3 @@ class LANG_API Float {
 
   
 };
-
-#endif // _Float_h_

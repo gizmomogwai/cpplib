@@ -1,5 +1,4 @@
-#ifndef _ByteDataBuffer_h_
-#define _ByteDataBuffer_h_
+#pragma once
 
 #include <lang/DataBuffer.h>
 
@@ -9,7 +8,7 @@
  *
  * @author cK, $Author: gizmo $
  */
-class LANG_API ByteDataBuffer : public DataBuffer {
+class ByteDataBuffer : public DataBuffer {
 
  public:
 
@@ -30,5 +29,3 @@ class LANG_API ByteDataBuffer : public DataBuffer {
   virtual ~ByteDataBuffer();
 		
 };
-
-#endif

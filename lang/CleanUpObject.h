@@ -1,7 +1,4 @@
-#ifndef _CleanUpObject_h_
-#define _CleanUpObject_h_
-
-#include <lang/LangApi.h>
+#pragma once
 
 /** Templateclasse um Pointer automatisch aufzuraeumen.
  *
@@ -19,7 +16,7 @@
  *
  * @author cK, $Author: gizmo $
  */
-template <class T> class LANG_API CleanUpObject {
+template <class T> class CleanUpObject {
 
  public:
 	/** Erzeugt das Aufraeumobject fuer ein gepointertes object.
@@ -67,5 +64,3 @@ template <class T> class LANG_API CleanUpObject {
 	T* toDelete;    
       
 };
-
-#endif // _CleanUpObject_h_

@@ -1,8 +1,6 @@
 #ifndef _DebugTools_h_
 #define _DebugTools_h_
 
-#include <util/UtilApi.h>
-
 #ifdef WIN32
   #include <windows.h>
 #endif
@@ -19,7 +17,7 @@
  *
  * @author cK, $Author: gizmo $
  */
-class UTIL_API DebugTools {
+class DebugTools {
   
  public:
 	/** Gibt den letzen Systemfehler in einer Messagebox aus.

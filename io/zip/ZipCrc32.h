@@ -1,8 +1,6 @@
 #ifndef _ZipCrc32_h_
 #define _ZipCrc32_h_
 
-#include <io/IoApi.h>
-
 #include <io/zip/Checksum.h>
 
 /** Spezieller Crc um die encryptionkeys zu updaten.
@@ -21,7 +19,7 @@
  *
  * @author cK $Author: koestlin $
  */
-class IO_API ZipCrc32 : public Checksum {
+class ZipCrc32 : public Checksum {
 
   public:
   	/** Tabelle. */

@@ -1,8 +1,6 @@
 #ifndef _Deflater_h_
 #define _Deflater_h_
 
-#include <io/IoApi.h>
-
 #include <lang/DataBuffer.h>
 #include <zlib.h>
 
@@ -24,7 +22,7 @@
  *
  * @author cK, $Author: koestlin $
  */
-class IO_API Deflater {
+class Deflater {
   public:
     /// Konstante fall deflated
     static const int DEFLATED;

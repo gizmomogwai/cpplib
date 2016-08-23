@@ -1,5 +1,4 @@
-#ifndef _ChunkedHTTPInputStream_h_
-#define _ChunkedHTTPInputStream_h_
+#pragma once
 
 #include <lang/DataBuffer.h>
 #include <lang/Long.h>
@@ -117,5 +116,3 @@ class ChunkedHTTPInputStream : public FilterInputStream {
     }
 
 };
-
-#endif // _ChunkedHTTPInputStream_h_

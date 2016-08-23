@@ -1,5 +1,4 @@
-#ifndef _SocketOutputStream_h_
-#define _SocketOutputStrean_h_
+#pragma once
 
 #include <net/Socket.h>
 #include <io/OutputStream.h>
@@ -53,5 +52,3 @@ class SocketOutputStream : public OutputStream {
   Socket* s;
 
 };
-
-#endif // _SocketOutputStream_h_

@@ -1,8 +1,6 @@
 #ifndef _SyncedList_h_
 #define _SyncedList_h_
 
-#include <util/UtilApi.h>
-
 #include <list>
 #include <lang/Mutex.h>
 
@@ -23,7 +21,7 @@
  *
  * @author cK, $Author: gizmo $
  */
-template <class T> class UTIL_API SyncedList : public std::list<T>, public Mutex {
+template <class T> class SyncedList : public std::list<T>, public Mutex {
 	
  public:
 	/** Erzeugt eine neue Liste.

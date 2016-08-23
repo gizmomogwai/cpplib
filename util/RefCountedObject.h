@@ -1,10 +1,6 @@
 #ifndef _RefCountedObject_h_
 #define _RefCountedObject_h_
 
-#include <util/UtilApi.h>
-
-#include <pragmaincludes.h>
-
 #include <iostream>
 
 #include <lang/Exception.h>
@@ -35,7 +31,7 @@
  *
  * @author cK, $Author: gizmo $
  */
-class UTIL_API RefCountedObject {
+class RefCountedObject {
   
   public:
     /** Erzeugt ein neues Referencecounted-OIbject. Und setzt dessen 

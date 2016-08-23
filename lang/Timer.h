@@ -1,5 +1,4 @@
-#ifndef _Timer_h_
-#define _Timer_h_
+#pragma once
 
 #include <lang/Thread.h>
 #include <lang/Event.h>
@@ -64,5 +63,3 @@ class Timer : public Thread, public Event {
 	bool stop;
 	
 };
-
-#endif // _Timer_h_

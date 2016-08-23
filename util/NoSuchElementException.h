@@ -1,8 +1,6 @@
 #ifndef _NoSuchElementException_h_
 #define _NoSuchElementException_h_
 
-#include <util/UtilApi.h>
-
 #include <lang/Exception.h>
 
 /** Exception falls ein eigentlich erwartetes element nicht 
@@ -20,7 +18,7 @@
  *
  * @author cK, $Author: gizmo $
  */
-class UTIL_API NoSuchElementException : public Exception {
+class NoSuchElementException : public Exception {
   
  public: 
 	/** Erzeugt eine Exception mit Fehlermessage.

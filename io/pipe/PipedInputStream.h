@@ -1,8 +1,6 @@
 #ifndef _PipedInputStream_h_
 #define _PipedInputStream_h_
 
-#include <io/IoApi.h>
-
 #include <lang/DataBuffer.h>
 #include <io/InputStream.h>
 #include <io/IOException.h>
@@ -27,7 +25,7 @@
  *
  * @author cK, $Author: koestlin $
  */
-class IO_API PipedInputStream : public InputStream {  
+class PipedInputStream : public InputStream {  
 
   public:
     /** Erzeugt einen PipedInputStream.

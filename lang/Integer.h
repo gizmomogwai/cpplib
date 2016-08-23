@@ -1,5 +1,4 @@
-#ifndef _Integer_h_
-#define _Integer_h_
+#pragma once
 
 #include <string>
 #include <sstream>
@@ -41,5 +40,3 @@ class Integer {
   static const int MAX_VALUE;
   
 };
-
-#endif // _Integer_h_

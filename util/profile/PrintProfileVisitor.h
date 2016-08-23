@@ -1,8 +1,6 @@
 #ifndef _PrintProfileVisitor_h_
 #define _PrintProfileVisitor_h_
 
-#include <util/UtilApi.h>
-
 #include <util/profile/ProfileVisitor.h>
 #include <sstream>
 
@@ -18,7 +16,7 @@
  *
  * @author cK $Author: gizmo $
  */
-class UTIL_API PrintProfileVisitor : public ProfileVisitor {
+class PrintProfileVisitor : public ProfileVisitor {
 
   public:
 

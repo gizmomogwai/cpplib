@@ -1,7 +1,4 @@
-#ifndef _ByteArrayInputStream_h_
-#define _ByteArrayInputStream_h_
-
-#include <io/IoApi.h>
+#pragma once
 
 #include <io/InputStream.h>
 
@@ -27,7 +24,7 @@
  *
  * @author cK, $Author: koestlin $
  */
-class IO_API ByteArrayInputStream : public InputStream {
+class ByteArrayInputStream : public InputStream {
   
  public:
   /** Erzeugt einen neuen ByteArrayInputStream auf dem angegebenen
@@ -70,5 +67,3 @@ class IO_API ByteArrayInputStream : public InputStream {
   int available;
   
 };
-
-#endif // _ByteArrayInputStream_h_

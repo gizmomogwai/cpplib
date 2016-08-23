@@ -1,7 +1,4 @@
-#ifndef _DataBuffer_h_
-#define _DataBuffer_h_
-
-#include <lang/LangApi.h>
+#pragma once
 
 #include <lang/Exception.h>
 
@@ -11,7 +8,7 @@
  *
  * @author cK, $Author: gizmo $
  */
-class LANG_API DataBuffer {
+class DataBuffer {
 
  public:
 	/** Erzeugt einen neuen Datenpuffer.
@@ -75,5 +72,3 @@ class LANG_API DataBuffer {
 	unsigned int length;
 
 };
-
-#endif // _DataBuffer_h_

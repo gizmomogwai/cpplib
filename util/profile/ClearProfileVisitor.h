@@ -1,8 +1,6 @@
 #ifndef _ClearProfileVisitor_h_
 #define _ClearProfileVisitor_h_
 
-#include <util/UtilApi.h>
-
 #include <util/profile/ProfileVisitor.h>
 
 /** ProfileVisitor, der die Totalzeiten in den Profiles loescht.
@@ -17,7 +15,7 @@
  *
  * @author cK $Author: gizmo $
  */
-class UTIL_API ClearProfileVisitor : public ProfileVisitor {
+class ClearProfileVisitor : public ProfileVisitor {
 
   public:
 

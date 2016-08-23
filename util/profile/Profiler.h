@@ -1,8 +1,6 @@
 #ifndef _Profiler_h_
 #define _Profiler_h_
 
-#include <util/UtilApi.h>
-
 #include <lang/HPStopWatch.h>
 #include <list>
 #include <lang/Exception.h>
@@ -28,7 +26,7 @@
  *
  * @author cK $Author: gizmo $
  */
-class UTIL_API Profiler {
+class Profiler {
 
   public:
 

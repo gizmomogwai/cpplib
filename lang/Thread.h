@@ -1,5 +1,4 @@
-#ifndef _Thread_h_
-#define _Thread_h_
+#pragma once
 
 #ifdef WIN32
   #ifdef _AFX
@@ -15,7 +14,6 @@
 #endif // LINUX
 
 
-#include <lang/LangApi.h>
 #include <lang/Runnable.h>
 #include <lang/Exception.h>
 
@@ -39,7 +37,7 @@
  *
  * @author cK, $Author: gizmo $
  */
-class LANG_API Thread : public Runnable {
+class Thread : public Runnable {
   
  public:
   /** Erzeugt einen neuen Thread. */
@@ -145,5 +143,3 @@ class LANG_API Thread : public Runnable {
 #endif
 
 };
-
-#endif // _Thread_h_

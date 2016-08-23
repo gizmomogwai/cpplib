@@ -1,8 +1,6 @@
 #ifndef _File_h_
 #define _File_h_
 
-#include <io/IoApi.h>
-
 #include <stdio.h>
 #include <string>
 #include <util/ListIterator.h>
@@ -39,7 +37,7 @@
  *
  * @author cK, $Author: koestlin $
  */
-class IO_API File {
+class File {
 
  public:
 	/** Erzeugt ein neues File.

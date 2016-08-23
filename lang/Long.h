@@ -1,7 +1,4 @@
-#ifndef _Long_h_
-#define _Long_h_
-
-#include <lang/LangApi.h>
+#pragma once
 
 #include <string>
 #include <sstream>
@@ -23,7 +20,7 @@
  *
  * @author cK, $Author: gizmo $
  */
-class LANG_API Long {
+class Long {
 
  public:
   /** Parst ein long zu einer bestimmten basis.
@@ -43,5 +40,3 @@ class LANG_API Long {
   }
       
 };
-
-#endif // _Long_h_

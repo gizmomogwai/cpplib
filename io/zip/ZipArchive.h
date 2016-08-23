@@ -1,8 +1,6 @@
 #ifndef _ZipArchive_h_
 #define _ZipArchive_h_
 
-#include <io/IoApi.h>
-
 #include <string>
 
 class File;
@@ -26,7 +24,7 @@ class InputStream;
  *
  * @author cK, $Author: koestlin $
  */
-class IO_API ZipArchive {
+class ZipArchive {
 
   public:
     /** Bereitet ein ZipArchive mit dem File f vor.

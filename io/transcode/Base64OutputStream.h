@@ -1,8 +1,6 @@
 #ifndef _Base64OutputStream_h_
 #define _Base64OutputStream_h_
 
-#include <io/IoApi.h>
-
 #include <io/FilterOutputStream.h>
 
 /** Filteroutputstream, der eine mim64 kodierung erzeugt.
@@ -26,7 +24,7 @@
  *
  * @author cK, $Author: koestlin $
  */
-class IO_API Base64OutputStream : public FilterOutputStream {
+class Base64OutputStream : public FilterOutputStream {
   
  public:
   /** Erzeugt den outputstream.

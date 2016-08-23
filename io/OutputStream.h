@@ -1,8 +1,6 @@
 #ifndef _OutputStream_h_
 #define _OutputStream_h_
 
-#include <io/IoApi.h>
-
 #include <io/IOException.h>
 #include <lang/DataBuffer.h>
 
@@ -23,7 +21,7 @@
  *
  * @author cK, $Author: koestlin $
  */
-class IO_API OutputStream {
+class OutputStream {
 
 	public:
     /** Raeumt auf. */

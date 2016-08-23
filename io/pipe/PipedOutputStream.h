@@ -1,8 +1,6 @@
 #ifndef _PipedOutputStream_h_
 #define _PipedOutputStream_h_
 
-#include <io/IoApi.h>
-
 #include <lang/DataBuffer.h>
                          
 #include <io/OutputStream.h>                         
@@ -28,7 +26,7 @@
  *
  * @author cK, $Author: koestlin $
  */
-class IO_API PipedOutputStream : public OutputStream {
+class PipedOutputStream : public OutputStream {
   
   public:  
     /** Erzeugt einen neuen PipedOutputStream.

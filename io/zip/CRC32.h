@@ -1,8 +1,6 @@
 #ifndef _CRC32_h_
 #define _CRC32_h_
 
-#include <io/IoApi.h>
-
 #include <io/zip/Checksum.h>
 #include <lang/DataBuffer.h>
 
@@ -20,7 +18,7 @@
  *
  * @author cK, $Author: koestlin $
  */
-class IO_API CRC32 : public Checksum {
+class CRC32 : public Checksum {
 
  public:
 	/** Erzeugt ein neues Checksummenobjekt. */

@@ -1,8 +1,6 @@
 #ifndef _SequenceInputStream_h_
 #define _SequenceInputStream_h_
 
-#include <io/IoApi.h>
-
 #include <io/InputStream.h>
 #include <list>
 
@@ -23,7 +21,7 @@
  *
  * @author cK, $Author: koestlin $
  */
-class IO_API SequenceInputStream : public InputStream {
+class SequenceInputStream : public InputStream {
   
  public:
   /** Erzeugt einen neuen InputStream durch aneinanderhaengen von 2

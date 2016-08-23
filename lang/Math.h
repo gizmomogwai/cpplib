@@ -1,5 +1,4 @@
-#ifndef _Math_h_
-#define _Math_h_
+#pragma once
 
 #include <stdlib.h>
 
@@ -48,6 +47,3 @@ class Math {
     }
   
 };
-
-
-#endif // _Math_h_

@@ -1,7 +1,4 @@
-#ifndef _HTTPResponce_h_
-#define _HTTPResponce_h_
-
-#include <pragmaincludes.h>
+#pragma once
 
 #include <io/InputStream.h>
 #include <io/DataInputStream.h>
@@ -120,6 +117,3 @@ class FirstHTTPLine {
   int result;
   
 };
-
-
-#endif // _HTTPResponce_h_

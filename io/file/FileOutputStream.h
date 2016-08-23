@@ -1,8 +1,6 @@
 #ifndef _FileOutputStream_h_
 #define _FileOutputStream_h_
 
-#include <io/IoApi.h>
-
 #include <string>
 
 #include <stdio.h>
@@ -26,7 +24,7 @@ class File;
  *
  * @version $Revision: 1.2 $, $Date: 2001/09/13 13:11:10 $
  */
-class IO_API FileOutputStream : public OutputStream {
+class FileOutputStream : public OutputStream {
 
  public:
   /** Erzeugt einen neuen FileOutputStream.

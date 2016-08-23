@@ -1,7 +1,4 @@
-#ifndef _Runnable_h_
-#define _Runnable_h_
-
-#include <lang/LangApi.h>
+#pragma once
 
 /** Oberklasse aller Klassen die von Threads ausgefuehrt werden koennen.
  *
@@ -15,7 +12,7 @@
  *
  * @author cK, $Author: gizmo $
  */
-class LANG_API Runnable {
+class Runnable {
 
 public:
 	/** Raeumt auf. */
@@ -28,5 +25,3 @@ public:
 	virtual void run() = 0;
 
 };
-
-#endif // _Runnable_h_

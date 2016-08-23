@@ -1,8 +1,6 @@
 #ifndef _StringTools_h_
 #define _StringTools_h_
 
-#include <util/UtilApi.h>
-
 #include <string>
 
 /** Da systemunabhaengig abgegangen werden soll muessen
@@ -20,7 +18,7 @@
  *
  * @author cK, $Author: gizmo $
  */
-class UTIL_API StringTools {
+class StringTools {
 
  public:
   /** schneidet spaces und tabs vom anfang und end ab!

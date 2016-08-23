@@ -1,7 +1,6 @@
 #ifndef _StringTokenizer_h_
 #define _StringTokenizer_h_
 
-#include <util/UtilApi.h>
 #include <string>
 #include <memory>
 
@@ -25,7 +24,7 @@
  *
  * @author cK, $Author: gizmo $
  */
-class UTIL_API StringTokenizer {
+class StringTokenizer {
   
  public:
   /** Erzeugt einen Stringtokenizer.

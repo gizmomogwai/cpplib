@@ -1,8 +1,6 @@
 #ifndef _ProfileStack_h_
 #define _ProfileStack_h_
 
-#include <util/UtilApi.h>
-
 #include <stack>
 class Profile;
 
@@ -18,7 +16,7 @@ class Profile;
  *
  * @author cK $Author: gizmo $
  */
-class UTIL_API ProfileStack {
+class ProfileStack {
 
   public:
 	/** Erzeugt einen neuen Stack. */

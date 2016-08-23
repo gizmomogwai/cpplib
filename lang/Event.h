@@ -1,5 +1,4 @@
-#ifndef _Event_h_
-#define _Event_h_
+#pragma once
 
 #ifdef WIN32
   #ifdef _AFX
@@ -78,6 +77,3 @@ class Event {
 #endif
 
 };
-
-
-#endif // _Event_h_

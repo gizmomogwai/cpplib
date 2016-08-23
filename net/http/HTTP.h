@@ -1,7 +1,4 @@
-#ifndef _HTTP_h_
-#define _HTTP_h_
-
-#include <pragmaincludes.h>
+#pragma once
 
 #include <string>
 #include <list>
@@ -123,5 +120,3 @@ class HTTP {
   HTTPResponce* responce;
   
 };
-
-#endif // _HTTP_h_

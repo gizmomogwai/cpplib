@@ -1,7 +1,4 @@
-#ifndef _LittleEndianDataOutputStream_h_
-#define _LittleEndianDataOutputStream_h_
-
-#include <io/IoApi.h>
+#pragma once
 
 #include <io/DataOutputStream.h>
 
@@ -17,7 +14,7 @@
  *
  * @author cK, $Author: koestlin $
  */
-class IO_API LittleEndianDataOutputStream : public DataOutputStream {
+class LittleEndianDataOutputStream : public DataOutputStream {
 
  public:
 	/** Erzeugt einen neuen LittleEndianDataOutputStream.
@@ -91,5 +88,3 @@ class IO_API LittleEndianDataOutputStream : public DataOutputStream {
 	DataBuffer* buffer;		
 	
 };
-
-#endif // _LittleEndianDataOutputStream_h_

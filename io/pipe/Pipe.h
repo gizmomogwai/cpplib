@@ -1,8 +1,6 @@
 #ifndef _Pipe_h_
 #define _Pipe_h_
 
-#include <io/IoApi.h>
-
 #include <io/InputStream.h>
 #include <io/OutputStream.h>
 
@@ -44,7 +42,7 @@ class PipedOutputStream;
  *
  * @author cK, $Auhtor$
  */
-class IO_API Pipe {
+class Pipe {
 
   friend class PipedInputStream;
   friend class PipedOutputStream;

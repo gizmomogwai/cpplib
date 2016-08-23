@@ -1,5 +1,4 @@
-#ifndef _Time_h_
-#define _Time_h_
+#pragma once
 
 /** Klasse um moeglichst genaue Zeitinformationen vom System zu erfragen.
  *
@@ -33,6 +32,4 @@ private:
 	double f;
 
 };
-
-#endif // _Time_h_
 

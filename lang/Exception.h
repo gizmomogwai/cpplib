@@ -1,7 +1,4 @@
-#ifndef _Exception_h_
-#define _Exception_h_
-
-#include <lang/LangApi.h>
+#pragma once
 
 #include <string>
 #include <sstream>
@@ -18,7 +15,7 @@
  *
  * @author cK, $Author: gizmo $
  */
-class LANG_API Exception {
+class Exception {
 
  public:
 
@@ -73,5 +70,3 @@ class LANG_API Exception {
 	std::string msg;
 
 };
-
-#endif // _Exception_h_

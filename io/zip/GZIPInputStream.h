@@ -1,9 +1,6 @@
 #ifndef GZIPInputStream_h_
 #define GZIPInputStream_h_
 
-#include <io/IoApi.h>
-
-
 #include <io/zip/InflaterInputStream.h>
 #include <lang/DataBuffer.h>
 #include <io/zip/CRC32.h>
@@ -24,7 +21,7 @@
  *
  * @author cK, $Author: koestlin $
  */
-class IO_API GZIPInputStream : public InflaterInputStream {
+class GZIPInputStream : public InflaterInputStream {
   
  public:
   /** Erzeugt einen neuen GZIPInputStream auf dem zugrundeliegenden

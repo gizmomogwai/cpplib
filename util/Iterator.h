@@ -1,8 +1,6 @@
 #ifndef _Iterator_h_
 #define _Iterator_h_
 
-#include <util/UtilApi.h>
-
 /** Templateklasse (interface) fuer Iteratoren.
  *
  * <p>
@@ -18,7 +16,7 @@
  * @author cK, $Author: gizmo $
  */
 template <class T>
-class UTIL_API Iterator {
+class Iterator {
  public:
   
   /** Raeumt auf. */

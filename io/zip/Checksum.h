@@ -1,8 +1,6 @@
 #ifndef _Checksum_h_
 #define _Checksum_h_
 
-#include <io/IoApi.h>
-
 #include <lang/DataBuffer.h>
 
 /** Schnittstelle fuer Checksummenalgorithmen.
@@ -17,7 +15,7 @@
  *
  * @author cK, $Auzthor$
  */
-class IO_API Checksum {
+class Checksum {
 	
 	public:
 

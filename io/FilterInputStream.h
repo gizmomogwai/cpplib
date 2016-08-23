@@ -1,7 +1,4 @@
-#ifndef _FilterInputStream_h_
-#define _FilterInputStream_h_
-
-#include <io/IoApi.h>
+#pragma once
 
 #include <io/InputStream.h>
 
@@ -27,7 +24,7 @@
  *
  * @author cK, $Author: koestlin $
  */
-class IO_API FilterInputStream : public InputStream {
+class FilterInputStream : public InputStream {
 
  public:
   /** Erzeugt einen neuen FilterInputStream auf einem zugrundeliegenden
@@ -55,6 +52,4 @@ class IO_API FilterInputStream : public InputStream {
   bool handleStream;
   
 };
-
-#endif // _FilterInputStream_h_
 

@@ -1,9 +1,6 @@
 #ifndef _DeflaterOutputStream_h_
 #define _DeflaterOutputStream_h_
 
-#include <io/IoApi.h>
-
-
 #include <io/FilterOutputStream.h>
 #include <io/OutputStream.h>
 #include <io/IOException.h>
@@ -29,7 +26,7 @@
  *
  * @author cK, $Author: koestlin $
  */
-class IO_API DeflaterOutputStream : public FilterOutputStream {
+class DeflaterOutputStream : public FilterOutputStream {
 
   public:
     /** Erzeugt einen neuen DeflaterOutputStream.

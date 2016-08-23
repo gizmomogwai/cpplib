@@ -1,7 +1,4 @@
-#ifndef _ByteArrayOutputStream_h_
-#define _ByteArrayOutputStream_h_
-
-#include <io/IoApi.h>
+#pragma once
 
 #include <io/OutputStream.h>
 #include <lang/ByteDataBuffer.h>
@@ -18,7 +15,7 @@
  *
  * @author cK, $Author: koestlin $
  */
-class IO_API ByteArrayOutputStream : public OutputStream {
+class ByteArrayOutputStream : public OutputStream {
 
  public:
   /** Erzeugt einen neuen OutputStream mit initialer groesse.
@@ -64,5 +61,3 @@ class IO_API ByteArrayOutputStream : public OutputStream {
   void assertSpace(unsigned int size);
   
 };
-
-#endif // _ByteArrayInputStream_h_

@@ -1,10 +1,7 @@
 #ifndef _ZipFileHeader_h_
 #define _ZipFileHeader_h_
 
-#include <io/IoApi.h>
-
 #include <string>
-
 #include <io/DataInputStream.h>
 
 /** Header eines ZipEntrys im CentralDirectory.
@@ -20,7 +17,7 @@
  *
  * @author cK, $Author: koestlin $
  */
-class IO_API ZipFileHeader {
+class ZipFileHeader {
   public:
     /** Directoryeintrag eines ZipEintrages.
      *

@@ -1,13 +1,11 @@
 #ifndef SeekableInputStream_h_
 #define SeekableInputStream_h_
 
-#include <io/IoApi.h>
-
 class ByteArrayOutputStream;
 class ByteDataBuffer;
 #include <io/FilterInputStream.h>
 
-class IO_API SeekableInputStream : public FilterInputStream {
+class SeekableInputStream : public FilterInputStream {
 
   public:
 

@@ -1,8 +1,6 @@
 #ifndef ZipEndIfCentralDirRecord_h_
 #define ZipEndIfCentralDirRecord_h_
 
-#include <io/IoApi.h>
-
 #include <string>
 #include <sstream>
 #include <io/file/File.h>
@@ -24,7 +22,7 @@
  *
  * @author cK, $Author: koestlin $
  */
-class IO_API ZipEndOfCentralDirRecord {
+class ZipEndOfCentralDirRecord {
 
   public:
     /** Liesst den Record ein.

@@ -1,8 +1,6 @@
 #ifndef Inflater_h_
 #define Inflater_h_
 
-#include <io/IoApi.h>
-
 #include <lang/DataBuffer.h>
 #include <zlib.h>
 
@@ -25,7 +23,7 @@
  *
  * @author cK, $Author: koestlin $
  */
-class IO_API Inflater {
+class Inflater {
 
   public:
     /** Erzeugt einen neuen Inflater. 

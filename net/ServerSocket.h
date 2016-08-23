@@ -1,5 +1,4 @@
-#ifndef _ServerSocket_h_
-#define _ServerSocket_h_
+#pragma once
 
 // gefaehrlich .. aber socket macht alles was noetig ist???!!!
 #include <net/Socket.h>
@@ -72,6 +71,3 @@ class ServerSocket {
 #endif // LINUX
   
 };
-
-
-#endif // _ServerSocket_h_

@@ -1,8 +1,6 @@
 #ifndef _CheckedInputStream_h_
 #define _CheckedInputStream_h_
 
-#include <io/IoApi.h>
-
 #include <io/FilterInputStream.h>
 #include <io/zip/Checksum.h>
 
@@ -19,7 +17,7 @@
  *
  * @author cK, $Author: koestlin $
  */
-class IO_API CheckedInputStream : public FilterInputStream {
+class CheckedInputStream : public FilterInputStream {
   
  public:
   /** Erzeugt einen neuen CheckedStrom.

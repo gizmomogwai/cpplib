@@ -1,8 +1,6 @@
 #ifndef FileList_h_
 #define FileList_h_
 
-#include <io/IoApi.h>
-
 #include <vector>
 
 class File;
@@ -22,7 +20,7 @@ class File;
  *
  * @author cK, $Author: koestlin $
  */
-class IO_API FileList : public std::vector<File*> {
+class FileList : public std::vector<File*> {
 
  public:
   /** Raeumt alle Referencen in der Liste auf. */

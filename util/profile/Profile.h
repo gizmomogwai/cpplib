@@ -1,8 +1,6 @@
 #ifndef _Profile_h_
 #define _Profile_h_
 
-#include <util/UtilApi.h>
-
 #include <string>
 #include <list>
 #include <util/Iterator.h>
@@ -25,7 +23,7 @@ class ProfileIterator;
  *
  * @author cK $Author: gizmo $
  */
-class UTIL_API Profile {
+class Profile {
 
   public:
     /** Erzeugt ein neues Profile mit einem schluessel.

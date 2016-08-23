@@ -1,8 +1,6 @@
 #ifndef InflaterInputStream_h_
 #define InflaterInputStream_h_
 
-#include <io/IoApi.h>
-
 #include <io/FilterInputStream.h>
 #include <lang/DataBuffer.h>
 #include <io/zip/Inflater.h>
@@ -23,7 +21,7 @@
  *
  * @author cK, $Author: koestlin $
  */
-class IO_API InflaterInputStream : public FilterInputStream {
+class InflaterInputStream : public FilterInputStream {
 
  public:
   /** Erzeugt einen neuen InflaterInputStream.

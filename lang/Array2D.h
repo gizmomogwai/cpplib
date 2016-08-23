@@ -1,7 +1,4 @@
-#ifndef _Array2D_h_
-#define _Array2D_h_
-
-#include <pragmaincludes.h>
+#pragma once
 
 /** Templateklasse fuer 2-dim arrays.
  *
@@ -85,5 +82,3 @@ template <class T> class Array2D {
     int height;
 
 };
-
-#endif // _Array2D_h_

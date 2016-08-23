@@ -1,8 +1,6 @@
 #ifndef _PreferencesSingleton_h_
 #define _PreferencesSingleton_h_
 
-#include <util/UtilApi.h>
-
 #include <lang/Exception.h>
 
 #include <util/Preferences.h>
@@ -22,7 +20,7 @@
  *
  * @author cK, $Author: gizmo $
  */
-class UTIL_API PreferencesSingleton {
+class PreferencesSingleton {
   
   public:
     /** Setzt die Instance.

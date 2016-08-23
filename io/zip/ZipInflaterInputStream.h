@@ -1,8 +1,6 @@
 #ifndef _ZipInflaterInputStream_h_
 #define _ZipInflaterInputStream_h_
 
-#include <io/IoApi.h>
-
 #include <io/zip/InflaterInputStream.h>
 
 /** Inflater InputStream fuer ZipEntrys.
@@ -20,7 +18,7 @@
  *
  * @author ck $Auhor$
  */
-class IO_API ZipInflaterInputStream : public InflaterInputStream {
+class ZipInflaterInputStream : public InflaterInputStream {
 
   public:
     /** InflaterInputStream ohne HZIPheader etc.

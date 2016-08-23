@@ -1,5 +1,4 @@
-#ifndef Mutex_h_
-#define Mutex_h_
+#pragma once
 
 #ifdef WIN32
   #define _mutex_
@@ -116,5 +115,3 @@ class AutoMutex {
 	private:
 		Mutex* fMutex;
 };
-
-#endif // Mutex_h_

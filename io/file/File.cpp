@@ -2,8 +2,6 @@
 
 #include <io/IOTools.h>
 
-#include <windowsinclude.h>
-
 #include <sys/stat.h>
 
 #if defined(WIN32)
@@ -213,7 +211,7 @@ bool File::mkdir() {
 	return CreateDirectory(pathName.c_str(), 0);
 	#endif
 	
-	#ifdef LINUX
+  #if defined(LINUX) || defined(OSX)
 	return 0 == ::mkdir(pathName.c_str(), S_IRWXU);
 	#endif
 }

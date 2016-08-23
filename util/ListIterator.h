@@ -1,10 +1,6 @@
 #ifndef ListIterator_h_
 #define ListIterator_h_
 
-#include <pragmaincludes.h>
-
-#include <util/UtilApi.h>
-
 #include <lang/Exception.h>
 #include <util/Iterator.h>
 
@@ -49,7 +45,7 @@ using namespace std;
  * @author cK, $Author: gizmo $
  */
 template <class T, class CT> 
-class UTIL_API StlIterator : public Iterator<T> {
+class StlIterator : public Iterator<T> {
 
  public:
 	/** Erzeugt einen neuen Iterator aus einer stl-liste.
@@ -95,12 +91,12 @@ class UTIL_API StlIterator : public Iterator<T> {
 };
 
 
-template <class T> class UTIL_API ListIterator : public StlIterator<T, std::list<T> > {
+template <class T> class ListIterator : public StlIterator<T, std::list<T> > {
   public:
     ListIterator(std::list<T>* container) : StlIterator<T, std::list<T> >(container) {}
 };
 
-template <class T> class UTIL_API VectorIterator : public StlIterator<T, std::vector<T> > {
+template <class T> class VectorIterator : public StlIterator<T, std::vector<T> > {
   public:
     VectorIterator(std::vector<T>* container) : StlIterator<T, std::vector<T> >(container) {}  
 };

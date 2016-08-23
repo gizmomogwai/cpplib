@@ -1,7 +1,4 @@
-#ifndef _InputStream_h_
-#define _InputStream_h_
-
-#include <io/IoApi.h>
+#pragma once
 
 class DataBuffer;
 #include <io/IOException.h>
@@ -21,7 +18,7 @@ class DataBuffer;
  *
  * @author cK, $Author: koestlin $
  */
-class IO_API InputStream {
+class InputStream {
   
  public:
   /** Virtueller Dekonstruktor. */
@@ -74,5 +71,3 @@ class IO_API InputStream {
 		throw (IOException) = 0;
 
 };
-
-#endif // _InputStream_h_

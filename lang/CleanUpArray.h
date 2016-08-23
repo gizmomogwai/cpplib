@@ -1,7 +1,4 @@
-#ifndef _CleanUpArray_h_
-#define _CleanUpArray_h_
-
-#include <lang/LangApi.h>
+#pragma once
 
 /** Templateclasse um Array-Pointer automatisch aufzuraeumen.
  *
@@ -14,7 +11,7 @@
  *   <li> 2003-04-20, cK, Created.
  * </ul>
  */
-template <class T> class LANG_API CleanUpArray {
+template <class T> class CleanUpArray {
 
  public:
 	/** Erzeugt das Aufraeumobject fuer ein gepointertes object.
@@ -48,6 +45,4 @@ template <class T> class LANG_API CleanUpArray {
 	T* toDelete;
       
 };
-
-#endif // _CleanUpObject_h_
 

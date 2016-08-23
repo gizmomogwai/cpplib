@@ -1,7 +1,4 @@
-#ifndef _BufferedInputStream_h_
-#define _BufferedInputStream_h_
-
-#include <io/IoApi.h>
+#pragma once
 
 #include <io/FilterInputStream.h>
 #include <io/IOException.h>
@@ -29,7 +26,7 @@
  *
  * @author cK, $Author: koestlin $
  */
-class IO_API BufferedInputStream : public FilterInputStream {
+class BufferedInputStream : public FilterInputStream {
 
  public:
   /** Erzeugt einen neuen BufferedInputStream auf einem Stream.
@@ -65,5 +62,3 @@ class IO_API BufferedInputStream : public FilterInputStream {
   unsigned char* sourceData;
   
 };
-
-#endif // _BufferedInputStream_h_

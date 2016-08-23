@@ -1,7 +1,4 @@
-#ifndef LittleEndianDataInputStream_h_
-#define LittleEndianDataInputStream_h_
-
-#include <io/IoApi.h>
+#pragma once
 
 #include <io/DataInputStream.h>
 
@@ -25,8 +22,8 @@
  *
  * @author cK, $Author: koestlin $
  */
-class IO_API LittleEndianDataInputStream : public DataInputStream {
-
+class LittleEndianDataInputStream : public DataInputStream {
+  
  public:
 	/** Erzeugt einen neuen LittleEndianDataInputStream.
 	 *
@@ -35,9 +32,7 @@ class IO_API LittleEndianDataInputStream : public DataInputStream {
 	 *        InputStream von dem DataInputStream verwaltet werden soll.
 	 */
 	LittleEndianDataInputStream(InputStream* _in, bool _handleStream)
-
 		: DataInputStream(_in, _handleStream), buffer(new DataBuffer(0, 0, false)) {
-
 	}
 
 
@@ -45,64 +40,36 @@ class IO_API LittleEndianDataInputStream : public DataInputStream {
   
 
 	/** Gibt den Stream frei.
-
 	 *
-
 	 * Gibt auch den Uebergebenen Stream frei, falls handleStream gesetzt
-
 	 * wurde. 
-
 	 */
-
 	virtual ~LittleEndianDataInputStream() {
-
 		delete(buffer);
-
 	}
 
 
 
 	double readDouble() throw (IOException) {
-
 		double res;
-
 		buffer->setData(&res, sizeof(double), false);
-
 		int count = in->readFully(*buffer);
-
 		if (count != sizeof(double)) {
-
-			throw(IOException("LittleEndianDataInputStream::readDouble - not enough data", 
-
-												__FILE__, __LINE__));
-
+			throw IOException("LittleEndianDataInputStream::readDouble - not enough data", 
+												__FILE__, __LINE__);
 		}
-
 		return(res);
-
 	}
 
-
-
 	float readFloat() throw (IOException) {
-
 		float res;
-
 		buffer->setData(&res, sizeof(float), false);
-
 		int count = in->readFully(*buffer);
-
 		if (count != sizeof(float)) {
 			throw IOException("LittleEndianDataInputStream::readFloat - not enough data");
 		}
-
 		return(res);
-
-
-
 	}
-
-
 
 	void readFloats(float* data, int nOfFloats) throw (IOException) {
 
@@ -206,11 +173,6 @@ class IO_API LittleEndianDataInputStream : public DataInputStream {
  private:
 
 	/** Datenpuffer, Optimierung fuer readFloats etc. */
-
 	DataBuffer* buffer;
 
-	
-
 };
-
-#endif // LittleEndianDataInputStream_h_

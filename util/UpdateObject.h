@@ -1,8 +1,6 @@
 #ifndef _UpdateObject_h_
 #define _UpdateObject_h_
 
-#include <util/UtilApi.h>
-
 #include <lang/Mutex.h>
 #include <util/RefCountedObject.h>
 
@@ -26,7 +24,7 @@
  *
  * @author cK, $Author: gizmo $
  */
-template <class T> class UTIL_API UpdateObject {
+template <class T> class UpdateObject {
 
  public:
 	/** Erzeugt ein neues UpdateObject, dass keine Objekte eingetragen

@@ -1,7 +1,4 @@
-#ifndef _BufferedOutputStream_h_
-#define _BufferedOutputStream_h_
-
-#include <io/IoApi.h>
+#pragma once
 
 #include <lang/ByteDataBuffer.h>
 #include <io/IOException.h>
@@ -27,7 +24,7 @@
  *
  * @author cK, $Author: koestlin $
  */
-class IO_API BufferedOutputStream : public FilterOutputStream {
+class BufferedOutputStream : public FilterOutputStream {
 
   public:    
     /** Erzeugt einen neuen BufferedOUtputStream auf 
@@ -90,5 +87,3 @@ class IO_API BufferedOutputStream : public FilterOutputStream {
     int count;
 
 };
-
-#endif // _BufferedOutputStream_h_

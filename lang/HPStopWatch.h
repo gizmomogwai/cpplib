@@ -1,7 +1,4 @@
-#ifndef _HPStopWatch_h_
-#define _HPStopWatch_h_
-
-#include <lang/LangApi.h>
+#pragma once
 
 #include <lang/StopWatch.h>
 
@@ -24,7 +21,7 @@
  *
  * @author cK, $Author: gizmo $
  */
-class LANG_API HPStopWatch : public StopWatch {
+class HPStopWatch : public StopWatch {
  public:
   /** Erzeugt einen neue uninitialisierte Stoppuhr. */
   HPStopWatch();
@@ -69,5 +66,3 @@ class LANG_API HPStopWatch : public StopWatch {
 #endif
 
 };
-
-#endif // _HPStopWatch_h_

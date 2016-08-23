@@ -1,5 +1,4 @@
-#ifndef _Socket_h_
-#define _Socket_h_
+#pragma once
 
 #include <lang/Exception.h>
 
@@ -160,5 +159,3 @@ class Socket {
   int port;
 
 };
-
-#endif // _Socket_h_

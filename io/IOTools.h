@@ -1,7 +1,4 @@
-#ifndef _IOTools_h_
-#define _IOTools_h_
-
-#include <io/IoApi.h>
+#pragma once
 
 #include <iostream>
 #include <io/InputStream.h>
@@ -22,7 +19,7 @@
  *
  * @author cK, $Author: koestlin $
  */
-class IO_API IOTools {
+class IOTools {
 
  public:
 	/** Kopiert alle Daten von in nach out.
@@ -98,5 +95,3 @@ class IO_API IOTools {
 	}
       
 };
-
-#endif // _IOTools_h_

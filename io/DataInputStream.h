@@ -1,7 +1,4 @@
-#ifndef DataInputStream_h_
-#define DataInputStream_h_
-
-#include <io/IoApi.h>
+#pragma once
 
 #include <io/FilterInputStream.h>
 #include <io/IOException.h>
@@ -29,7 +26,7 @@
  *
  * @author ck, $Author: koestlin $
  */
-class IO_API DataInputStream : public FilterInputStream {
+class DataInputStream : public FilterInputStream {
 
  public:
 
@@ -255,5 +252,3 @@ class IO_API DataInputStream : public FilterInputStream {
 		}
 	}
 };
-
-#endif // _DataInputStream_h_

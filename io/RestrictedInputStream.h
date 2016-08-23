@@ -1,8 +1,6 @@
 #ifndef _RestrictedInputStream_h_
 #define _RestrictedInputStream_h_
 
-#include <io/IoApi.h>
-
 #include <io/InputStream.h>
 #include <io/FilterInputStream.h>
 #include <lang/DataBuffer.h>
@@ -24,7 +22,7 @@
  *
  * @author cK, $Author: koestlin $
  */                                                       
-class IO_API RestrictedInputStream : public FilterInputStream {
+class RestrictedInputStream : public FilterInputStream {
  public:
 	/** Erzeugt einen Stream mit n byte groesse.
 	 *

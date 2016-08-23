@@ -1,8 +1,6 @@
 #ifndef _ProfileVisitor_h_
 #define _ProfileVisitor_h_
 
-#include <util/UtilApi.h>
-
 class Profile;
 class Profiler;
 #include <util/profile/Profiler.h>
@@ -19,7 +17,7 @@ class Profiler;
  *
  * @author cK $Author: gizmo $
  */
-class UTIL_API ProfileVisitor {
+class ProfileVisitor {
 
 public:
 	/** Raeumt auf. */

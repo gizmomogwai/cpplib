@@ -1,7 +1,4 @@
-#ifndef _DataOutputStream_h_
-#define _DataOutputStream_h_
-
-#include <io/IoApi.h>
+#pragma once
 
 #include <io/FilterOutputStream.h>
 #include <io/IOException.h>
@@ -26,7 +23,7 @@
  *
  * @author ck, $Author: koestlin $
  */
-class IO_API DataOutputStream : public FilterOutputStream {
+class DataOutputStream : public FilterOutputStream {
   
  public:
   /** Erzeugt einen neuen DataOutputStream.
@@ -180,5 +177,3 @@ class IO_API DataOutputStream : public FilterOutputStream {
   virtual void writeUTFString(std::string* s) throw (IOException);
   
 };
-
-#endif // _DataOutputStream_h_

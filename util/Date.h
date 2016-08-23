@@ -1,8 +1,6 @@
 #ifndef Date_h_
 #define Date_h_
 
-#include <util/UtilApi.h>
-
 #include <string>
 #include <time.h>
 #include <assert.h>
@@ -20,7 +18,7 @@
  *
  * @author cK, $Author: gizmo $
  */
-class UTIL_API Date {
+class Date {
 
  public:
 	/** Erzeugt ein Datum, das mit der aktuellen Uhrzeit initialisiert ist.
