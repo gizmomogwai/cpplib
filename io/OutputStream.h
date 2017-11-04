@@ -24,7 +24,7 @@ class OutputStream {
 
 	public:
     /** Raeumt auf. */
-    virtual ~OutputStream() {}
+    virtual ~OutputStream() throw (IOException) {}
 
 		/** Schreibt ein Byte in den Strom.
 		 *
