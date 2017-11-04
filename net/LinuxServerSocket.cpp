@@ -19,8 +19,13 @@ ServerSocket::ServerSocket(int port) throw(Exception) {
   serverSocketAddr.sin_port = htons(port);
   memset(&(serverSocketAddr.sin_zero), 0, 8);
 
-  int res =
-      bind(serverSocket, (sockaddr*)(&serverSocketAddr), sizeof(sockaddr_in));
+  int enable = 1;
+  int res = setsockopt(serverSocket, SOL_SOCKET, SO_REUSEADDR, &enable, sizeof(int));
+  if (res == -1) {
+    SysError::throwDetailedException("setting so_reuseaddr");
+  }
+
+  res = bind(serverSocket, (sockaddr*)(&serverSocketAddr), sizeof(sockaddr_in));
   if (res == -1) {
     SysError::throwDetailedException("binding");
   }
