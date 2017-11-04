@@ -14,9 +14,12 @@ Event::Event() : mutex(new Mutex()), eventSet(false) {
 Event::~Event() {
   int res = pthread_cond_destroy(&condition);
   if (res != 0) {
+    assert(false);
+    /*
     throw(Exception(
         "Event::~Event() - could not destroy cond - someones waiting!",
         __FILE__, __LINE__));
+    */
   }
 
   if (mutex != 0) {

@@ -15,9 +15,12 @@ Mutex::Mutex() {
 Mutex::~Mutex() {
   int res = pthread_mutex_destroy(&mutex);
   if (res != 0) {
+    assert(false);
+    /*
     throw Exception(
         "LinuxMutex::~LinuxMutex() - mutex in deconstructor still locked",
         __FILE__, __LINE__);
+    */
   }
 
   res = pthread_mutexattr_destroy(&mutexAttr);
