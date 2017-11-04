@@ -1,4 +1,4 @@
-#include <RtMidi.h>
+#include <rtmidi/RtMidi.h>
 #include <cstdlib>
 #include <io/DataOutputStream.h>
 #include <iostream>
@@ -142,12 +142,20 @@ int main() {
     RtMidiIn midiin;
 
     unsigned int nPorts = midiin.getPortCount();
+    std::cout << "port count " << nPorts << std::endl;
     if (nPorts == 0) {
       std::cout << "No ports available!\n";
       return 0;
     }
 
-    midiin.openPort(0);
+    int port = 0;
+    for (int i=0; i<nPorts; ++i) {
+      std::cout << "Port " << i << " " << midiin.getPortName(i) << std::endl;
+      if (midiin.getPortName(i).find("USB-MIDI") != std::string::npos) {
+	port = i;
+      }
+    }
+    midiin.openPort(port);
     midiin.setCallback(&mycallback, &server);
     midiin.ignoreTypes(false, false, false);
 

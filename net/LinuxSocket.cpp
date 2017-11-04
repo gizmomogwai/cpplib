@@ -8,6 +8,7 @@
 #include <lang/SysError.h>
 #include <net/SocketInputStream.h>
 #include <net/SocketOutputStream.h>
+#include <cstring>
 
 Socket::Socket(const std::string& host, int _port) throw(Exception)
     : hostName(host), port(_port) {
@@ -23,7 +24,7 @@ class AddrInfo {
 public:
   AddrInfo(const std::string& host) : fInfo(0) {
     struct addrinfo hints;
-    memset(&hints, 0, sizeof(struct addrinfo));
+    ::memset(&hints, 0, sizeof(struct addrinfo));
     hints.ai_family = PF_UNSPEC;
     hints.ai_socktype = SOCK_STREAM;
 
@@ -145,8 +146,8 @@ Socket::~Socket() {
 
 void Socket::createStreams() {
   // disable sigpipe, otherwise a server gets the signal if a client disconnects
-  const int set = 1;
-  setsockopt(theSocket, SOL_SOCKET, SO_NOSIGPIPE, &set, sizeof(set));
+  // const int set = 1;
+  // setsockopt(theSocket, SOL_SOCKET, SO_NOSIGPIPE, &set, sizeof(set));
 
   if (is == 0) {
     is = new SocketInputStream(this);

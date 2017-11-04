@@ -84,6 +84,6 @@ class BufferedOutputStream : public FilterOutputStream {
     ByteDataBuffer* buffer;
 
     /** Anzahl schon geschriebener Byte im Buffer. */
-    int count;
+    size_t count;
 
 };
