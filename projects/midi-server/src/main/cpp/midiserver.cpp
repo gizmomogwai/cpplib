@@ -24,8 +24,10 @@ public:
   }
   void notify(std::vector<unsigned char>& message) throw (IOException) {
     dataOutputStream->write((unsigned char)message.size());
+    int idx = 0;
     for (auto aByte : message) {
       dataOutputStream->write(aByte);
+      idx++;
     }
   }
 
@@ -36,9 +38,12 @@ private:
 
 class Server {
 public:
-  Server() : serverSocket(55554) {}
+  Server(bool _debug) : serverSocket(55554), debug(debug) {}
 
   void send(std::vector<unsigned char>& message) {
+    if (debug) {
+      std::cout << "Sending messiage.size() 0 " << message.size() << " to clients" << std::endl;
+    }
     VectorIterator<Client*> i(&clients);
     while (i.hasNext()) {
       Client* client = i.next();
@@ -74,7 +79,7 @@ public:
 
   void run() {
     while (true) {
-      std::cout << "Waiting for client" << std::endl;
+      std::cout << "Waiting for next client" << std::endl;
       Client* client = new Client(serverSocket.accept());
       std::cout << "One client connected" << std::endl;
       clients.push_back(client);
@@ -84,20 +89,29 @@ public:
 private:
   ServerSocket serverSocket;
   std::vector<Client*> clients;
+public:
+  bool debug;
 };
 
 void mycallback(double deltatime,
                 std::vector<unsigned char>* message,
                 void* userData) {
   Server* server = (Server*)userData;
-
-  server->send(*message);
-
-  unsigned int nBytes = message->size();
-  for (unsigned int i = 0; i < nBytes; i++) {
-    std::cout << "Byte " << i << " = 0x" << std::hex << (int)message->at(i) << ", ";
+  if (server->debug) {
+    std::cout << "midi received something" << std::endl;
   }
-  std::cout << std::endl;
+  if (message->size() > 1) {
+    server->send(*message);
+  }
+
+  if (server->debug) {
+    unsigned int nBytes = message->size();
+    for (unsigned int i = 0; i < nBytes; i++) {
+      std::cout << "Byte " << i << " = 0x" << std::hex << (int)message->at(i) << ", ";
+    }
+    std::cout << std::endl;
+  }
+
   /*
   // https://www.cs.cmu.edu/~music/cmsip/readings/MIDI%20tutorial%20for%20programmers.html
   // http://fmslogo.sourceforge.net/manual/midi-table.html: Control Change	176 + Channel	64 Damper Pedal	0:off 127:on
@@ -136,9 +150,15 @@ public:
   }
 };
 */
-int main() {
+int main(int argc, char** args) {
   try {
-    Server server;
+    bool debug = false;
+    if (argc > 1) {
+      debug = true;
+    }
+
+    std::cout << "Debug " << debug << std::endl;
+    Server server(debug);
     RtMidiIn midiin;
 
     unsigned int nPorts = midiin.getPortCount();
@@ -155,6 +175,7 @@ int main() {
 	port = i;
       }
     }
+    std::cout << "Using midi port " << port << std::endl;
     midiin.openPort(port);
     midiin.setCallback(&mycallback, &server);
     midiin.ignoreTypes(false, false, false);

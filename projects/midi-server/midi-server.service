@@ -1,0 +1,17 @@
+[Unit]
+Description=midi-server
+
+[Service]
+User=pi
+Group=pi
+
+Type=simple
+WorkingDirectory=/home/pi/cpplib
+ExecStart=/home/pi/cpplib/out/midi-server
+Restart=on-failure
+RestartSec=60
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
