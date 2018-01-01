@@ -44,15 +44,10 @@ class GZIPInputStream : public InflaterInputStream {
   
  private:
   /** Verwendete Checksumme. */
-  CRC32* crc;
+  CRC32 crc;
   
   /** Ist der Stream fertig dekomprimiert. */
   bool eos;
-  
-  /** Ist der Strom geschlossen. */
-  bool closed;
-
-  bool containsZlibWrapper;
   
   /** GZIP header magic number. */
   static const int GZIP_MAGIC;  
@@ -82,26 +77,26 @@ class GZIPInputStream : public InflaterInputStream {
    *
    * @param _in InputStream, von dem die Daten gelesen werden sollen.
    */
-  unsigned short readUShort(InputStream* _in);
+  unsigned short readUShort(InputStream& _in);
   
   /** Liesst ein Int (32bit) in pc-endian ein.
    *
    * @param _in InputStream, von dem die Daten gelesen werden sollen.
    */
-  long readUInt(InputStream* _in);
+  long readUInt(InputStream& _in);
   
   /** Ueberspringt eine Menge von byte im InputStream.
    *
    * @param _in InputStream.
    * @param bytes Anzahl uzu ueberspringender Byte.
    */
-  void skipBytes(InputStream* _in, int _bytes);
+  void skipBytes(InputStream& _in, int _bytes);
   
   /** Behandelt das Ende eines GZIP-Stroms. 
    *
    * @param _in InputStream.
    */
-  void handleRest(InputStream* _in);
+  void handleRest(InputStream& _in);
   
 };
 

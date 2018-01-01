@@ -6,8 +6,6 @@
 #include <io/zip/CheckedInputStream.h>
 #include <lang/Exception.h>
 
-#include <assert.h>
-
 const int GZIPInputStream::GZIP_MAGIC = 0x8b1f;
 
 const int GZIPInputStream::FTEXT = 1;	// Extra text
@@ -23,38 +21,36 @@ GZIPInputStream::GZIPInputStream(InputStream* _in,
                         _handleStream, 
                         new Inflater(true), 
                         _size), 
-    crc(new CRC32()), eos(false) {
+    eos(false) {
 
   readHeader();
-  crc->reset();
+  crc.reset();
 }
 
 GZIPInputStream::~GZIPInputStream() {
-  delete(crc);
 }
 
 
-unsigned short GZIPInputStream::readUShort(InputStream* _in) {
-  int b = _in->read();
-  return((unsigned short)(_in->read() << 8 | b));
+unsigned short GZIPInputStream::readUShort(InputStream& _in) {
+  int b = _in.read();
+  return((unsigned short)(_in.read() << 8 | b));
 }
 
-long GZIPInputStream::readUInt(InputStream* _in) {
+long GZIPInputStream::readUInt(InputStream& _in) {
   long s = readUShort(_in);
   return(readUShort(_in) << 16 | s);
 }
 
-void GZIPInputStream::skipBytes(InputStream* _in, int bytes) {
+void GZIPInputStream::skipBytes(InputStream& _in, int bytes) {
   for (int i=0; i<bytes; i++) {
-    _in->read();
+    _in.read();
   }
 }
 
 
 void GZIPInputStream::readHeader() {
-  CheckedInputStream* cIn = new CheckedInputStream(in, false, crc);
-  assert(cIn != 0);
-  crc->reset();
+  CheckedInputStream cIn(in, false, &crc);
+  crc.reset();
   
   // Check header magic (2 byte) ushort
   int h = readUShort(cIn);
@@ -64,13 +60,13 @@ void GZIPInputStream::readHeader() {
   
   
   // Check compression method
-  h = cIn->read();
+  h = cIn.read();
   if (h != 8) {
     throw Exception("Unsupported compression method", __FILE__, __LINE__);
   }
   
   // Read flags
-  int flg = cIn->read();
+  int flg = cIn.read();
   // Skip MTIME, XFL, and OS fields
   skipBytes(cIn, 6);
   
@@ -80,22 +76,20 @@ void GZIPInputStream::readHeader() {
   }
   // Skip optional file name
   if ((flg & FNAME) == FNAME) {
-    while (cIn->read() != 0) ;
+    while (cIn.read() != 0) ;
   }
   // Skip optional file comment
   if ((flg & FCOMMENT) == FCOMMENT) {
-    while (cIn->read() != 0) ;
+    while (cIn.read() != 0) ;
   }
   // Check optional header CRC
   if ((flg & FHCRC) == FHCRC) {
     
-    int v = (int)(crc->getChecksum() & 0xffff);
+    int v = (int)(crc.getChecksum() & 0xffff);
     if (readUShort(cIn) != v) {
       throw(Exception("Corrupt GZIP header", __FILE__, __LINE__));
     }
   }
-  
-  delete(cIn);
 }
 
 
@@ -119,46 +113,29 @@ int GZIPInputStream::read(DataBuffer& _b, int _offset, int _length)
     readTrailer();
     eos = true;
   } else {
-    crc->update(&_b, _offset, _length);
+    crc.update(&_b, _offset, _length);
   }
 
   return(_length);
 }
 
 void GZIPInputStream::readTrailer() {
-
-/*
-    private void readTrailer() throws IOException {
-	InputStream in = this.in;
-	int n = inf.getRemaining();
-	if (n > 0) {
-	    in = new SequenceInputStream(
-			new ByteArrayInputStream(buf, len - n, n), in);
-	}
-	long v = crc.getValue();
-	if (readUInt(in) != v || readUInt(in) != inf.getTotalOut()) {
-	    throw new IOException("Corrupt GZIP trailer");
-	}
-    }
-*/
-  
   InputStream* _in = in;
   int n = inf->getRemaining();
   if (n > 0) {
     ByteArrayInputStream* byteIn = 
       new ByteArrayInputStream(sourceBuffer, fillState - n, n);
     _in = new SequenceInputStream(byteIn, _in);
-    handleRest(_in);    
+    handleRest(*_in);
     delete(_in);
     delete(byteIn);
   } else {
-    handleRest(_in);
+    handleRest(*_in);
   }
-
 }
 
-void GZIPInputStream::handleRest(InputStream* _in) {
-  long v = crc->getChecksum();
+void GZIPInputStream::handleRest(InputStream& _in) {
+  long v = crc.getChecksum();
   long l = readUInt(_in);
   if (l != v) {
     throw(Exception("GZIPInputStream::readTrailer: Corrupt GZIP Trailer 1", 
@@ -172,5 +149,3 @@ void GZIPInputStream::handleRest(InputStream* _in) {
   }
 
 }
-
-

@@ -4,7 +4,7 @@ cxx_configuration do
   }
 
   static_lib("lang",
-             :sources => FileList['**/*.cpp'].delete_if{|f|f.index('WIN32')},
+             :sources => FileList['**/*.cpp'].delete_if{ |f| f.index('WIN32') },
              :includes => ['..'],
              :toolchain => Provider.modify_cpp_compiler("gcc", flags))
 end

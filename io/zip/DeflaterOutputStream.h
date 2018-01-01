@@ -74,7 +74,7 @@ class DeflaterOutputStream : public FilterOutputStream {
         throw(IOException("DeflaterOutputStream - write beyond end of stream", 
                           __FILE__, __LINE__));
 	    }
-      if ((off < 0) || (len < 0) || ((off + len) < 0) | (((b->getSize() - (off + len)) < 0))) {
+      if ((off < 0) || (len < 0) || ((off + len) < 0)) {
         throw(Exception("DeflaterOutputStream - index out of bounds", 
                         __FILE__, __LINE__));
       } else if (len == 0) {

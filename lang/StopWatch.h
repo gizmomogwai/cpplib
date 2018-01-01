@@ -18,10 +18,10 @@ class StopWatch {
 	}
 
 	/** Startet die Stopuhr. */
-	virtual void start() = 0;
+  virtual StopWatch& start() = 0;
 
 	/** Stoppt die Stopuhr. */
-	virtual void stop() = 0;
+  virtual StopWatch& stop() = 0;
 	
 	/** Liefert die Zeit zwischen dem letzen start und stop in
 	 * millisekunden. 

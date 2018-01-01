@@ -1,4 +1,4 @@
-#ifdef LINUX
+#if defined(LINUX) || defined(OSX)
 
 #include <lang/HPStopWatch.h>
 
@@ -8,20 +8,22 @@ HPStopWatch::HPStopWatch() {}
 
 HPStopWatch::~HPStopWatch() {}
 
-void HPStopWatch::start() {
+StopWatch& HPStopWatch::start() {
   int res = gettimeofday(&startTime, 0);
   if (res != 0) {
     throw(Exception("HPStopWatch::stop - could not take time", __FILE__,
                     __LINE__));
   }
+  return *this;
 }
 
-void HPStopWatch::stop() {
+StopWatch& HPStopWatch::stop() {
   int res = gettimeofday(&endTime, 0);
   if (res != 0) {
     throw(Exception("HPStopWatch::stop - could not take time", __FILE__,
                     __LINE__));
   }
+  return *this;
 }
 
 double HPStopWatch::getDelta() {

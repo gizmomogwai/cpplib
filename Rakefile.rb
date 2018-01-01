@@ -2,12 +2,13 @@ require 'cxx'
 
 flags = {
 #  :DEFINES => ['UNIT_TEST','EXAMPLE=main'],
-  :FLAGS => ['-O0',
-             '-g3',
-             '-Wall',
-             #'-Werror',
-             '-fno-diagnostics-color',
-             '-std=c++11']
+  :FLAGS => [
+    '-std=c++11',
+    '-Ofast',
+    '-g', '-Wall', '-Werror',
+  #  '-fsanitize=address',
+  #  '-fno-omit-frame-pointer',
+  ]
 }
 
 cxx(Dir['**/project.rb'], 'out', "gcc", './') do |tc|

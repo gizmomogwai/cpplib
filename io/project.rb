@@ -4,13 +4,13 @@ cxx_configuration do
   }
 
   sources = FileList['**/*.cpp'].delete_if do |f|
-    f.index('rar') ||
-    f.index('zip')
+    f.index('rar') #||
+    #f.index('zip')
   end
 
   static_lib("io",
              sources: sources,
              includes: ['..'],
-             dependencies: ['lang'],
+             dependencies: ['lang', BinaryLibrary.new('z')],
              toolchain: Provider.modify_cpp_compiler("gcc", flags))
 end

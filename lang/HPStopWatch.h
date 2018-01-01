@@ -29,9 +29,9 @@ class HPStopWatch : public StopWatch {
   /** Raeumt auf. */
   virtual ~HPStopWatch();
 
-  void start();
+  StopWatch& start();
 
-  void stop();
+  StopWatch& stop();
 
   double getDelta();
 
