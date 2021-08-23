@@ -13,22 +13,22 @@ class Rotation;
 class IMAGE_API JpegImage {
   public:
     JpegImage(const File& file);
-      
+
     virtual ~JpegImage();
-      
+
     void rotateLeft();
-      
+
     void rotateRight();
 
     void normalizeRotation();
     void resetRotation();
-    
+
     bool isExifDateInSyncWithFileDate();
-    
+
     void adjustFileDateFromExifDate();
-    
+
     Date* getExifDate();
-    
+
     void setExifDate(const Date& date);
     void setDateTimeDigitized(const Date& date);
     void setDateTimeOriginal(const Date& date);
@@ -40,21 +40,20 @@ class IMAGE_API JpegImage {
     void setThumbnail(Image& image);
 
    private:
-    void setTagByDate(unsigned int tag, ExifTagLocation location, const Date& d);
+     void setTagByDate(unsigned int tag, ExifTagLocation location, const Date& d);
 
      File fFile;
-	
-     void rotate(JXFORM_CODE transform);
-	
+
+     // void rotate(JXFORM_CODE transform);
+
      static const char* format;
      static const char* easyFormat;
-	
+
      Rotation* getRotation();
-	
+
      void setRotation(int rotation);
      static std::string date2String(const Date& date);
-	
+
 };
 
 #endif
-

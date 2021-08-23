@@ -1,8 +1,6 @@
 #ifndef _TemplateTupelArray_h_
 #define _TemplateTupelArray_h_
 
-#include <pragmaincludes.h>
-
 #include <lang/Exception.h>
 
 #include <sg/nodeComponents/NodeComponent.h>
@@ -11,7 +9,7 @@
  *
  * Intern wird ein Array der groesse _size * _tupelSize von Ts angelegt.
  * _size gibt an, wieviele tupel gespeichert werden sollen, _tupelSize,
- * wieviele elemente ein tupel hat. 
+ * wieviele elemente ein tupel hat.
  *
  * <p>
  * Curriculum Vitae:
@@ -30,8 +28,8 @@ template <class T> class TemplateTupelArray : public NodeComponent {
 	 * @param _size Anzahl von Tupel.
 	 * @param _tupelSize Anzahl von Ts pro Tupel.
 	 */
-   TemplateTupelArray(int _size, int _tupelSize) 
-     : maxIdx(_size*_tupelSize), 
+   TemplateTupelArray(int _size, int _tupelSize)
+     : maxIdx(_size*_tupelSize),
        data(new T[maxIdx]),
        tupelSize(_tupelSize),
        size(_size) {
@@ -47,7 +45,7 @@ template <class T> class TemplateTupelArray : public NodeComponent {
   TemplateTupelArray(int _size, int _tupelSize, T* _data)
     : maxIdx(_size*_tupelSize), data(_data), tupelSize(_tupelSize), size(_size)  {
   }
-  
+
 	/** Liefert die Anzahl von Tupel
 	 *
 	 * @return int Tupelanzahl.
@@ -73,9 +71,9 @@ template <class T> class TemplateTupelArray : public NodeComponent {
 	 */
 	void set(int idx, T v) {
 		if ((idx < maxIdx) && (idx >= 0)) {
-			data[idx] = v;  
+			data[idx] = v;
 		} else {
-			throw(Exception("Arrayf::set - out Of Bounds", __FILE__, __LINE__));  
+			throw(Exception("Arrayf::set - out Of Bounds", __FILE__, __LINE__));
 		}
 	}
 
@@ -85,7 +83,7 @@ template <class T> class TemplateTupelArray : public NodeComponent {
 		delete[](data);
 	}
 
-    
+
  private:
 	/** Maximalindex ins array. */
 	int maxIdx;
@@ -95,10 +93,10 @@ template <class T> class TemplateTupelArray : public NodeComponent {
 
 	/** Anzahl von floats pro tupel. */
 	int tupelSize;
-    
+
 	/** Anzahl von Tupeln. */
 	int size;
-      
+
 };
 
 #endif // _TemplateArray_h_

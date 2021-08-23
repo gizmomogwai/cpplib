@@ -10,7 +10,7 @@
 #include <util/profile/Profile.h>
 #include <util/profile/ProfileList.h>
 
-/** Klasse mit dem Programme untersucht werden können.
+/** Klasse mit dem Programme untersucht werden koennen.
  * Grundidee ist, dass man bereiche immer mit begin und end 
  * markiert, und dass zwiscchen diesen Punkten die zeit genommen wird.
  * Diese Punkte koennen auch geschachtelt werden, so dass sich ein 

@@ -1,7 +1,9 @@
 #ifndef _GLUTKeyEvent_h_
 #define _GLUTKeyEvent_h_
 
+
 #ifdef OSX
+#define GL_SILENCE_DEPRECATION
   #include <GLUT/glut.h>
 #else
   #include <GL/glut.h>
@@ -20,43 +22,40 @@
  *   <li> 2001-04-05, cK, Created.
  * </ul>
  *
- * @@version $Revision: 1.1.1.1 $, $Date: 2001/04/27 14:10:37 $
- *
- * @@author cK, $Author: koestlin $
+ * @author cK
  */
 class GLUTKeyEvent : public KeyEvent {
-	
- public:	
-	/** Erzeugt ein neues GLUTKeyEvent.
-	 *
-	 * @@param _key GLUT-Keycode
-	 */
-	GLUTKeyEvent(unsigned int _key) : key(_key) {
-		modifiers = glutGetModifiers();
-	}
-	
-	bool shiftPressed() {
-		return((modifiers & GLUT_ACTIVE_SHIFT) != 0);
-	}
 
-	bool ctrlPressed() {
-		return((modifiers & GLUT_ACTIVE_CTRL) != 0);
-	}
+ public:
+  /** Erzeugt ein neues GLUTKeyEvent.
+   *
+   * @@param _key GLUT-Keycode
+   */
+  GLUTKeyEvent(unsigned int _key) : key(_key) {
+    modifiers = glutGetModifiers();
+  }
 
-	bool altPressed() {
-		return((modifiers & GLUT_ACTIVE_ALT) != 0);
-	}
+  bool shiftPressed() {
+    return((modifiers & GLUT_ACTIVE_SHIFT) != 0);
+  }
 
-	bool keyPressed(unsigned int _key);
+  bool ctrlPressed() {
+    return((modifiers & GLUT_ACTIVE_CTRL) != 0);
+  }
+
+  bool altPressed() {
+    return((modifiers & GLUT_ACTIVE_ALT) != 0);
+  }
+
+  bool keyPressed(unsigned int _key);
 
  private:
-	/** Gedrueckte Taste. */
-	unsigned int key;
+  /** Gedrueckte Taste. */
+  unsigned int key;
 
-	/** Modifiers. */
-	int modifiers;
+  /** Modifiers. */
+  int modifiers;
 
 };
 
 #endif // _GLUTKeyEvent_h_
-

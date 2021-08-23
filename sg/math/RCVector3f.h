@@ -1,14 +1,12 @@
 #ifndef _RCVector3f_h_
 #define _RCVector3f_h_
 
-#include <pragmaincludes.h>
-
 #include <util/RefCountedObject.h>
 #include <vecmath/Vector3f.h>
 
 
 /** 3-D Vector der Referenzcounted ist und somit in den Szenegraphen
- * integriert werden kann. 
+ * integriert werden kann.
  *
  * <p>
  * Curriculum Vitae:

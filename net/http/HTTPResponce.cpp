@@ -76,7 +76,7 @@ HTTPResponce::~HTTPResponce() {
 void HTTPResponce::readHeader() throw(Exception) {
 
   header = new std::map<std::string, std::string>();
-  std::auto_ptr<std::string> line(in->readLine());
+  auto line = in->readLine();
 
   while ((line.get() != 0) && (line->size() != 0)) {
     int idx = line->find(':');

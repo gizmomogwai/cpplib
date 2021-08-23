@@ -11,12 +11,12 @@ class RenderVisitor : public Visitor {
     RenderVisitor() {
     }
 
-	  virtual ~RenderVisitor() {
-	  }
-
+    virtual ~RenderVisitor() {
+    }
+    using Visitor::visit;
     void visit(ImplicitSGNode* node);
 
-    /** Liefert die Breite des Canvases. 
+    /** Liefert die Breite des Canvases.
      *
      * @return int Breite des Canvases.
      */
@@ -24,7 +24,7 @@ class RenderVisitor : public Visitor {
       return(imageWidth);
     }
 
-    /** Liefert die Hoehe des Canvases. 
+    /** Liefert die Hoehe des Canvases.
      *
      * @return int Hoehe des Canvases.
      */
@@ -40,17 +40,17 @@ class RenderVisitor : public Visitor {
       return(((float)imageWidth) / ((float)imageHeight));
     }
 
-	  /** Transformation die die Billboardmatrix zur Camera in Richtung z-Achse
-	   * enthaelt. 
-	   */
+    /** Transformation die die Billboardmatrix zur Camera in Richtung z-Achse
+     * enthaelt.
+     */
     Transform3D yAxisBillboard;
 
     Transform3D observerTransformation;
 
-  	/** Breite des Canvases. */
+    /** Breite des Canvases. */
     int imageWidth;
 
-  	/** Hoehe des Canvases. */
+    /** Hoehe des Canvases. */
     int imageHeight;
 
 };

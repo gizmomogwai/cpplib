@@ -111,7 +111,7 @@ class FirstHTTPLine {
   
  private:
   /** String vom server. */
-  std::auto_ptr<std::string> line;
+  std::unique_ptr<std::string> line;
   
   /** HTTP-ergebniscode. */
   int result;

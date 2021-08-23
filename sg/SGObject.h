@@ -1,8 +1,6 @@
 #ifndef _SGObject_h_
 #define _SGObject_h_
 
-#include <windowsinclude.h>
-
 #include <string>
 #include <map>
 

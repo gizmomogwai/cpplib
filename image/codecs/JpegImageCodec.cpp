@@ -11,7 +11,7 @@
 
 class JpegDecompressor {
   public:
-    JpegDecompressor(struct jpeg_decompress_struct* _jpegInfo) 
+    JpegDecompressor(struct jpeg_decompress_struct* _jpegInfo)
       : jpegInfo(_jpegInfo), decompressStarted(false) {
       jpeg_create_decompress(jpegInfo);
     }
@@ -38,7 +38,7 @@ class JpegDecompressor {
 };
 
 Image* JpegImageCodec::read(InputStream* _in) throw (Exception) {
-  in = _in; 
+  in = _in;
   out = 0;
   Image* res = 0;
 
@@ -77,9 +77,9 @@ Image* JpegImageCodec::read(InputStream* _in) throw (Exception) {
   decompressor.startDecompress();
 
   // bild anlegen
-  res = new Image((unsigned int)cInfo.output_width, 
-                  (unsigned int)cInfo.output_height, 
-		  (unsigned int)8 * cInfo.out_color_components);
+  res = new Image((unsigned int)cInfo.output_width,
+                  (unsigned int)cInfo.output_height,
+      (unsigned int)8 * cInfo.out_color_components);
   try {
     int rowStride = res->getRowStride();
     unsigned char* data = 0;
@@ -91,7 +91,7 @@ Image* JpegImageCodec::read(InputStream* _in) throw (Exception) {
     }
 
     // alle zeilen lesen.
-    
+
     while (cInfo.output_scanline < cInfo.output_height) {
       int red = decompressor.readScanlines(&data);
       if (red != 1) {
@@ -105,7 +105,7 @@ Image* JpegImageCodec::read(InputStream* _in) throw (Exception) {
     throw;
   }
 
-  
+
   if (jErr.num_warnings != 0) {
     // std::cout << "jpeg-warnings: " << jErr.num_warnings << std::endl;
   } else {
@@ -115,8 +115,8 @@ Image* JpegImageCodec::read(InputStream* _in) throw (Exception) {
 }
 
 
-void JpegImageCodec::write(Image* _image, OutputStream* _out) 
-	throw (Exception) {
+void JpegImageCodec::write(Image* _image, OutputStream* _out)
+  throw (Exception) {
   out = _out;
   if (_image->getFormat().bitPerPixel != 24) {
     throw(Exception("only 24 bit images supported", __FILE__, __LINE__));
@@ -145,7 +145,7 @@ void JpegImageCodec::write(Image* _image, OutputStream* _out)
   dataOutput.empty_output_buffer = JpegImageCodec::emptyOutputBufferFN;
   dataOutput.term_destination = JpegImageCodec::termDestinationFN;
   cInfo.dest = &dataOutput;
-  
+
   // daten setzen
   cInfo.image_width = _image->getWidth();
   cInfo.image_height = _image->getHeight();
@@ -190,7 +190,7 @@ void JpegImageCodec::write(Image* _image, OutputStream* _out)
 boolean JpegImageCodec::fillInputBuffer(j_decompress_ptr cInfo) {
   int red = in->read(*buffer);
   if (red == -1) {
-    return FALSE;        
+    return FALSE;
   }
   unsigned char* help = (unsigned char*)(buffer->getData());
   cInfo->src->next_input_byte = help;
@@ -215,7 +215,7 @@ void JpegImageCodec::errorExitFN(j_common_ptr cInfo) {
   outHelp << "JPEGImageCodec::errorExitFN - " << help << std::ends;
   std::string errMessage(outHelp.str());
   std::cout << "errmessage " << errMessage << std::endl;
-  
+
   throw Exception("pech im jpeg teil", __FILE__, __LINE__);
 */
 }

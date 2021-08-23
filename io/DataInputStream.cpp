@@ -182,7 +182,7 @@ unsigned short int DataInputStream::readUnsignedShort() throw(IOException) {
   return ((unsigned short int)readShort());
 }
 
-std::auto_ptr<std::string> DataInputStream::readLine() throw(IOException) {
+std::unique_ptr<std::string> DataInputStream::readLine() throw(IOException) {
 
   int dataRed = 0;
 
@@ -214,10 +214,10 @@ std::auto_ptr<std::string> DataInputStream::readLine() throw(IOException) {
 
   if (dataRed == 0) {
 
-    return std::auto_ptr<std::string>(0);
+    return std::unique_ptr<std::string>(nullptr);
   }
 
-  return std::auto_ptr<std::string>(new std::string(help.str()));
+  return std::unique_ptr<std::string>(new std::string(help.str()));
 }
 
 char* DataInputStream::readUTF() throw(IOException) {

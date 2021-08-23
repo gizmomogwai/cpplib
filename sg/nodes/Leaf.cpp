@@ -11,8 +11,7 @@ void Leaf::accept(Visitor* v) {
 }
 
 std::string Leaf::toString() {
-  return(std::string("Leaf"));
+  return "Leaf";
 }
-
 
 

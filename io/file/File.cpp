@@ -163,7 +163,7 @@ void File::unifyName() {
   std::vector<std::string> paths;
 
   StringTokenizer tokens(pathName, "/");
-  std::auto_ptr<std::string> token = tokens.next();
+  auto token = tokens.next();
   while (token.get() != 0) {
     if (((*token) != "..") || (paths.empty() || (paths.back() == ".."))) {
       paths.push_back(*token);

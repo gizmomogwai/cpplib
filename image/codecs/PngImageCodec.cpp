@@ -69,18 +69,18 @@ class PngReadStruct : public PngStruct {
     }
 
     png_byte getColorType() {
-      return getInfoPtr()->color_type;
+      return png_get_color_type(getPngPtr(), getInfoPtr());
     }
 
 
     png_uint_32 getWidth() {
-      return getInfoPtr()->width;
+      return png_get_image_width(getPngPtr(), getInfoPtr());
     }
 
     png_uint_32 getHeight() {
-      return getInfoPtr()->height;
+      return png_get_image_height(getPngPtr(), getInfoPtr());
     }
-    
+
     int getBitPerPixel() throw (Exception) {
       png_byte colorType = getColorType();
       switch (colorType) {
@@ -95,7 +95,7 @@ class PngReadStruct : public PngStruct {
           png_set_gray_to_rgb(getPngPtr());
           return 32;
         case PNG_COLOR_TYPE_PALETTE:
-          png_set_packing(getPngPtr()); 
+          png_set_packing(getPngPtr());
           png_set_palette_to_rgb(getPngPtr());
           return 32;
         default:
@@ -135,11 +135,11 @@ class PngWriteStruct : public PngStruct {
         throw Exception("only 3 and 4 byte pp supported", __FILE__, __LINE__);
       }
 
-      png_set_IHDR(getPngPtr(), getInfoPtr(), 
-                   image->getWidth(), 
-                   image->getHeight(), 
+      png_set_IHDR(getPngPtr(), getInfoPtr(),
+                   image->getWidth(),
+                   image->getHeight(),
                    8,
-                   colorType, 
+                   colorType,
                    PNG_INTERLACE_NONE,
                    PNG_COMPRESSION_TYPE_DEFAULT,
                    PNG_FILTER_TYPE_DEFAULT);
@@ -159,7 +159,7 @@ class PngWriteStruct : public PngStruct {
 
 Image* PngImageCodec::read(InputStream* _in) throw (Exception) {
   out = 0;
-  in = _in;  
+  in = _in;
   buffer = new DataBuffer(0, 0, false);
   CleanUpObject<DataBuffer> bufferCleaner(buffer);
 
@@ -183,13 +183,13 @@ Image* PngImageCodec::read(InputStream* _in) throw (Exception) {
   png_set_sig_bytes(readStruct.getPngPtr(), 8);
 
   // check for png finished
-  
-  png_set_read_fn(readStruct.getPngPtr(), (voidp)this, (png_rw_ptr)readFn);
-  
+
+  png_set_read_fn(readStruct.getPngPtr(), this, (png_rw_ptr)readFn);
+
   readStruct.readInfo();
 
-  Image* res = new Image((unsigned int)readStruct.getWidth(), 
-                         (unsigned int)readStruct.getHeight(), 
+  Image* res = new Image((unsigned int)readStruct.getWidth(),
+                         (unsigned int)readStruct.getHeight(),
                          (unsigned int)readStruct.getBitPerPixel());
   png_bytep data = (png_bytep)(res->getBuffer()->getData());
   int height = res->getHeight();
@@ -201,24 +201,24 @@ Image* PngImageCodec::read(InputStream* _in) throw (Exception) {
     data += res->getRowStride();
   }
   readStruct.readImage(rowPointers);
-  
+
   in = 0;
 
   return(res);
 }
 
-void PngImageCodec::write(Image* image, OutputStream* _out) 
-	throw (Exception) {
+void PngImageCodec::write(Image* image, OutputStream* _out)
+  throw (Exception) {
   in = 0;
-  out = _out;  
+  out = _out;
   buffer = new DataBuffer(0, 0, false);
   CleanUpObject<DataBuffer> bufferCleaner(buffer);
-  
+
   PngWriteStruct writeStruct;
 
-  assert(!setjmp(writeStruct.getPngPtr()->jmpbuf));
+  assert(!setjmp(png_jmpbuf(writeStruct.getPngPtr())));
 
-  png_set_write_fn(writeStruct.getPngPtr(), (voidp)this, (png_rw_ptr)writeFn, (png_flush_ptr)flushFn);
+  png_set_write_fn(writeStruct.getPngPtr(), this, (png_rw_ptr)writeFn, (png_flush_ptr)flushFn);
 
   writeStruct.setImageHeader(image);
 
@@ -270,17 +270,17 @@ void PngImageCodec::read(png_bytep data, png_uint_32 l) {
   int toDo = l;
   int red = in->read(*buffer);
   assert(red != -1);
-  
+
   toDo -= red;
   while (toDo > 0) {
     help += red;
     buffer->setData(help, toDo, false);
-    
+
     red = in->read(*buffer);
     assert(red != -1);
 
     toDo -= red;
-  }  
+  }
 }
 
 void PngImageCodec::write(png_bytep data, png_uint_32 l) {

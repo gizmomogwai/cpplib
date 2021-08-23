@@ -1,8 +1,6 @@
 #ifndef _Array3f_h_
 #define _Array3f_h_
 
-#include <pragmaincludes.h>
-
 #include <sg/data/TemplateTupelArray.h>
          
 /** Klasse fuer Daten, die 3 float pro eintrag benoetigen.

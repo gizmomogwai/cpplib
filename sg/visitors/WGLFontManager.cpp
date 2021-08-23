@@ -22,7 +22,7 @@ WGLFontManager::WGLFontManager(float extrusion) {
                        700, // default weight (bold or not)
                        FALSE, // non italic
                        FALSE, // non underline
-                       FALSE, // non strike out     
+                       FALSE, // non strike out
                        ANSI_CHARSET, // ansicharset
                        OUT_DEFAULT_PRECIS, // passt so ungefaehr an specs
                        CLIP_DEFAULT_PRECIS, // default clipping
@@ -38,16 +38,16 @@ WGLFontManager::WGLFontManager(float extrusion) {
   totalChars = 100;
 
   glyphs = new GLYPHMETRICSFLOAT[totalChars];
-  
-  BOOL wglRes = wglUseFontOutlines(hdc, ' ', totalChars,	first, 
+
+  BOOL wglRes = wglUseFontOutlines(hdc, ' ', totalChars,  first,
                                    0.5f, extrusion, WGL_FONT_POLYGONS, glyphs);
 
-  assert(wglRes == TRUE);  
+  assert(wglRes == TRUE);
 
   std::cout << "} WGLFontManager" << std::endl;
 }
-      
-  
+
+
 WGLFontManager::~WGLFontManager() {
 
   glDeleteLists(first, 100);
@@ -55,7 +55,7 @@ WGLFontManager::~WGLFontManager() {
   if (theFont != 0) {
     DeleteObject(theFont);
   }
-  
+
   delete[](glyphs);
 }
 
@@ -89,7 +89,7 @@ void WGLFontManager::render(Text3D* text3d) {
 
   glListBase(oldBase);
   assert(glGetError() == GL_NO_ERROR);
-  
+
   glDisable(GL_NORMALIZE);
   glFrontFace(GL_CCW);
 

@@ -10,7 +10,7 @@ Inflater::Inflater() {
   init(false);
 }
 
-Inflater::~Inflater() {
+Inflater::~Inflater() throw (Exception) {
 
   if (::inflateEnd(stream) != Z_OK) {
     throw(Exception("Inflater::~Inflater", __FILE__, __LINE__));

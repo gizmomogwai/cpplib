@@ -1,8 +1,6 @@
 #ifndef _Leaf_h_
 #define _Leaf_h_
 
-#include <pragmaincludes.h>
-
 #include <string>
 
 #include <sg/nodes/Node.h>
@@ -27,7 +25,7 @@ class Leaf : public Node {
     /** Erzeugt einen neuen Leaf.
      */
     Leaf();
-    
+
     void accept(Visitor* v);
 
     /** Liefert eine StringRep.

@@ -1,8 +1,6 @@
 #ifndef _Texture_h_
 #define _Texture_h_
 
-#include <pragmaincludes.h>
-
 #include <sg/nodeComponents/NodeComponent.h>
 
 #include <sg/nodeComponents/app/SGImage.h>
@@ -34,7 +32,7 @@
 class Texture : public NodeComponent {
 
   public:
-    /** Erzeugt ein neues Texturobjekt aus einem Image. 
+    /** Erzeugt ein neues Texturobjekt aus einem Image.
      *
      * @param _image Bild, das als Texstur verwendet werden soll.
      */
@@ -44,7 +42,7 @@ class Texture : public NodeComponent {
       v->visit(this);
     }
 
-		/** Liefert das SGImage zurueck. 
+		/** Liefert das SGImage zurueck.
 		 *
 		 * @return SGImage* Bild.
 		 */

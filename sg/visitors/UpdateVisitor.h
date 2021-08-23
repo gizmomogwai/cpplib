@@ -1,8 +1,6 @@
 #ifndef _UpdateVisitor_h_
 #define _UpdateVisitor_h_
 
-#include <pragmaincludes.h>
-
 #include <sg/visitors/Visitor.h>
 
 

@@ -1,8 +1,6 @@
 #ifndef _PolygonAttributes_h_
 #define _PolygonAttributes_h_
 
-#include <pragmaincludes.h>
-
 #include <lang/Exception.h>
 
 #include <util/UpdateObject.h>
@@ -25,7 +23,7 @@
  * @author cK, $Author: koestlin $
  */
 class PolygonAttributes : public NodeComponent {
-  
+
  public:
   /** Erzeugt neue Polygonattribute.
    *
@@ -34,25 +32,25 @@ class PolygonAttributes : public NodeComponent {
    * @exception Exception falls der parameter nicht korrekt ist.
    */
   PolygonAttributes(int polyMode) throw (Exception);
-  
+
   /** PolygonMode. Eigentlich private nur die Visitoren sollten das
-   * lesen. 
+   * lesen.
    */
-  int polyMode;  
-  
+  int polyMode;
+
   /** Polygon wird gefuellt. */
-  static const int POLYGON_FILL;  
-  
+  static const int POLYGON_FILL;
+
   /** Nur der Rand des Polygons wird gefuellt. */
-  static const int POLYGON_LINE;  
-  
+  static const int POLYGON_LINE;
+
   /** Nur die Eckpunkte des Polygons werden gezeichnet. */
-  static const int POLYGON_POINT;  
-  
+  static const int POLYGON_POINT;
+
  protected:
   /** Raeumt auf. */
   virtual ~PolygonAttributes() {}
-  
+
 };
 
 #endif // _PolygonAttributes_h_

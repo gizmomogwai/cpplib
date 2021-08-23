@@ -48,8 +48,8 @@ class InputStream {
    * 
    * @param b Buffer.
    *
-   * @return int Anzahl tatsächlich eingelesener Byte. 
-   *         Wird nichts eingelesen wird 0 zurückgeliefert.
+   * @return int Anzahl tatsiaechlich eingelesener Byte. 
+   *         Wird nichts eingelesen wird 0 zurueckgeliefert.
    *
    * @exception IOException wenn etwas schief laeuft.
    */

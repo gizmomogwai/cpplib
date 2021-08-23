@@ -1,8 +1,6 @@
 #ifndef _NodeComponent_h_
 #define _NodeComponent_h_
 
-#include <pragmaincludes.h>
-
 #include <string>
 
 #include <sg/SGObject.h>

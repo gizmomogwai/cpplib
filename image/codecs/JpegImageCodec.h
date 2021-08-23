@@ -3,8 +3,6 @@
 
 #include <image/ImageApi.h>
 
-#include <pragmaincludes.h>
-
 #include <stdio.h>
 #include <iostream>
 
@@ -13,7 +11,6 @@ extern "C" {
   //#define XMD_H
   //#undef FAR
   #include <jpeglib.h>
-  #include <transupp.h>
 }
 
 #include <image/codecs/ImageCodec.h>
@@ -27,15 +24,15 @@ extern "C" {
  * Curriculum Vitae:
  * <ul>
  *   <li> 2000-12-30, cK, Created.
- *   <li> 2000-12-30, cK, fall mit in der mitte gesplittetem 
- *        jpg durchgespielt. und dabei problem mit der default 
+ *   <li> 2000-12-30, cK, fall mit in der mitte gesplittetem
+ *        jpg durchgespielt. und dabei problem mit der default
  *        errorbehandlung gefunden.
  *   <li> 2001-01-03, cK, ein paar mehr exceptions eingebaut
- *   <li> 2001-04-12, cK, Errorhandling eingebaut 
+ *   <li> 2001-04-12, cK, Errorhandling eingebaut
  *        (damit exception geworfen wird, falls nicht jpeg vorliegt).
  * </ul>
  *
- * @todo bei read und write muessen die jpeg-lib structuren 
+ * @todo bei read und write muessen die jpeg-lib structuren
  *       richtig aufgeraeumt werden.
  *
  * @version $Revision: 1.5 $, $Date: 2001/10/23 11:25:02 $
@@ -43,28 +40,28 @@ extern "C" {
  * @author cK, $Author: schaefer $
  */
 class IMAGE_API JpegImageCodec : public ImageCodec {
-	
+
   public:
 
     /** Erzeugt einen neuen JPEGImageCodec.
      *
-     * @param _vFlip Falg, das angibt, ob beim 
-     *        schreiben und lesen die Daten vertical gespiegelt werden 
+     * @param _vFlip Falg, das angibt, ob beim
+     *        schreiben und lesen die Daten vertical gespiegelt werden
      *        sollen.
      * @param _quality Encodierungsqualitaet in Prozent. vFlip default auf false.
      */
-    JpegImageCodec(bool _vFlip, int _quality) : 
+    JpegImageCodec(bool _vFlip, int _quality) :
       vFlip(_vFlip),
       quality(_quality) {
     }
 
     /** Erzeugt einen neuen JPEGImageCodec.
      *
-     * @param _vFlip Falg, das angibt, ob beim 
-     *        schreiben und lesen die Daten vertical gespiegelt werden 
+     * @param _vFlip Falg, das angibt, ob beim
+     *        schreiben und lesen die Daten vertical gespiegelt werden
      *        sollen.
      */
-    JpegImageCodec(bool _vFlip = false) : 
+    JpegImageCodec(bool _vFlip = false) :
       vFlip(_vFlip),
       quality(60) {
     }
@@ -73,7 +70,7 @@ class IMAGE_API JpegImageCodec : public ImageCodec {
      *
      * @param _quality Encodierungsqualitaet in Prozent. vFlip default auf false.
      */
-    JpegImageCodec(int _quality) : 
+    JpegImageCodec(int _quality) :
       vFlip(false),
       quality(_quality) {
     }
@@ -84,10 +81,10 @@ class IMAGE_API JpegImageCodec : public ImageCodec {
     }
 
 
-	  void write(Image* _image, OutputStream* _out) throw (Exception);
+    void write(Image* _image, OutputStream* _out) throw (Exception);
 
-	  
-	  Image* read(InputStream* _in) throw (Exception);
+
+    Image* read(InputStream* _in) throw (Exception);
 
   private:
     /** Initialisiert die Fehlerbehandlung.
@@ -101,7 +98,7 @@ class IMAGE_API JpegImageCodec : public ImageCodec {
 
 
     /** Statische Hilfsmethode, die von der jpeg_source_mgr Struktur
-     * benoetigt wird. 
+     * benoetigt wird.
      *
      * @param cInfo das Lib-jpeg-objekt.
      */
@@ -109,7 +106,7 @@ class IMAGE_API JpegImageCodec : public ImageCodec {
     }
 
 
-    /** Besser hier definieren, da es in meinem Testprojekt sonst 
+    /** Besser hier definieren, da es in meinem Testprojekt sonst
      * zu abstuerzen, wahrscheinlich im context mit windows gekommen ist,
      * die defaultimplementierung versucht das aktuell aktive Fenster zu
      * bekommen. und wenn man kein fenster hat geht das nicht.
@@ -119,38 +116,38 @@ class IMAGE_API JpegImageCodec : public ImageCodec {
     static void outputMessageFN(j_common_ptr cInfo);
 
 
-		/** Callback falls in der Jpeglib ein Fehler auftrat.
-		 *
-		 * @param cInfo das Lib-jpeg-objekt.
-		 */
+    /** Callback falls in der Jpeglib ein Fehler auftrat.
+     *
+     * @param cInfo das Lib-jpeg-objekt.
+     */
     static void errorExitFN(j_common_ptr cInfo);
 
 
     /** Statische Hilfsmethode, die von der jpeg_source_mgr-structur
-     * benoetigt wird. 
+     * benoetigt wird.
      *
      * @param cInfo das Lib-Jpeg-Object.
      */
     static boolean fillInputBufferFN(j_decompress_ptr cInfo) {
-	    JpegImageCodec* codec = (JpegImageCodec*)(cInfo->client_data);
-	    boolean res = codec->fillInputBuffer(cInfo);
-	    return(res);
+      JpegImageCodec* codec = (JpegImageCodec*)(cInfo->client_data);
+      boolean res = codec->fillInputBuffer(cInfo);
+      return(res);
     }
-  
+
 
     /** Statische Hilfsmethode, die von der jpeg_source_mgr-structur
-     * benoetigt wird. 
+     * benoetigt wird.
      *
      * @param cInfo das Lib-Jpeg-Object.
      * @param l anzahl von byte, die uebersprungen werden sollen.
      */
     static void skipInputDataFN(j_decompress_ptr cInfo, long l) {
-	    JpegImageCodec* codec = (JpegImageCodec*)(cInfo->client_data);
-	    codec->skipInputData(cInfo, l);
+      JpegImageCodec* codec = (JpegImageCodec*)(cInfo->client_data);
+      codec->skipInputData(cInfo, l);
     }
-  
 
-    /** resync keine ahnung. 
+
+    /** resync keine ahnung.
      *
      * Kann glaube ich fuer streams nicht implementiert werden.
      *
@@ -158,24 +155,24 @@ class IMAGE_API JpegImageCodec : public ImageCodec {
      * @param desired keine ahnung.
      */
     static boolean resyncToRestartFN(j_decompress_ptr cInfo, int desired) {
-	    return(false);
+      return FALSE;
     }
-  
+
 
     /** beendet die sourcedecompression.
      *
      * @param cInfo das lib-jpeg-objekt.
      */
     static void termSourceFN(j_decompress_ptr cInfo) {
-//	    std::cout << "JpegImageCodec::termSourceFN" << std::endl;
+//      std::cout << "JpegImageCodec::termSourceFN" << std::endl;
     }
 
 
     /** Fuellt den localen Puffer mit etwas Daten.
      *
-     * das lib-jpeg-object muss geupdatet werden, je nachdem welche 
+     * das lib-jpeg-object muss geupdatet werden, je nachdem welche
      * anzahl von byte gelesen wurden.
-     * 
+     *
      * @param cInfo das lib-jpeg-object.
      *
      * @return boolean TRUE, falls werte gelesen wurden.
@@ -191,14 +188,14 @@ class IMAGE_API JpegImageCodec : public ImageCodec {
      * @param l anzahl zu ueberspringender byte.
      */
     void skipInputData(j_decompress_ptr cInfo, long l) {
-	    if (l > 0) {
-		    while (l > (long)(cInfo->src->bytes_in_buffer)) {
-			    l -= (long)(cInfo->src->bytes_in_buffer);
-			    fillInputBuffer(cInfo);
-		    }
-		    cInfo->src->next_input_byte += l;
-		    cInfo->src->bytes_in_buffer -= l;
-	    }
+      if (l > 0) {
+        while (l > (long)(cInfo->src->bytes_in_buffer)) {
+          l -= (long)(cInfo->src->bytes_in_buffer);
+          fillInputBuffer(cInfo);
+        }
+        cInfo->src->next_input_byte += l;
+        cInfo->src->bytes_in_buffer -= l;
+      }
     }
 
 
@@ -208,8 +205,8 @@ class IMAGE_API JpegImageCodec : public ImageCodec {
      * @param cInfo jpeg-lib-object.
      */
     static void initDestinationFN(j_compress_ptr cInfo) {
-	    JpegImageCodec* codec = (JpegImageCodec*)(cInfo->client_data);
-	    codec->initDestination(cInfo);
+      JpegImageCodec* codec = (JpegImageCodec*)(cInfo->client_data);
+      codec->initDestination(cInfo);
     }
 
 
@@ -218,8 +215,8 @@ class IMAGE_API JpegImageCodec : public ImageCodec {
      * @param cInfo jpeg-lib-object.
      */
     void initDestination(j_compress_ptr cInfo) {
-	    cInfo->dest->next_output_byte = (unsigned char*)buffer->getData();
-	    cInfo->dest->free_in_buffer = buffer->getSize();
+      cInfo->dest->next_output_byte = (unsigned char*)buffer->getData();
+      cInfo->dest->free_in_buffer = buffer->getSize();
     }
 
 
@@ -228,9 +225,9 @@ class IMAGE_API JpegImageCodec : public ImageCodec {
      * @param cInfo jpeg-lib-object.
      */
     static boolean emptyOutputBufferFN(j_compress_ptr cInfo) {
-	    JpegImageCodec* codec = (JpegImageCodec*)(cInfo->client_data);
-	    boolean res = codec->emptyOutputBuffer(cInfo);
-	    return(res);
+      JpegImageCodec* codec = (JpegImageCodec*)(cInfo->client_data);
+      boolean res = codec->emptyOutputBuffer(cInfo);
+      return res;
     }
 
 
@@ -239,9 +236,9 @@ class IMAGE_API JpegImageCodec : public ImageCodec {
      * @param cInfo jpeg-lib-object.
      */
     boolean emptyOutputBuffer(j_compress_ptr cInfo) {
-	    out->write(buffer);
-	    initDestination(cInfo);
-	    return(TRUE);
+      out->write(buffer);
+      initDestination(cInfo);
+      return TRUE;
     }
 
 
@@ -251,18 +248,18 @@ class IMAGE_API JpegImageCodec : public ImageCodec {
      * @param cInfo jpeg-lib-object.
      */
     static void termDestinationFN(j_compress_ptr cInfo) {
-	    JpegImageCodec* codec = (JpegImageCodec*)(cInfo->client_data);
-	    codec->termDestination(cInfo);
+      JpegImageCodec* codec = (JpegImageCodec*)(cInfo->client_data);
+      codec->termDestination(cInfo);
     }
 
 
-    /** Eigentliche Implementierung. 
+    /** Eigentliche Implementierung.
      *
      * @param cInfo jpeg-lib-object.
      */
     void termDestination(j_compress_ptr cInfo) {
-	    int l = buffer->getSize() - cInfo->dest->free_in_buffer;
-	    out->write(buffer, 0, l);
+      int l = buffer->getSize() - cInfo->dest->free_in_buffer;
+      out->write(buffer, 0, l);
     }
 
 

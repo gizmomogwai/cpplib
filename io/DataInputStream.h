@@ -159,7 +159,7 @@ class DataInputStream : public FilterInputStream {
    *
    * @return std::string* Zeile oder 0 fall eof.
    */
-  virtual std::auto_ptr<std::string> readLine() throw (IOException);
+  virtual std::unique_ptr<std::string> readLine() throw (IOException);
 
   /** Liesst einen UTF-String. Ein UTFString ist ein chararray, 
    * bei dem zunaechst steht, wieviele chars das chararray umfasst.

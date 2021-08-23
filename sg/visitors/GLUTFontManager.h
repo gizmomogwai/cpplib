@@ -1,8 +1,6 @@
 #ifndef _GLUTFontManager_h_
 #define _GLUTFontManager_h_
 
-#include <pragmaincludes.h>
-
 #include <sg/nodeComponents/geom/Text3D.h>
 
 #include <sg/visitors/OGLFontManager.h>

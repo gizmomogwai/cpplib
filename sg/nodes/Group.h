@@ -1,8 +1,6 @@
 #ifndef _Group_h_
 #define _Group_h_
 
-#include <pragmaincludes.h>
-
 #include <string>
 #include <list>
 
@@ -37,7 +35,7 @@ class BranchGroup;
  */
 class NodeList : public std::list<Node*>, public RefCountedObject {
   public:
-    /** Replace, dass das refcounting beruecksichtigt. 
+    /** Replace, dass das refcounting beruecksichtigt.
      *
      * @param idx Index der ersetz werden soll.
      * @param n Neuer Knoten fuer den Index.
@@ -64,10 +62,10 @@ class NodeList : public std::list<Node*>, public RefCountedObject {
     }
 
   protected:
-    /** Zaehlt bei allen Nodes in der Liste den Referencecounter runter. */ 
+    /** Zaehlt bei allen Nodes in der Liste den Referencecounter runter. */
     virtual ~NodeList() {
       std::cout << "~NodeList" << std::endl;
-      
+
       std::list<Node*>::iterator i = begin();
       while (i != end()) {
         Node* help = *i++;
@@ -78,10 +76,10 @@ class NodeList : public std::list<Node*>, public RefCountedObject {
 };
 
 /** Hilfsklasse um ueber eine NodeList zu iterieren (und am ende die
- * referenz herunterzuzaehlen). 
+ * referenz herunterzuzaehlen).
  *
  * Das ist noetig, weil man irgendwannmal die NodeList per get von einem
- * UpdateObject holt (hauptsaechlich die Visitoren gehen ueber 
+ * UpdateObject holt (hauptsaechlich die Visitoren gehen ueber
  * alle Kinder einer Gruppe).
  *
  * <p>
@@ -100,41 +98,39 @@ class NodeListIterator : public Iterator<Node*> {
   public:
     /** Erzeugt einen neuen Iterator.
      *
-     * @param _list Liste, ueber die iteriert werden soll. 
+     * @param _list Liste, ueber die iteriert werden soll.
      */
     NodeListIterator(NodeList* _list) {
       list = _list;
-      if (list != 0) {
+      if (list != nullptr) {
         i = list->begin();
-      } else {
-        i = 0;
       }
     }
-    
-    /** Raeumt auf (zaehlt rteference herunter. */
+
+    /** Raeumt auf (zaehlt reference herunter. */
     virtual ~NodeListIterator() {
-      if (list != 0) {
+      if (list != nullptr) {
         list->releaseReference();
-        list = 0;
+        list = nullptr;
       }
     }
 
     bool hasNext() {
-      if (i == 0) {
-        return(false);
+      if (list == nullptr) {
+        return false;
       } else {
-        return(i != list->end());
+        return i != list->end();
       }
     }
 
     Node* next() {
-      return(*i++);
+      return *i++;
     }
 
   private:
     /** Liste. */
     NodeList* list;
-    
+
     /** stl-Iteartor. */
     NodeList::iterator i;
 
@@ -156,7 +152,7 @@ class NodeListIterator : public Iterator<Node*> {
  * @version $Revision: 1.3 $, $Date: 2001/08/06 15:53:24 $
  */
 class Group : public Node {
-	public:
+  public:
     /** Erzeugt ein neues Objekt.
      */
     Group();
@@ -171,7 +167,7 @@ class Group : public Node {
      */
     virtual void addChild(Node* n);
 
-    /** Fuegt einen Knoten an ein Stelle hinzu. 
+    /** Fuegt einen Knoten an ein Stelle hinzu.
      *
      * @param n Node
      * @param idx Index an den der Knoten gesetzt werden soll.
@@ -187,17 +183,17 @@ class Group : public Node {
     /** Liefert einen Iterator ueber alle Kinder.
      *
      * Der Iterator muss per delete zerstoehrt werden.
-	 *
+   *
      * @return NodeListIterator* Iterator ueber die Kinder.
      */
     virtual NodeListIterator* getChilds();
-		
-	/**
-	 * Liefert die aktuelle childlist. bitte releaseReference.
-	 */
-	virtual NodeList* getChildsAsList() {
-		return childs->get();
-	}
+
+  /**
+   * Liefert die aktuelle childlist. bitte releaseReference.
+   */
+  virtual NodeList* getChildsAsList() {
+    return childs->get();
+  }
 
     /** Liefert die Anzahl der Kinder.
      *
@@ -219,8 +215,8 @@ class Group : public Node {
     virtual ~Group();
 
   private:
-    /** Fall noch keine neue Liste vorhanden ist, wird die 
-     * aktuelle liste kopiert und als Childliste angemeldet. Falls 
+    /** Fall noch keine neue Liste vorhanden ist, wird die
+     * aktuelle liste kopiert und als Childliste angemeldet. Falls
      * die neue Liste schon vorhanden ist wird nichts gemacht.
      *
      * @param oldOne Liste mit aktuellen Kindern.

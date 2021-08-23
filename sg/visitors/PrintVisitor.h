@@ -1,8 +1,6 @@
 #ifndef _PrintVisitor_h_
 #define _PrintVisitor_h_
 
-#include <pragmaincludes.h>
-
 #include <string>
 
 #include <sg/visitors/Visitor.h>

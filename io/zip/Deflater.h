@@ -73,7 +73,7 @@ class Deflater {
     }
  
     /** Raeumt auf. */
-    virtual ~Deflater() {
+    virtual ~Deflater() throw (Exception) {
 	    if (stream != 0) {
         int res = ::deflateEnd(stream);
         if (res == Z_STREAM_ERROR) {

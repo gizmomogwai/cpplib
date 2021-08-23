@@ -1,24 +1,22 @@
 #ifndef _Array2f_h_
 #define _Array2f_h_
 
-#include <pragmaincludes.h>
-
 #include <sg/data/TemplateTupelArray.h>
-         
+
 /** Klasse fuer Daten, die 2 float pro eintrag benoetigen.
  *
  * <p>
  * Curriculum Vitae:
- * <ul> 
+ * <ul>
  *   <li> 2000-12-07, cK, Created.
- * </ul>                          
+ * </ul>
  *
  * @version $Revision: 1.1.1.1 $, $Date: 2001/04/27 14:10:36 $
  *
  * @author cK, $Author: koestlin $
  */
 class Array2f : public TemplateTupelArray<float> {
-  public:  
+  public:
     /** Erzeugt ein FloatArray mit Tupel der groesse 2.
      *
      * @param size Anbzahl von 2er Tupeln.
@@ -41,7 +39,7 @@ class Array2f : public TemplateTupelArray<float> {
 		/** Raeumt auf. */
     virtual ~Array2f() {
     }
-  
+
 };
 
 #endif // _Array2f_h_

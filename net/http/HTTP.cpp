@@ -143,8 +143,8 @@ InputStream* HTTP::get() throw(Exception) {
 
   // check answer either Content-Range, Content-Length,
   // or a chunked encoding must be given
-  std::auto_ptr<std::string> value =
-      std::auto_ptr<std::string>(responce->getValue("Content-Range"));
+  auto value =
+      std::unique_ptr<std::string>(responce->getValue("Content-Range"));
   if (value.get() != 0) {
     throw(Exception("HTTP::get - ContentRange not supported", __FILE__,
                     __LINE__));

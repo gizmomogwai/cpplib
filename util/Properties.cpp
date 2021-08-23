@@ -9,14 +9,14 @@ Properties::Properties() {}
 Properties::~Properties() {}
 
 void Properties::read(DataInputStream& in) {
-  std::auto_ptr<std::string> line = in.readLine();
+  auto line = in.readLine();
   while (line.get() != 0) {
 
     if (line->length() > 0) {
       if (line->at(0) != '#') {
         StringTokenizer tokens(*line, "=");
-        std::auto_ptr<std::string> key = tokens.next();
-        std::auto_ptr<std::string> value = tokens.next();
+        auto key = tokens.next();
+        auto value = tokens.next();
 
         if ((key.get() != 0) && (value.get() != 0)) {
           setProperty(*key, *value);

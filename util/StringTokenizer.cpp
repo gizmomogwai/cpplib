@@ -14,12 +14,12 @@ bool StringTokenizer::isDelimiter(char v) {
   return (StringTools::contains(&delimiters, v));
 }
 
-std::auto_ptr<std::string> StringTokenizer::rest() {
+std::unique_ptr<std::string> StringTokenizer::rest() {
   end = source.end();
-  return std::auto_ptr<std::string>(new std::string(start, end));
+  return std::unique_ptr<std::string>(new std::string(start, end));
 }
 
-std::auto_ptr<std::string> StringTokenizer::next() {
+std::unique_ptr<std::string> StringTokenizer::next() {
   // ueberspringe fuehrende delimiters
   while ((start != source.end()) && (isDelimiter(*start) == true)) {
     start++;
@@ -34,10 +34,10 @@ std::auto_ptr<std::string> StringTokenizer::next() {
   }
 
   if (found == 0) {
-    return std::auto_ptr<std::string>(0);
+    return std::unique_ptr<std::string>(nullptr);
   }
 
-  std::auto_ptr<std::string> res(new std::string(start, end));
+  std::unique_ptr<std::string> res(new std::string(start, end));
   start = end;
 
   return res;

@@ -1,8 +1,6 @@
 #ifndef _SGObserver_h_
 #define _SGObserver_h_
 
-#include <pragmaincludes.h>
-
 #include <sg/math/RCTransform3D.h>
 #include <vecmath/Transform3D.h>
 #include <vecmath/Vector3f.h>
@@ -72,7 +70,7 @@ class SGObserver : public ProjectionGroup {
   
   /** Liefert die Translation.
    *
-   * @return Vector3f* Die Translation, geht in den Besitz des Callers über.
+   * @return Vector3f* Die Translation, geht in den Besitz des Callers ueber.
    */
   virtual Vector3f* getTranslation();
   

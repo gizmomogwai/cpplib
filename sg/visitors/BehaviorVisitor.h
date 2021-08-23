@@ -1,8 +1,6 @@
 #ifndef _BehaviorVisitor_h_
 #define _BehaviorVisitor_h_
 
-#include <pragmaincludes.h>
-
 #include <sg/visitors/Visitor.h>
 
 /** Besucher der alle Behaviors im Graphen evaluiert.

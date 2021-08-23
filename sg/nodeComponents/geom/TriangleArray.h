@@ -1,8 +1,6 @@
 #ifndef _TriangleArray_h_
 #define _TriangleArray_h_
 
-#include <pragmaincludes.h>
-
 #include <sstream>
 
 #include <sg/data/Array1i.h>
@@ -18,7 +16,7 @@
 
 /** Klasse, die TriangleArrays speichert.
  *
- * Ein TriangleArray ist eine Menge von Punkten (und evtl. 
+ * Ein TriangleArray ist eine Menge von Punkten (und evtl.
  * deren Farben, Normalen und Texturcoordinaten). Diese werden je nach
  * Typ zu graphicprimitiven zusammengefasst. Die gelaeufigsten davon sind:
  * Triangles, Fans, Strips. Bei Triangles werden jeweils 3 Punkt zu einem
@@ -53,7 +51,7 @@ class TriangleArray : public Geometry {
      * @param _maxMultiTextures anzahl von multitexturelayers.
      */
     TriangleArray(const TriangleArrayType _type, int _maxMultiTextures);
-    
+
     void accept(Visitor* v) {
       v->visit(this);
     }
@@ -61,11 +59,11 @@ class TriangleArray : public Geometry {
     /** Setzt die Koordinaten des TriangleFans.
      *
 		 * SG-maessiges setzen.
-		 * 
+		 *
      * @param coords Neue Koordinaten.
      */
     virtual void setCoordinates(Array3f* coords);
-    
+
     /** Setzt die Farben.
 		 *
 		 * SG-maessiges setzen.
@@ -142,10 +140,10 @@ class TriangleArray : public Geometry {
      * @param _texNr Multitexturnr.
      */
     void assertMaxMultiTextures(int _texNr);
-    
+
     /** Anzahl von multitextur-leveln. */
     int maxMultiTextures;
-    
+
 };
 
 #endif // _TriangleArray_h_

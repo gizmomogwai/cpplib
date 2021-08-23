@@ -1,8 +1,6 @@
 #ifndef _Point3f_h_
 #define _Point3f_h_
 
-#include <pragmaincludes.h>
-
 #include <lang/Exception.h>
 #include <math.h>
 #include <string>

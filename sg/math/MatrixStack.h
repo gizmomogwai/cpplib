@@ -38,7 +38,7 @@ class MatrixStack {
 			}
     }
 
-    /** Bequeme Methode um die ID au´f den Stack zu pushen.
+    /** Bequeme Methode um die ID auf den Stack zu pushen.
      */
     void pushIdentity() {
       Transform3D* t3d = new Transform3D();

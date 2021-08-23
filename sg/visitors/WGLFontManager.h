@@ -1,8 +1,6 @@
 #ifndef _WGLFontManager_h_
 #define _WGLFontManager_h_
 
-#include <windowsinclude.h>
-
 #include <sg/visitors/OGLFontManager.h>
 
 #ifdef OSX
@@ -15,11 +13,11 @@
  *
  * <p>
  * Curriculum Vitae:
- * <ul> 
+ * <ul>
  *   <li> 2001-02-13, cK, Created.
- *   <li> 2001-03-13, cK, fonts anhand von glyphmetrics skaliert.   
+ *   <li> 2001-03-13, cK, fonts anhand von glyphmetrics skaliert.
  *   <li> 2001-07-19, gS, Extrusion rausgemacht, und bold
- * </ul>                          
+ * </ul>
  *
  * @version $Revision: 1.3 $, $Date: 2001/08/08 14:32:20 $
  *
@@ -31,17 +29,17 @@ class WGLFontManager : public OGLFontManager {
   public:
     /** Erzeugt den Manager. */
     WGLFontManager(float extrusion=0.35f);
-                              
-    /** Raeumt auf. */                              
+
+    /** Raeumt auf. */
     virtual ~WGLFontManager();
 
     void render(Text3D* text3d);
-  private:      
+  private:
     /** OGL-Objectid des ersten erzeugten Buchstabens. */
     GLuint first;
 
-    /** Basis, die aktiviert werden muss, um bytearrays 
-     * mit den generierten calllists zu rendern. 
+    /** Basis, die aktiviert werden muss, um bytearrays
+     * mit den generierten calllists zu rendern.
      */
     GLuint base;
 
@@ -54,8 +52,8 @@ class WGLFontManager : public OGLFontManager {
     /** Anzahl an verwendeten Displaylisten. */
     unsigned int totalChars;
 
-#endif  
+#endif
 };
- 
+
 
 #endif // _WGLFontManager_h_

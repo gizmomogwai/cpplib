@@ -1,8 +1,6 @@
 #ifndef _Geometry_h_
 #define _Geometry_h_
 
-#include <pragmaincludes.h>
-
 #include <sg/nodeComponents/NodeComponent.h>
 #include <sg/visitors/Visited.h>
 #include <sg/visitors/Visitor.h>
@@ -34,3 +32,4 @@ class Geometry : public NodeComponent  {
 };
 
 #endif // _Geometry_h_
+

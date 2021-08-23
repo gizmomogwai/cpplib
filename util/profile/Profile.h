@@ -10,7 +10,7 @@ class Profile;
 class ProfileList;
 class ProfileIterator;
 
-/** Ein Programmbereich, zwisachen zusammengehoerigen begin und
+/** Ein Programmbereich, zwischen zusammengehoerigen begin und
  * end anweisungen wird Profile genannt. Hier werden alle Infos gespeichert.
  *
  * <p>
@@ -116,7 +116,7 @@ class Profile {
     /** Fuegt ein Kind hinzu.
      *
      * @param profile Neues Kind, das Kind geht in den Besitz 
-     *        des Profiles über und wird von ihm verwaltet.
+     *        des Profiles ueber und wird von ihm verwaltet.
      */
     void addChild(Profile* profile);
 

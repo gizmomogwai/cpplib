@@ -94,7 +94,7 @@ class IMAGE_API ExifImageHelper {
       return "EXIFINTEROPIFDPOINTER";
     case 41728:
       return "FILESOURCE";
-      
+
     default:
       std::ostringstream s;
       s << "unknown " << id;
@@ -104,4 +104,3 @@ class IMAGE_API ExifImageHelper {
 };
 
 #endif
-

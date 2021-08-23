@@ -84,8 +84,8 @@ class ChunkedHTTPInputStream : public FilterInputStream {
       if (dataSize == -1) {
         DataInputStream dIn(in, false);
         
-	std::auto_ptr<std::string> chunkSize = dIn.readLine();
-	assert(chunkSize.get());
+        auto chunkSize = dIn.readLine();
+        assert(chunkSize.get());
         dataSize = Long::parseLong(*chunkSize, 16);
       }
     }
@@ -95,7 +95,7 @@ class ChunkedHTTPInputStream : public FilterInputStream {
 
       DataInputStream dIn(in, false);
       
-      std::auto_ptr<std::string> help = dIn.readLine();
+      auto help = dIn.readLine();
       
       while ((help.get() != 0) && (help->length() != 0)) {
         help = dIn.readLine();

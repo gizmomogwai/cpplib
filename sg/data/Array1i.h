@@ -1,8 +1,6 @@
 #ifndef _Array1i_h_
 #define _Array1i_h_
 
-#include <pragmaincludes.h>
-
 #include <lang/Exception.h>
 
 #include <sg/nodeComponents/NodeComponent.h>
@@ -30,13 +28,13 @@ class Array1i : public TemplateTupelArray<int> {
      * @param _tupelSize Anzahl von ints pro Tupel.
      */
     Array1i(int _size) : TemplateTupelArray<int>(_size, 1) {
-    } 
+    }
 
   protected:
     /** Raeumt auf. */
     virtual ~Array1i() {
     }
-      
+
 };
 
 #endif // _Array1i_h_

@@ -1,8 +1,6 @@
 #ifndef _Text3D_h_
 #define _Text3D_h_
 
-#include <pragmaincludes.h>
-
 #include <string>
 
 #include <sg/nodeComponents/geom/Geometry.h>

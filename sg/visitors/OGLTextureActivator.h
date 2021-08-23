@@ -1,7 +1,6 @@
 #ifndef _OGLTextureActivator_h_
 #define _OGLTextureActivator_h_
 
-#include <windowsinclude.h>
 #include <list>
 #include <lang/Mutex.h>
 
@@ -16,7 +15,7 @@
 class OGLTextureID;
 class Texture;
 class Image;
-	
+
 /** Liste mit zur Karte geladenen Texturobjekten.
  *
  * Die Liste erlaubt das Entfernen eines Objektes anhand der vergebenen id.
@@ -47,11 +46,11 @@ class RegisterList : public std::list<OGLTextureID*> {
 
 
 /** Klasse um aehnlich wie der OGLTextureManager texturen auf
- * die Grafikkarte (bzw. in den Treiber) zu laden. Im Gegensatz zum 
+ * die Grafikkarte (bzw. in den Treiber) zu laden. Im Gegensatz zum
  * OGLTextureManager wird der CustomData-Mechanismus verwendet.
  *
- * das deleteTexture und deleteUnusedTextures ist noetig, um das 
- * loeschen von texturen aus einem anderen thread heraus zu 
+ * das deleteTexture und deleteUnusedTextures ist noetig, um das
+ * loeschen von texturen aus einem anderen thread heraus zu
  * ermoeglichen.
  *
  * Es werden 2 Listen mit TextureIDs gefuehrt:
@@ -70,8 +69,8 @@ class RegisterList : public std::list<OGLTextureID*> {
  *   <li> 2001-10-23, cK, Loeschen von Texturen korrigiert (probleme mit dem texturcache).
  * </ul>
  *
- * @todo Scheinbar ists so, dass das glBindTExture mehr 
- *       textureinstellungen laedt als angenommen als kann 
+ * @todo Scheinbar ists so, dass das glBindTExture mehr
+ *       textureinstellungen laedt als angenommen als kann
  *       man hier z.b. textureWrap auch nur einmal aufrufen.
  *       vgl. OGLRenderVisitor
  *
@@ -99,12 +98,12 @@ class OGLTextureActivator : public Mutex {
      */
     void activate(Texture* t);
 
-	  /** Fuehrt den eigentlichen glTexImage2D-call aus.
-	   * @param image bilddaten.
-	   * @param nOfChannels anzahhl der farbkanaele.
-	   * @param format oglformat.
-		 */
-		void texImage(Image* image, int nOfChannels, int format);
+    /** Fuehrt den eigentlichen glTexImage2D-call aus.
+     * @param image bilddaten.
+     * @param nOfChannels anzahhl der farbkanaele.
+     * @param format oglformat.
+     */
+    void texImage(Image* image, int nOfChannels, int format);
 
     /** Gibt eine Textur (bzw. deren id) zum Abschuss frei.
      *
@@ -116,12 +115,12 @@ class OGLTextureActivator : public Mutex {
      */
     void deleteTexture(OGLTextureID* t);
 
-    /** Loescht alle nicht verwendeten Texturen. 
+    /** Loescht alle nicht verwendeten Texturen.
      * (deren ids sind in der toDelete-Liste gespeichert).
      *
-     * Dieses nicht sofortige loeschen ist noetig, da das deleteTexture 
-     * auch aus anderen Threads und damit in anderen OGLContexten 
-     * moeglich ist. Sollte am Anfang oder am Ende des Renderns des 
+     * Dieses nicht sofortige loeschen ist noetig, da das deleteTexture
+     * auch aus anderen Threads und damit in anderen OGLContexten
+     * moeglich ist. Sollte am Anfang oder am Ende des Renderns des
      * Root-Knoten stattfinden.
      */
     void deleteUnusedTextures();
@@ -145,7 +144,7 @@ class OGLTextureActivator : public Mutex {
  * Curriculum Vitae:
  * <ul>
  *   <li> 2001-07-05, cK, Created.
- *   <li> 2001-07-06, cK, Textur wird im Destruktor nun auch 
+ *   <li> 2001-07-06, cK, Textur wird im Destruktor nun auch
  *        bei ogl aufgeraeumt, TextureListener wird nicht mehr benoetigt.
  *   <li> 2001-10-23, cK, Um registered-flag erweitert.
  * </ul>
@@ -163,11 +162,11 @@ class OGLTextureID : public CustomData {
      * @param _tManager zugehoeriger activator.
      * @param _id OGLTextureObjectID.
      */
-    OGLTextureID(OGLTextureActivator* _tManager, GLuint _id) 
+    OGLTextureID(OGLTextureActivator* _tManager, GLuint _id)
       : id(_id), tManager(_tManager), registered(true) {
     }
 
-    /** Raeumt auf. 
+    /** Raeumt auf.
      *
      * Falls die Textur noch registriert ist, muss sie von der Grtafikkarte entfernt werden,
      * ansonsten wurde das schon vom textureactivator gemacht.

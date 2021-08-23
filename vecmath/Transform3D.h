@@ -1,8 +1,6 @@
 #ifndef _Transform3D_h_
 #define _Transform3D_h_
 
-#include <pragmaincludes.h>
-
 #include <string>
 #include <string.h>
 
@@ -152,7 +150,7 @@ class Transform3D {
 		indices.idx15 = 1;
 	}
 
-	/** Löscht die Daten. */
+	/** Loescht die Daten. */
 	void clear() {
 		memset(m, 0, 64);
 	}

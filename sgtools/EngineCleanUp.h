@@ -1,8 +1,6 @@
 #ifndef _EngineCleanUp_h_
 #define _EngineCleanUp_h_
 
-#include <pragmaincludes.h>
-
 #include <list>
 
 #include <util/ListIterator.h>

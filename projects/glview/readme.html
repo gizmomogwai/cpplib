@@ -1,0 +1,109 @@
+<html>
+  <head>
+    <title>
+      GlView
+    </title>
+  </head>
+  <body>
+    <h1>GlView</h1>
+      <h2>Einleitung</h2>
+        GlView ist ein OpenGl-Programm dass als Bildviewer dient. Es
+      unterst&uuuml;tzt momentan nur jpgs, pngs und gifs. Besonders
+      interessant ist das schnelle und weiche Zommen.
+      <h2>Verwandte Systeme</h2>
+        Es gibt eine grosse Anzahl besserer Viewer. Auch imFreewareberecih
+      existieren unter anderem <a href="http://www.irfanview.com/">Irfan
+      View</a>, <a href="http://www.xnview.com">XNView</a> oder <a
+      href="http://www.slowview.f2s.com/">SlowView</a> die ein wesentlich
+      besseres UserInterface und auch wesentlich mehr Dateiformate
+      unterstützen. Auch ein OpenGl-Viewer f&uuml;r Linux (<a
+      href="http://gliv.tuxfamily.org">gliv</a>) existiert, der basierend
+      auf der imlib2 mehr Formate unterst&uuml;tzt und ein bessere
+      UserInterface bietet.
+      <h2>Motivation</h2>
+        Um den Szenegraph zu testen wurde dieses Programm in 2 Tagen
+      zusammengehackt. Es ist in keiner weise optimiert. Navigation in den
+      Verzeichnissen ist nur rudiment&auml;r implementiert.
+      <h2>Bedienung</h2>
+        Es handelt sich um ein Kommandozeilenprogramm, dessen
+      <b>einziger</b> Parameter ein Bild oder ein Verzeichnis sein
+      sollte. Der Parameter kann z.b. durch dnd auf das Programmicon
+      uebergeben werden. Alle Bilder im angegebenen Verzeichnis werden
+      angezeigt. 
+      <h3>Tasten</h3>
+      <ul>
+			  <li> BildAuf Vorheriges Bild im Verzeichnis.
+				<li> BildAb Naechstes Bild im Verzeichnis.
+				<li> Pfeiltasten herumstrafen (nur moeglich, wenn das bild groesser
+				als das Fenster ist).
+				<li> +, - Vergroessern, verkleinern.
+				<li> 0,...,9 verschieden Zoomfaktoren (5 ist Zoomfaktor 1)
+			</ul>
+
+			<h2>Rechtliches (Verwendetet Libs)</h2>
+			<h3>zLib 1.1.3</h3>
+			 	Robust, efficient zlib-based compression (zlib is a wonderful
+		  free compression library by Jean-loup Gailly and Mark Adler)
+			<br/>
+	    <b>Copyright (c) 1995-1998 Jean-loup Gailly and Mark Adler</b>
+			<h3>libPNG 1.0.5</h3>
+			 libpng version 1.0.5 - October 15, 1999<br/>
+			 Copyright (c) 1995, 1996 Guy Eric Schalnat, 
+			 Group 42, Inc.<br/>
+			 Copyright (c) 1996, 1997 Andreas Dilger<br/>
+			 Copyright (c) 1998, 1999 Glenn Randers-Pehrson
+			 <h3>libjpeg 6b</h3>
+			 This software is copyright (C) 1991-1998, Thomas G. Lane.
+			 All Rights Reserved except as specified below.
+			 
+			 <p>
+       Permission is hereby granted to use, copy, modify, and distribute this
+       software (or portions thereof) for any purpose, without fee, subject
+       to these conditions:
+       <ol>
+        <li> If any part of the source code for this software is
+				distributed, then this README file must be included, with this
+				copyright and no-warranty notice unaltered; and any additions,
+				deletions, or changes to the original files must be clearly
+				indicated in accompanying documentation. 
+				<li> If only executable code is distributed, then the accompanying 
+        documentation must state that this software is based in part on the
+				work of the Independent JPEG Group.
+        <li> Permission for use of this software is granted only if the
+				user accepts full responsibility for any undesirable consequences;
+				the authors accept NO LIABILITY for damages of any kind. 
+      </ol>
+      </p>
+
+      <p>
+			These conditions apply to any software derived from or based on the
+			IJG code, not just to the unmodified library.  If you use our work,
+			you ought to acknowledge us. 
+      </p>
+
+			<p>
+      Permission is NOT granted for the use of any IJG author's name or
+			company name in advertising or publicity relating to this software or
+			products derived from it.  This software may be referred to only as
+			the Independent JPEG Group's software.
+			</p>
+
+      <p>
+			We specifically permit and encourage the use of this software as the
+			basis of commercial products, provided that all warranty or liability
+			claims are assumed by the product vendor.
+			</p>
+			
+		<h3>GifLib</h3>
+	 In order to make life a little bit easier when using the GIF file
+	 format, this library was written, and which does all the dirty work.
+	 
+	 <p>																																	
+		Written by Gershon Elber,  Jun. 1989 <br/>
+	  Hacks by Eric S. Raymond,  Sep. 1992 <br/>
+	</p>
+			
+
+  </body>
+</html>
+

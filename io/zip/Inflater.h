@@ -36,7 +36,7 @@ class Inflater {
     Inflater();
 
     /** Raeumt auf. */
-    virtual ~Inflater();
+    virtual ~Inflater() throw (Exception);
 
     /** Setzt den sourcePuffer fuer zu dekomprimierende Daten. 
      *

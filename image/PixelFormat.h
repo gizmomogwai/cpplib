@@ -22,18 +22,18 @@
 class IMAGE_API PixelFormat {
 
  public:
-  /** Erzeugt ein neues Format. 
+  /** Erzeugt ein neues Format.
    *
    * @param bitPerPixel Anzahl von Pit Pro Pixel.
    */
   PixelFormat(int bitPerPixel);
 
-  /** Erzeugt ein Pixelformat aus einem anderen. 
+  /** Erzeugt ein Pixelformat aus einem anderen.
    *
    * @param format Format.
    */
   PixelFormat(PixelFormat* format);
-		
+
   /** Bit Pro Pixel. */
   unsigned int bitPerPixel;
 
@@ -50,5 +50,3 @@ class IMAGE_API PixelFormat {
 };
 
 #endif // _PixelFormat_h_
-
-

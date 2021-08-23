@@ -1,8 +1,6 @@
 #ifndef _Behavior_h_
 #define _Behavior_h_
 
-#include <pragmaincludes.h>
-
 #include <lang/Exception.h>
 
 #include <sg/nodes/Leaf.h>

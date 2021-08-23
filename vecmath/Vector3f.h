@@ -1,8 +1,6 @@
 #ifndef _Vector3f_h_
 #define _Vector3f_h_
 
-#include <pragmaincludes.h>
-
 #include <lang/Exception.h>
 #include <math.h>
 #include <string>

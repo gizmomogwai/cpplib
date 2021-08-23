@@ -1,8 +1,6 @@
 #ifndef _Appearance_h_
 #define _Appearance_h_
 
-#include <pragmaincludes.h>
-
 #include <sg/nodeComponents/NodeComponent.h>
 
 #include <sg/nodeComponents/app/Texture.h>
@@ -29,7 +27,7 @@
  *
  * @todo evtl texgen und textur in einem feld zusammenfassen ..
  *       * (TexGen*, Texture*) .. weniger mutexe
- * @todo die ** fuer texturen sind nicht schoen. auch die 
+ * @todo die ** fuer texturen sind nicht schoen. auch die
  *       maxanzahl ist nicht fein.
  *
  * @version $Revision: 1.5 $, $Date: 2001/09/13 13:11:13 $
@@ -38,8 +36,8 @@
  */
 class Appearance : public NodeComponent {
   public:
-   
-    /** Erzeugt einen neue Appearance. 
+
+    /** Erzeugt einen neue Appearance.
      *
      * @param _texNr Anzahl an gewuenschten multitexturelayers.
      */
@@ -71,7 +69,7 @@ class Appearance : public NodeComponent {
      */
     virtual void setRenderingAttributes(RenderingAttributes* _rAtts);
 
-    /** Setzt die Textur. 
+    /** Setzt die Textur.
 		 *
 		 * SG-maessig.
      *
@@ -80,7 +78,7 @@ class Appearance : public NodeComponent {
      */
     virtual void setTexture(Texture* _texture, int _tNr);
 
-    /** Setzt die TexGenattribute. 
+    /** Setzt die TexGenattribute.
 		 *
 		 * SG-maessig
      *
@@ -96,7 +94,7 @@ class Appearance : public NodeComponent {
      * @return PolygonAttributes* Attribute.
      */
     virtual PolygonAttributes* getPolygonAttributes();
-    
+
     /** Liefert die Rendering Attributes.
      *
      * SG-maessig.
@@ -105,7 +103,7 @@ class Appearance : public NodeComponent {
      */
     virtual RenderingAttributes* getRenderingAttributes();
 
-    /** Liefert die Textur. 
+    /** Liefert die Textur.
 		 *
 		 * SG-maessig
      *
@@ -163,13 +161,13 @@ class Appearance : public NodeComponent {
   private:
     /** Testet, ob eine texturnummer auch ok ist.
      *
-     * @param _texNr 
+     * @param _texNr
      * @param where Beschreibung, wo der zugriff versucht wurde.
      *
      * @exception falls der range nicht stimmt.
      */
     void assertTexNr(int _texNr, const char* where) throw (Exception);
-    
+
     /** maximale anzahl von multitextures. */
     int maxTextures;
 
