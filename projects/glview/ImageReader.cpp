@@ -4,7 +4,7 @@
 #include <image/Image.h>
 //#include <image/codecs/GifImageCodec.h>
 #include <image/codecs/ImageCodec.h>
-//#include <image/codecs/JasperImageCodec.h>
+#include <image/codecs/JasperImageCodec.h>
 #include <image/codecs/JpegImageCodec.h>
 #include <image/codecs/PngImageCodec.h>
 //#include <image/codecs/TiffImageCodec.h>
@@ -44,12 +44,12 @@ Image* ImageReader::readImage(std::string fileName) throw (Exception) {
     //codec = new GifImageCodec();
   } else if (matches(lowerCase, ".tif") ||
              matches(lowerCase, ".tiff")) {
-  //  codec = new TiffImageCodec();
+    //  codec = new TiffImageCodec();
   } else if (matches(lowerCase, ".jp2") ||
              matches(lowerCase, ".jpc") ||
              matches(lowerCase, ".bmp") ||
              matches(lowerCase, ".pnm")) {
-  //  codec = new JasperImageCodec();
+    codec = new JasperImageCodec();
   } else {
     std::string errorMessage("cannot find a codec for the file: ");
     errorMessage += fileName;
