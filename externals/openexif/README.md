@@ -1,0 +1,13 @@
+Project: OpenExif
+URL: http://sourceforge.net/projects/openexif/
+License: BSD
+Upstream version: 2.1.4 released the 2010-01-26
+
+Local modifications:
+* Remove makefiles build system.
+
+* Code changes :
+* Add CMake Build system
+* Fix warnings and errors at compilation time
+
+Upstream: https://github.com/openMVG-thirdparty/OpenExif
