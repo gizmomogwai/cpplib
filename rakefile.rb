@@ -1,12 +1,12 @@
 require 'cxx'
 
 flags = {
-#  :DEFINES => ['UNIT_TEST','EXAMPLE=main'],
+#  :DEFINES => ["OPENEXIF_NO_IJG"],
   :FLAGS => [
     '-std=c++11',
     '-Ofast',
     '-g', '-Wall', "-Wno-deprecated-declarations",
-    #"-DOPENEXIF_NO_IJG",
+    "-DOPENEXIF_NO_IJG",
     '-fsanitize=address',
     '-fno-omit-frame-pointer',
   ]
