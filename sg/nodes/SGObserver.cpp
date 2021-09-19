@@ -5,7 +5,7 @@
 
 SGObserver::SGObserver() : frustum(new Frustum()) {
   result = new RCTransform3D();
-  
+
   RCTransform3D* t3d = new RCTransform3D();
   transform.set(t3d);
   transform.update();
@@ -31,7 +31,7 @@ void SGObserver::setTranslation(Vector3f* v) {
   RCTransform3D* ori = transform.getNew();
   if (ori == 0) {
     ori = transform.get();
-  } 
+  }
 
   ReleaseRefCountedObject<RCTransform3D> clean1(ori);
 
@@ -51,7 +51,7 @@ void SGObserver::setTranslation(Vector3f* v) {
 
 Vector3f* SGObserver::getTranslation() {
   Vector3f* res = 0;
- 
+
   RCTransform3D* t3d = transform.get();
   if (t3d != 0) {
     res = new Vector3f(t3d->matrix.m30, t3d->matrix.m31, t3d->matrix.m32);
@@ -66,7 +66,7 @@ void SGObserver::calcTransform() {
     result->releaseReference();
     result = 0;
   }
-  
+
   RCTransform3D* t3d = transform.get();
   Transform3D* help = t3d->invertAffine();
   result = new RCTransform3D(help);

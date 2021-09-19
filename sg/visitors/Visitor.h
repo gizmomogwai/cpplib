@@ -52,7 +52,7 @@ class Visitor {
     /** Virtueller Deconstructor. */
     virtual ~Visitor() {
     }
-  
+
     /** Besucht einen Szenebetrachter.
      *
      * @param observer Betrachter.
@@ -60,14 +60,14 @@ class Visitor {
     virtual void visit(SGObserver* observer) {
       visit((Group*)observer);
     }
-    
+
     /** Besucht ein SGObject.
      *
      * @param sgo SceneGraphObject.
      */
     virtual void visit(SGObject* sgo) {}
-  
-    /** Besucht einen Node-Knoten. 
+
+    /** Besucht einen Node-Knoten.
      *
      * @param node Zu besuchender Node.
      */
@@ -79,14 +79,14 @@ class Visitor {
      */
     virtual void visit(Group* g);
 
-		/** Besucht eine SwitchGruppe.
-		 */
-		virtual void visit(SwitchGroup* g) {
-			visit((Group*)g);
-		}
+    /** Besucht eine SwitchGruppe.
+     */
+    virtual void visit(SwitchGroup* g) {
+      visit((Group*)g);
+    }
     /** Besucht eine Rootgruppe.
      *
-     * In der Defaultimplementierung wird der 
+     * In der Defaultimplementierung wird der
      * Knoten wie eine normale Gruppe behandelt.
      *
      * @param r Rootgruppe.
@@ -97,7 +97,7 @@ class Visitor {
 
     /** Besucht einen TGroup-Knoten.
      *
-     * In der Defaultimplementierung wird der 
+     * In der Defaultimplementierung wird der
      * Knoten wie eine normale Gruppe behandelt.
      *
      * @param TGroup g Transformationsgruppe.
@@ -108,7 +108,7 @@ class Visitor {
 
     /** Besucht einen FogGroup-Knoten.
      *
-     * In der Defaultimplementierung wird der 
+     * In der Defaultimplementierung wird der
      * Knoten wie eine normale Gruppe behandelt.
      *
      * @param g Zu besuchende Gruppe.
@@ -119,7 +119,7 @@ class Visitor {
 
     /** Besucht eine Lichtgruppe.
      *
-     * In der Defaultimplementierung wird der 
+     * In der Defaultimplementierung wird der
      * Knoten wie eine normale Gruppe behandelt.
      *
      * @param lg Lichtgruppe.
@@ -130,7 +130,7 @@ class Visitor {
 
     /** Besucht einen ProjectionGroup-Knoten.
      *
-     * In der Defaultimplementierung wird der 
+     * In der Defaultimplementierung wird der
      * Knoten wie eine normale Gruppe behandelt.
      *
      * @param g Zu besuchende Gruppe.
@@ -151,15 +151,15 @@ class Visitor {
      */
     virtual void visit(Shape3D* s3d);
 
-		/** Besucht ein Oriented Shape3D.
-		 *
-		 * Die Defaultimplementierung behandelt OrientedShape3D wie Shape3D.
-		 *
-		 * @param os3d Das Shape.
-		 */
-		virtual void visit(OrientedShape3D* os3d) {
-			visit((Shape3D*)os3d);
-		}
+    /** Besucht ein Oriented Shape3D.
+     *
+     * Die Defaultimplementierung behandelt OrientedShape3D wie Shape3D.
+     *
+     * @param os3d Das Shape.
+     */
+    virtual void visit(OrientedShape3D* os3d) {
+      visit((Shape3D*)os3d);
+    }
 
     /** Falls eine Geometrie besucht wird.
      *
@@ -192,18 +192,18 @@ class Visitor {
       visit((TriangleArray*)itArray);
     }
 
-		/** Falls ein InterleavedTriangleArray besucht werden soll.
-		 *
-		 * @param array InterleavedTriangleArray.
-		 */
+    /** Falls ein InterleavedTriangleArray besucht werden soll.
+     *
+     * @param array InterleavedTriangleArray.
+     */
     virtual void visit(InterleavedTriangleArray* array) {
       visit((TriangleArray*)array);
     }
 
-		/** Falls ein IndexedInterleaedTriangleArray besucht werden soll.
-		 *
-		 * @param array IndexedInterleavedTriangleArray.
-		 */
+    /** Falls ein IndexedInterleaedTriangleArray besucht werden soll.
+     *
+     * @param array IndexedInterleavedTriangleArray.
+     */
     virtual void visit(IndexedInterleavedTriangleArray* array) {
       visit((InterleavedTriangleArray*)array);
     }
@@ -226,7 +226,7 @@ class Visitor {
      */
     virtual void visit(Texture* texture) {}
 
-    /** Besucht ein Behavior. 
+    /** Besucht ein Behavior.
      *
      * @param b Das Behavior.
      */
@@ -238,7 +238,7 @@ class Visitor {
      */
     virtual void visit(ImplicitSGNode* node) {}
 
-    /** tostringmethode der Visitoren. 
+    /** tostringmethode der Visitoren.
      *
      * @return std::string Beschreibung des Visitors.
      */

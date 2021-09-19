@@ -36,7 +36,7 @@ class Array2f : public TemplateTupelArray<float> {
     }
 
   protected:
-		/** Raeumt auf. */
+    /** Raeumt auf. */
     virtual ~Array2f() {
     }
 

@@ -69,14 +69,14 @@ class Material : public NodeComponent {
       return(color->get());
     }
 
-    /** Soll das Material beleuchtet werdenoder nicht.
+    /** Soll das Material beleuchtet werden oder nicht.
      *
      * @param flag Licht an oder aus.
      */
     void setLighting(bool flag) {
       lighted = flag;
     }
-    
+
     /** Farbe des Materials. */
     UpdateObject<RCColor3f>* color;
 

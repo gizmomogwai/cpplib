@@ -14,7 +14,8 @@
 class OglTools {
 
 public:
-  bool static checkOglState(char* file, int line) throw (Exception) {
+  bool static checkOglState(const char* file, int line) throw (Exception) {
+    return true;
     GLenum err = glGetError();
     switch (err) {
     case GL_NO_ERROR:

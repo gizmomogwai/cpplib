@@ -1,6 +1,6 @@
 #include <sgtools/nodeComponents/geom/CubeGeometry.h>
 
-CubeGeometry::CubeGeometry(float size, int maxMultiTextures) 
+CubeGeometry::CubeGeometry(float size, int maxMultiTextures)
   : IndexedTriangleArray(TRIS, maxMultiTextures) {
 
   Array3f* coords = new Array3f(8);
@@ -14,7 +14,7 @@ CubeGeometry::CubeGeometry(float size, int maxMultiTextures)
   coords->set(5,  size2,  size2, -size2);
   coords->set(6,  size2,  size2,  size2);
   coords->set(7, -size2,  size2,  size2);
-  
+
   setCoordinates(coords);
   coords->releaseReference();
 
@@ -68,4 +68,3 @@ CubeGeometry::CubeGeometry(float size, int maxMultiTextures)
   setIndices(indices);
   indices->releaseReference();
 }
-

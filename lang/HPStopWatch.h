@@ -39,7 +39,7 @@ class HPStopWatch : public StopWatch {
    *
    * @return double Zeit.
    */
-  double getCurrent();
+  int64_t getCurrent();
 
   /** Berechnet die wirkliche Zeit zwischen 2 Zeitpunkten*/
   double getRealTime(double start, double end);

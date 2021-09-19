@@ -23,14 +23,14 @@
 
 #include <sg/visitors/OglTools.h>
 
-	
+
 #ifdef LINUX
   #ifndef OSX
     #include <GL/glx.h>
   #endif
 #endif
 
-OGLRenderVisitor::OGLRenderVisitor(OGLFontManager* _fontManager) 
+OGLRenderVisitor::OGLRenderVisitor(OGLFontManager* _fontManager)
   : fontManager(_fontManager) {
 
   std::cout << "OGLVendor:   " << glGetString(GL_VENDOR) << std::endl;
@@ -41,11 +41,11 @@ OGLRenderVisitor::OGLRenderVisitor(OGLFontManager* _fontManager)
 #ifdef WIN32
   // linux kennt das schon in der lib von nvidia!
   glActiveTextureARB = 0;
-  glActiveTextureARB = 
+  glActiveTextureARB =
     (void (__stdcall *)(GLenum))(wglGetProcAddress("glActiveTextureARB"));
 //  assert(glActiveTextureARB != 0);
   glClientActiveTextureARB = 0;
-  glClientActiveTextureARB = 
+  glClientActiveTextureARB =
     (void (__stdcall *)(GLenum))(wglGetProcAddress("glClientActiveTextureARB"));
 //  assert(glClientActiveTextureARB != 0);
 #endif
@@ -62,26 +62,26 @@ OGLRenderVisitor::~OGLRenderVisitor() {
 }
 
 void OGLRenderVisitor::visit(Root* root) {
-  glClearColor(0, 0, 0, 1);   
+  glClearColor(0, 0, 0, 1);
   assert(OglTools::checkOglState(__FILE__, __LINE__));
 
-  glColor3f(1, 1, 1);   
+  glColor3f(1, 1, 1);
   assert(OglTools::checkOglState(__FILE__, __LINE__));
 
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   assert(OglTools::checkOglState(__FILE__, __LINE__));
 
-  glFrontFace(GL_CCW);
+  glFrontFace(GL_CW);
   assert(OglTools::checkOglState(__FILE__, __LINE__));
 
   glCullFace(GL_BACK);
   assert(OglTools::checkOglState(__FILE__, __LINE__));
 
   glEnable(GL_CULL_FACE);
-//  glDisable(GL_CULL_FACE);
+  // glDisable(GL_CULL_FACE);
   assert(OglTools::checkOglState(__FILE__, __LINE__));
 
-  glDisable(GL_DITHER);  
+  glDisable(GL_DITHER);
   assert(OglTools::checkOglState(__FILE__, __LINE__));
 
   glEnable(GL_DEPTH_TEST);
@@ -89,7 +89,7 @@ void OGLRenderVisitor::visit(Root* root) {
 
   glDisable(GL_LIGHTING);
   assert(OglTools::checkOglState(__FILE__, __LINE__));
-  
+
   glDepthFunc(GL_LESS);
   assert(OglTools::checkOglState(__FILE__, __LINE__));
 
@@ -100,9 +100,9 @@ void OGLRenderVisitor::visit(Root* root) {
 
   imageWidth = root->imageWidth;
   imageHeight = root->imageHeight;
-  
+
   NodeListIterator* i = root->getChilds();
-	CleanUpObject<NodeListIterator> cleaner(i);
+  CleanUpObject<NodeListIterator> cleaner(i);
   while (i->hasNext() == true) {
     glMatrixMode(GL_MODELVIEW);
     assert(OglTools::checkOglState(__FILE__, __LINE__));
@@ -117,7 +117,6 @@ void OGLRenderVisitor::visit(Root* root) {
 }
 
 void OGLRenderVisitor::visit(SGObserver* observer) {
-
   createBillboards(observer);
 
   glMatrixMode(GL_MODELVIEW);
@@ -152,7 +151,7 @@ void OGLRenderVisitor::visit(ProjectionGroup* pGroup) {
 
   glLoadIdentity();
   assert(OglTools::checkOglState(__FILE__, __LINE__));
-    
+
   if (pGroup->camera != 0) {
     float imageRatio = 1;
     if (imageHeight != 0) {
@@ -163,10 +162,10 @@ void OGLRenderVisitor::visit(ProjectionGroup* pGroup) {
 
 //    c->aspectRatio = imageRatio;
     Transform3D* t3d = c->getProjection();
-		CleanUpObject<Transform3D> cleaner(t3d);
+    CleanUpObject<Transform3D> cleaner(t3d);
 
     glMultMatrixf((GLfloat*)t3d->m);
-		assert(OglTools::checkOglState(__FILE__, __LINE__));
+    assert(OglTools::checkOglState(__FILE__, __LINE__));
 
 //    std::cout << "Selfcalculated" << std::endl;
 //    OGLRenderVisitor::printMatrices();
@@ -177,7 +176,7 @@ void OGLRenderVisitor::visit(ProjectionGroup* pGroup) {
     float halfWidth = imageWidth / 2.0f / f;
     float halfHeight = imageHeight / 2.0f / f;
 
-    glOrtho(-halfWidth, halfWidth, -halfHeight, halfHeight, -1, 1);
+    glOrtho(-halfWidth, halfWidth, -halfHeight, halfHeight, pGroup->parallel->nearClipping, pGroup->parallel->farClipping);
     assert(OglTools::checkOglState(__FILE__, __LINE__));
 
   } else {
@@ -193,7 +192,6 @@ void OGLRenderVisitor::visit(ProjectionGroup* pGroup) {
 
 
 void OGLRenderVisitor::createBillboards(SGObserver* observer) {
-
   RCTransform3D* help = observer->getTransform();
   RCTransform3D* cameraT = observer->getCameraTransform();
   observerTransformation.set(cameraT);
@@ -249,21 +247,21 @@ void OGLRenderVisitor::visit(Group* group) {
 }
 
 void OGLRenderVisitor::visit(SwitchGroup* group) {
-	int idx = group->getSwitchedIndex();
-	if (idx >= group->getChildCount()) {
-		throw Exception("OGLRenderVisitor::visit(SwitchGroup*) so ja wohl nicht", __FILE__, __LINE__);
-	}
-	
-	CleanUpObject<NodeListIterator> childs(group->getChilds());
-	Node* child = childs->next();
-	for (int i=0; i<idx; i++) {
-		child = childs->next();
-	}
-	
-	if (child == 0) {
-		throw Exception("OGLRenderVisitor::visit(SwitchGroup*) child should not be 0", __FILE__, __LINE__);
-	}
-	child->accept(this);
+  int idx = group->getSwitchedIndex();
+  if (idx >= group->getChildCount()) {
+    throw Exception("OGLRenderVisitor::visit(SwitchGroup*) so ja wohl nicht", __FILE__, __LINE__);
+  }
+
+  CleanUpObject<NodeListIterator> childs(group->getChilds());
+  Node* child = childs->next();
+  for (int i=0; i<idx; i++) {
+    child = childs->next();
+  }
+
+  if (child == 0) {
+    throw Exception("OGLRenderVisitor::visit(SwitchGroup*) child should not be 0", __FILE__, __LINE__);
+  }
+  child->accept(this);
 }
 
 void OGLRenderVisitor::printMatrices() {
@@ -375,13 +373,13 @@ void OGLRenderVisitor::visit(LightGroup* lGroup) {
 
   glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);
   assert(OglTools::checkOglState(__FILE__, __LINE__));
-  
+
   glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse);
   assert(OglTools::checkOglState(__FILE__, __LINE__));
 
   glLightfv(GL_LIGHT0, GL_SPECULAR, specular);
   assert(OglTools::checkOglState(__FILE__, __LINE__));
-  
+
   glLightfv(GL_LIGHT0, GL_POSITION, homogen);
   assert(OglTools::checkOglState(__FILE__, __LINE__));
 
@@ -398,7 +396,7 @@ void OGLRenderVisitor::visit(LightGroup* lGroup) {
 }
 
 
-void OGLRenderVisitor::bringUpTexture(Texture* texture, 
+void OGLRenderVisitor::bringUpTexture(Texture* texture,
                                       TexGen* texGen) {
 
   glEnable(GL_TEXTURE_2D);
@@ -418,13 +416,13 @@ void OGLRenderVisitor::bringUpTexture(Texture* texture,
 
     glTexGenfv(GL_T, GL_OBJECT_PLANE, texGen->t);
     assert(OglTools::checkOglState(__FILE__, __LINE__));
-    
+
     glEnable(GL_TEXTURE_GEN_S);
     assert(OglTools::checkOglState(__FILE__, __LINE__));
-    
+
     glEnable(GL_TEXTURE_GEN_T);
     assert(OglTools::checkOglState(__FILE__, __LINE__));
-    
+
     texGen->releaseReference();
   }
 
@@ -439,12 +437,12 @@ void OGLRenderVisitor::bringUpTexture(Texture* texture,
   SGImage* image = texture->getImage();
   if (image != 0) {
     if (image->getFormat()->bitPerPixel == 32) {
-	    glEnable(GL_ALPHA_TEST);
-	    glAlphaFunc(GL_GREATER, 0.2f);
-	    glEnable(GL_BLEND);
-	    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+      glEnable(GL_ALPHA_TEST);
+      glAlphaFunc(GL_GREATER, 0.2f);
+      glEnable(GL_BLEND);
+      glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
       glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-	    glColor4f(1, 1, 1, 1);
+      glColor4f(1, 1, 1, 1);
     } else if (image->getFormat()->bitPerPixel == 24) {
       glDisable(GL_ALPHA_TEST);
       glDisable(GL_BLEND);
@@ -457,7 +455,7 @@ void OGLRenderVisitor::bringUpTexture(Texture* texture,
 
 
 void OGLRenderVisitor::startApp(Appearance* app) {
-//glPushAttrib(GL_FOG_BIT | GL_DEPTH_BUFFER_BIT); // GL_ALL_ATTRIB_BITS 
+//glPushAttrib(GL_FOG_BIT | GL_DEPTH_BUFFER_BIT); // GL_ALL_ATTRIB_BITS
   glPushAttrib(GL_ALL_ATTRIB_BITS);
   assert(OglTools::checkOglState(__FILE__, __LINE__));
 
@@ -508,7 +506,7 @@ void OGLRenderVisitor::startApp(Appearance* app) {
     if (rAtts->zBufferRead == true) {
       glEnable(GL_DEPTH_TEST);
       assert(OglTools::checkOglState(__FILE__, __LINE__));
-    
+
       glDepthFunc(GL_LESS);
       assert(OglTools::checkOglState(__FILE__, __LINE__));
     } else {
@@ -600,9 +598,9 @@ void OGLRenderVisitor::visit(Shape3D* shape3d) {
   if (a != 0) {
     startApp(a);
   }
-  
+
   GeometryListIterator* g = shape3d->getGeometries();
-	CleanUpObject<GeometryListIterator> cleaner(g);
+  CleanUpObject<GeometryListIterator> cleaner(g);
   if (g != 0) {
     while (g->hasNext() == true) {
       g->next()->accept(this);
@@ -613,7 +611,7 @@ void OGLRenderVisitor::visit(Shape3D* shape3d) {
     endApp(a);
     a->releaseReference();
   }
-  
+
 }
 
 
@@ -657,7 +655,7 @@ void OGLRenderVisitor::visit(OrientedShape3D* oShape3d) {
 //
 //  current.setRotation(&result);
 //  std::cout << "falsch: " << current.toString() << std::endl;
-//   
+//
 //  glLoadMatrixf((GLfloat*)current.m);
 //
 //  assert(OglTools::checkOglState(__FILE__, __LINE__));
@@ -676,14 +674,15 @@ void OGLRenderVisitor::visit(Geometry* geom) {
 }
 
 void OGLRenderVisitor::visit(TeapotGeometry* geom) {
-  glutSolidTeapot(1);
+  glutWireSphere(50, 10, 10);
+  //glutWireTeapot(50);
   assert(OglTools::checkOglState(__FILE__, __LINE__));
-//  glutSolidTorus(1, 3.2, 10, 10);
+  //glutSolidTorus(1, 3.2, 10, 10);
 }
 
 void OGLRenderVisitor::visit(Text3D* text3d) {
   if (fontManager != 0) {
-    fontManager->render(text3d);  
+    fontManager->render(text3d);
   }
 }
 
@@ -766,7 +765,7 @@ void OGLRenderVisitor::cleanUpTCoords(TriangleArray* tArray) {
 
 void OGLRenderVisitor::visit(IndexedTriangleArray* itArray) {
   if (itArray->coords == 0) {
-    std::cout <<"OGLRenderVisitor::visit(IndexedTriangleArray*) " 
+    std::cout <<"OGLRenderVisitor::visit(IndexedTriangleArray*) "
       << "- einige punkte sollten schon vorhanden sein" << std::endl;
   } else {
     Array3f* coords = itArray->coords->get();
@@ -793,7 +792,7 @@ void OGLRenderVisitor::visit(IndexedTriangleArray* itArray) {
 
       glVertexPointer(3, GL_FLOAT, 0, coords->get(0));
       assert(OglTools::checkOglState(__FILE__, __LINE__));
- 
+
       if (colors != 0) {
         glEnableClientState(GL_COLOR_ARRAY);
         assert(OglTools::checkOglState(__FILE__, __LINE__));
@@ -839,7 +838,7 @@ void OGLRenderVisitor::visit(IndexedTriangleArray* itArray) {
 } // visit indexedtrianglearray
 
 GLenum OGLRenderVisitor::type2Enum(TriangleArrayType type) {
-  
+
   if (type == TRIS) {
     return(GL_TRIANGLES);
   } else if (type == FAN) {
@@ -893,10 +892,10 @@ void OGLRenderVisitor::visit(TriangleArray* tArray) {
         glNormalPointer(GL_FLOAT, 0, normals->get(0));
         assert(OglTools::checkOglState(__FILE__, __LINE__));
       }
-  
+
       GLenum help = type2Enum(tArray->type);
       if (tArray->stripVertexCounts == 0) {
-        
+
         glDrawArrays(help, 0, coords->getSize());
         assert(OglTools::checkOglState(__FILE__, __LINE__));
 
@@ -909,7 +908,7 @@ void OGLRenderVisitor::visit(TriangleArray* tArray) {
 
             glDrawArrays(help, startIdx, length);
             assert(OglTools::checkOglState(__FILE__, __LINE__));
-            
+
             startIdx += length;
           }
 
@@ -943,7 +942,7 @@ void OGLRenderVisitor::visit(InterleavedTriangleArray* array) {
 
     glEnableClientState(GL_VERTEX_ARRAY);
     assert(OglTools::checkOglState(__FILE__, __LINE__));
-    
+
     int stride = data->getTupelSize() * 4;
     glVertexPointer(3, GL_FLOAT, stride, data->getCoord(0));
     assert(OglTools::checkOglState(__FILE__, __LINE__));
@@ -965,7 +964,7 @@ void OGLRenderVisitor::visit(InterleavedTriangleArray* array) {
     }
 
     GLenum help = type2Enum(array->type);
-    
+
     glDrawArrays(help, 0, data->getSize());
     assert(OglTools::checkOglState(__FILE__, __LINE__));
 
@@ -984,7 +983,7 @@ void OGLRenderVisitor::visit(IndexedInterleavedTriangleArray* array) {
 
     glEnableClientState(GL_VERTEX_ARRAY);
     assert(OglTools::checkOglState(__FILE__, __LINE__));
-    
+
     int stride = data->getTupelSize() * 4;
     glVertexPointer(3, GL_FLOAT, stride, data->getCoord(0));
     assert(OglTools::checkOglState(__FILE__, __LINE__));
@@ -1012,7 +1011,7 @@ void OGLRenderVisitor::visit(IndexedInterleavedTriangleArray* array) {
       assert(OglTools::checkOglState(__FILE__, __LINE__));
       indices->releaseReference();
     }
-    
+
     data->releaseReference();
 
     glPopClientAttrib();

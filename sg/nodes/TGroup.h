@@ -28,7 +28,7 @@
  * @author cK, $Author: koestlin $
  */
 class TGroup : public Group {
-	public:
+  public:
     /** Erzeugt einen neue Transformgruppe.
      *
      * @parm _init createRetained-Workaround.
@@ -43,31 +43,31 @@ class TGroup : public Group {
       v->visit(this);
     }
 
-		/** Liefert die Transform3D. Mit dieser ist so zu verfahren, wie mit
-		 * SG-Objecten ueblich. Readonly und releaseReference.
-		 *
+    /** Liefert die Transform3D. Mit dieser ist so zu verfahren, wie mit
+     * SG-Objecten ueblich. Readonly und releaseReference.
+     *
      * @return RCTransform3D transformation.
      */
     virtual RCTransform3D* getTransform() {
       return(transform.get());
     }
 
-		/** SG-typisches setzten.		
-		 *
-		 * Die Transformation muss vom rufer per releaseReference zerstoehrt
-		 * werden. Einmal in den Szenegraphen gegeben, ist das Object
-		 * bestenfalls noch readonly, muss aber nicht mehr unbedngt etwas mit
-		 * dem Object im SG zu tun haben. Die Aenderungen werde nerst nach
-		 * einem update realisiert.
-		 *
+    /** SG-typisches setzten.
+     *
+     * Die Transformation muss vom rufer per releaseReference zerstoehrt
+     * werden. Einmal in den Szenegraphen gegeben, ist das Object
+     * bestenfalls noch readonly, muss aber nicht mehr unbedngt etwas mit
+     * dem Object im SG zu tun haben. Die Aenderungen werden erst nach
+     * einem update realisiert.
+     *
      * @param t3d Transformation.
      */
     virtual void setTransform(RCTransform3D* t3d) {
       transform.set(t3d);
     }
 
-    /** Per Value setzen. nachfolgende Aenderungen an t3d sind 
-     * garantiert wirkungslos! 
+    /** Per Value setzen. nachfolgende Aenderungen an t3d sind
+     * garantiert wirkungslos!
      *
      * @param t3d Transform3D.
      */

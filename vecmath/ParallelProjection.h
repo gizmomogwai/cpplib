@@ -1,11 +1,10 @@
-#ifndef _ParallelProjection_h_
-#define _ParallelProjection_h_
+#pragma once
 
 #include <vecmath/Transform3D.h>
 
 /** Parallelprojection.
  *
- * Momentan wird die Projection so ausgewertet, dass links 
+ * Momentan wird die Projection so ausgewertet, dass links
  * unten immer 0,0 istund recht oben die koordinate aktuelle
  * Fensterbreite/Fensterhoehe hat.
  *
@@ -23,22 +22,22 @@
  * @author cK, $Author: koestlin $
  */
 class ParallelProjection {
-            
+
   public:
     /** Erzeugt eine neue Parallelprojection. */
-    ParallelProjection(float _factor=1.0f) : 
-      left(-1), 
-      right(1), 
-      bottom(-1), 
-      top(1), 
-      nearClipping(-1), 
+    ParallelProjection(float _factor=1.0f) :
+      left(-1),
+      right(1),
+      bottom(-1),
+      top(1),
+      nearClipping(-1),
       farClipping(1), factor(_factor) {
     }
 
 
-    /** Liefert die ProjectionMatrix einer ParallelProjection. 
+    /** Liefert die ProjectionMatrix einer ParallelProjection.
      *
-     * @return Transform3D* Transformation geht in den Besitz des 
+     * @return Transform3D* Transformation geht in den Besitz des
      *         Callers ueber.
      */
     Transform3D* getProjection();
@@ -64,5 +63,3 @@ class ParallelProjection {
     float factor;
 
 };
-
-#endif // _ParallelProjection_h_

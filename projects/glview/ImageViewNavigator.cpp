@@ -27,6 +27,7 @@ ImageViewNavigator::ImageViewNavigator(Root* _root,
   observer = new SGObserver();
 
   observer->setParallel(new ParallelProjection(factor));
+  //observer->setCamera(new Camera(75, 1.0, 10, 10000));
 
   root->addChild(observer);
 
@@ -197,7 +198,7 @@ void ImageViewNavigator::informSelectionListener(File* newSelection) {
   while (i.hasNext()) {
     SelectionListener* listener = i.next();
     std::cout << "informing listener " << listener << std::endl;
-  listener->selectionChanged(newSelection);
+    listener->selectionChanged(newSelection);
   }
 }
 

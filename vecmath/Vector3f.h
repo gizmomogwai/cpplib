@@ -27,36 +27,36 @@ class Point3f;
 class Vector3f {
 
  public:
-	/** Erzeugt einen neuen Vector _OHNE_ initialisierung. 
-	 */
-	Vector3f() {
-	}
-   
-	/** Erzeugt einen neuen Vector.
-	 *
-	 * @param x X
-	 * @param y y
-	 * @param z z
-	 */
-	Vector3f(float x, float y, float z) {
-		dx = x;
-		dy = y;
-		dz = z;
-	}
+  /** Erzeugt einen neuen Vector _OHNE_ initialisierung.
+   */
+  Vector3f() {
+  }
 
-	/** Erzeugt einen neuen Vector aus einem anderen.
-	 *
-	 * (Copy constructor).
-	 *
-	 * @param toCopy Zu kopierender Vector.
-	 */
-	Vector3f(Vector3f* toCopy) {
-		dx = toCopy->dx;
-		dy = toCopy->dy;
-		dz = toCopy->dz;
-	}
+  /** Erzeugt einen neuen Vector.
+   *
+   * @param x X
+   * @param y y
+   * @param z z
+   */
+  Vector3f(float x, float y, float z) {
+    dx = x;
+    dy = y;
+    dz = z;
+  }
 
-  /** Erzeugt einen Vector3f aus einem Punkt. 
+  /** Erzeugt einen neuen Vector aus einem anderen.
+   *
+   * (Copy constructor).
+   *
+   * @param toCopy Zu kopierender Vector.
+   */
+  Vector3f(Vector3f* toCopy) {
+    dx = toCopy->dx;
+    dy = toCopy->dy;
+    dz = toCopy->dz;
+  }
+
+  /** Erzeugt einen Vector3f aus einem Punkt.
    *
    * @param toCopy Zu kopierender Punkt.
    */
@@ -64,71 +64,71 @@ class Vector3f {
 
   /** Raeumt auf. */
   virtual ~Vector3f() {}
-  
-	/** Zieht von b a ab und setzt this auf die Differenz.
-	 *
-	 * @param a Vector.
-	 * @param b Vector.
-	 */
-	void sub(Vector3f* a, Vector3f* b) {
-		dx = b->dx - a->dx;
-		dy = b->dy - a->dy;
-		dz = b->dz - a->dz;
-	}
 
-  
   /** Zieht von b a ab und setzt this auf die Differenz.
-	 *
-	 * @param a Point3f.
-	 * @param b Point3f.
-	 */
-	void sub(Point3f* a, Point3f* b);  
+   *
+   * @param a Vector.
+   * @param b Vector.
+   */
+  void sub(Vector3f* a, Vector3f* b) {
+    dx = b->dx - a->dx;
+    dy = b->dy - a->dy;
+    dz = b->dz - a->dz;
+  }
+
+
+  /** Zieht von b a ab und setzt this auf die Differenz.
+   *
+   * @param a Point3f.
+   * @param b Point3f.
+   */
+  void sub(Point3f* a, Point3f* b);
 
 
   /** Subtrahiert Vektor von this
-	 *
-	 * @param a Vector.
-	 */
-	void sub(Vector3f* a) {
+   *
+   * @param a Vector.
+   */
+  void sub(Vector3f* a) {
 
-		dx -= a->dx;
-		dy -= a->dy;
-		dz -= a->dz;
-	}
+    dx -= a->dx;
+    dy -= a->dy;
+    dz -= a->dz;
+  }
 
-	/** Addiert 2 Vectoren.
-	 *
-	 * @param a Vector 1.
-	 * @param b Vector 2.
-	 */
-	void add(Vector3f* a, Vector3f* b) {
-		dx = a->dx + b->dx;
-		dy = a->dy + b->dy;
-		dz = a->dz + b->dz;
-	}
+  /** Addiert 2 Vectoren.
+   *
+   * @param a Vector 1.
+   * @param b Vector 2.
+   */
+  void add(Vector3f* a, Vector3f* b) {
+    dx = a->dx + b->dx;
+    dy = a->dy + b->dy;
+    dz = a->dz + b->dz;
+  }
 
 
   /** Addiert Vector auf this.
-	 *
-	 * @param a Vector 1.
-	 */
-	void add(Vector3f* a) {
-		dx += a->dx;
-		dy += a->dy;
-		dz += a->dz;
-	}
+   *
+   * @param a Vector 1.
+   */
+  void add(Vector3f* a) {
+    dx += a->dx;
+    dy += a->dy;
+    dz += a->dz;
+  }
 
-	/** Normalisiert this.
-	 *
-	 * @todo was wenn die Laenge 0 ist.
-	 */
-	void normalize() throw (Exception) {
-		float l = (float)(sqrt(dx*dx + dy*dy + dz*dz));
-		if (l == 0) {
-			throw(Exception("Vector3f::normalize() - laenge 0", __FILE__, __LINE__));
-		}
-		scale((float)(1 / l));
-	}
+  /** Normalisiert this.
+   *
+   * @todo was wenn die Laenge 0 ist.
+   */
+  void normalize() throw (Exception) {
+    float l = (float)(sqrt(dx*dx + dy*dy + dz*dz));
+    if (l == 0) {
+      throw(Exception("Vector3f::normalize() - laenge 0", __FILE__, __LINE__));
+    }
+    scale((float)(1 / l));
+  }
 
   /** Liefert die Laenge eines Vectors.
    *
@@ -137,7 +137,7 @@ class Vector3f {
   float getLength() {
       return(sqrt(dx * dx + dy*dy + dz*dz));
   }
-  
+
   /** Setzt this auf das Kreuzproduke von a und b.
    *
    * @param a Vector 1.
@@ -148,7 +148,7 @@ class Vector3f {
       dy = a->dx * b->dz - a->dz * b->dx;
       dz = a->dx * b->dy - a->dy * b->dx;
   }
-  
+
   /** Skaliert this.
    *
    * @param f Skalierungsfactor.
@@ -158,7 +158,7 @@ class Vector3f {
       dy *= f;
       dz *= f;
   }
-  
+
   /** Setzt this mit den Werten eines anderen Vectors.
    *
    * @param v Anderer Vector.
@@ -169,8 +169,8 @@ class Vector3f {
       dy = v->dy;
       dz = v->dz;
   }
-  
-  /** Setzt this mit den angegebenen Werten. 
+
+  /** Setzt this mit den angegebenen Werten.
    *
    * @param x XPosition.
    * @param y YPosition.
@@ -181,7 +181,7 @@ class Vector3f {
     dy = y;
     dz = z;
   }
-  
+
   /** Vergleicht this mit einem anderen Vector bei value.
    *
    * @param v Anderer Vector.
@@ -192,26 +192,26 @@ class Vector3f {
     return((dx == v->dx) && (dy == v->dy) && (dz == v->dz));
   }
 
-	
+
   /** Liefert eine Stringrepraesentation von this.
    *
    * @return std::string Stringrep.
    */
   std::string toString() {
       std::ostringstream help;
-      help << "Vector3f(" << dx << ", " << dy 
-	   << ", " << dz << ")" << std::ends;
+      help << "Vector3f(" << dx << ", " << dy
+     << ", " << dz << ")" << std::ends;
       std::string res = std::string(help.str());
       return(res);
   }
-  
-  
+
+
   /** x-Komponente. */
   float dx;
-  
+
   /** y-Komponente. */
   float dy;
-  
+
   /** z-Komponente. */
   float dz;
 };

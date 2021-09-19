@@ -18,14 +18,13 @@
 class CubeGeometry : public IndexedTriangleArray {
 
 public:
-	/** Erzeugt einen Wuerfel am Ursprung mit einer gewissen Kantenlaenge.
-	 *
-	 * @@param size Kantenlaenge.
-	 * @@param maxMultiTextures Anzahl von Texturen.
-	 */
-	CubeGeometry(float size, int maxMultiTextures);
+  /** Erzeugt einen Wuerfel am Ursprung mit einer gewissen Kantenlaenge.
+   *
+   * @@param size Kantenlaenge.
+   * @@param maxMultiTextures Anzahl von Texturen.
+   */
+  CubeGeometry(float size, int maxMultiTextures);
 
 };
 
 #endif // _CubeGeometry_h_
-

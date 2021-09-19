@@ -1,5 +1,4 @@
-#ifndef _OGLTextureManager_h_
-#define _OGLTextureManager_h_
+#pragma once
 
 #include <iostream>
 #include <map>
@@ -52,23 +51,10 @@ class OGLTextureManager : public TextureListener, public Mutex{
   public:
     /** Erzeugt einen neuen OGL-TextureManager. */
     OGLTextureManager() {
-      //      textures = new OGLTextureHashMap();
-      //      toDelete = new std::list<unsigned long>();
     }
 
     /** Raeumt auf. */
     ~OGLTextureManager() {
-      /*
-      if (textures != 0) {
-        delete(textures);
-        textures = 0;
-      }
-
-      if (toDelete != 0) {
-        delete(toDelete);
-        toDelete = 0;
-      }
-      */
       std::cout << "Da ist noch nicht das letzte wort gesprochen," <<
         " die referenzen muessen released werden" << std::endl;
     }
@@ -99,8 +85,9 @@ class OGLTextureManager : public TextureListener, public Mutex{
         GLuint id = found->second;
         glBindTexture(GL_TEXTURE_2D, id);
         assert(glGetError() == GL_NO_ERROR);
-
+        std::cout << "Texture found" << std::endl;
       } else {
+        std::cout << "Texture miss" << std::endl;
         SGImage* sgImage = texture->getImage();
         if (sgImage != 0) {
           Image* image = sgImage->getImage();
@@ -214,5 +201,3 @@ class OGLTextureManager : public TextureListener, public Mutex{
 
 
 };
-
-#endif // _OGLTextureManager_h_

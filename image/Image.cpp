@@ -6,19 +6,19 @@
 
 #include <lang/ByteDataBuffer.h>
 
-Image::Image(unsigned int _width, unsigned int _height, unsigned int _bitPerPixel) 
-  : width(_width), 
-    height(_height), 
-    format(_bitPerPixel), 
+Image::Image(unsigned int _width, unsigned int _height, unsigned int _bitPerPixel)
+  : width(_width),
+    height(_height),
+    format(_bitPerPixel),
     data(new ByteDataBuffer(_width * _height * format.bytePerPixel)),
     fOwnData(true)
 {
 }
 
-Image::Image(unsigned int width_, unsigned int height_, unsigned int bitPerPixel_, DataBuffer& buffer_) 
-  : width(width_), 
-    height(height_), 
-    format(bitPerPixel_), 
+Image::Image(unsigned int width_, unsigned int height_, unsigned int bitPerPixel_, DataBuffer& buffer_)
+  : width(width_),
+    height(height_),
+    format(bitPerPixel_),
     data(&buffer_),
     fOwnData(false) {
   if (format.bytePerPixel * width * height != data->getSize()) {
@@ -54,8 +54,8 @@ PixelFormat& Image::getFormat() {
 
 void Image::setAlpha(unsigned char v) {
   if (getFormat().bitPerPixel != 32) {
-    throw Exception("Image::setAlpha - cannot handle bitdepth != 32 bit", 
-		    __FILE__, __LINE__);
+    throw Exception("Image::setAlpha - cannot handle bitdepth != 32 bit",
+        __FILE__, __LINE__);
   }
   unsigned char* help = (unsigned char*)(data->getData());
   help += 3;
@@ -76,7 +76,7 @@ Image* Image::getRect(int left, int top, int width, int height) {
     sourceData += sourceRowStride;
     targetData += targetRowStride;
   }
-  return(res);
+  return res;
 }
 
 Image* Image::getClippedRect(int left, int top, int width, int height) {

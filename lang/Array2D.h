@@ -20,12 +20,12 @@ template <class T> class Array2D {
      * @param _width gewuenschte Breite.
      * @param _height gewuenschte Hoehe.
      */
-    Array2D(int _width, int _height) 
+    Array2D(int _width, int _height)
       : width(_width), height(_height), array(0) {
 
       array = new T[width*height];
     }
-    
+
     /** Raeumt auf. */
     ~Array2D() {
 
@@ -39,7 +39,7 @@ template <class T> class Array2D {
      * @param t Neuer wert.
      */
     void set(int x, int y, T t) {
-      
+
       array[y*width + x] = t;
     }
 
@@ -51,8 +51,8 @@ template <class T> class Array2D {
      * @return T Element.
      */
     T get(int x, int y) {
-    
-      return(array[y*width + x]);
+
+      return array[y*width + x];
     }
 
     /** Liefert die Anzahl von Spalten.
@@ -60,7 +60,7 @@ template <class T> class Array2D {
      * @return int Spalten des 2d-arrays.
      */
     int getWidth() {
-      return(width);
+      return width;
     }
 
     /** Liefert die Anzahl von Reihen.
@@ -68,7 +68,7 @@ template <class T> class Array2D {
      * @return int Hoehe des 2d-arrays.
      */
     int getHeight() {
-      return(height);
+      return height;
     }
 
   private:

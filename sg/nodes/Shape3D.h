@@ -13,11 +13,11 @@ class Appearance;
 #include <vector>
 
 
-/** Liste mit Geometrien. Wird benoetigt, um 
+/** Liste mit Geometrien. Wird benoetigt, um
  * eine RefCountedListe anzubieten, die RefCounted Objecte verwaltet.
  *
- * Um die Klasse mit noch mehr funktionalitaet anzureichern (damit sie nicht 
- * so mickrig ist) koennte man hier push_back um die RefCountingSemantik 
+ * Um die Klasse mit noch mehr funktionalitaet anzureichern (damit sie nicht
+ * so mickrig ist) koennte man hier push_back um die RefCountingSemantik
  * anreichern.
  *
  * <p>
@@ -52,7 +52,7 @@ class GeometryList : public std::vector<Geometry*>, public RefCountedObject {
  *
  * Der Iterator kann mit einer GeometryList initialisiert werden
  * und uebernimmt die reference. Im Destructor gibt er sie frei.
- * Man kann also new GeometryListIterator(geom.get()); delete() 
+ * Man kann also new GeometryListIterator(geom.get()); delete()
  * schreien ohne eine leak zu produzieren.
  *
  * <p>
@@ -69,17 +69,17 @@ class GeometryListIterator : public Iterator<Geometry*> {
   public:
     /** Erzeugt einen neuen Iterator.
      *
-     * @param _list Liste, ueber die iteriert werden soll. 
+     * @param _list Liste, ueber die iteriert werden soll.
      */
     GeometryListIterator(GeometryList* _list) {
       list = _list;
       if (list == 0) {
         throw Exception("list == 0");
       }
-      
+
       i = list->begin();
     }
-    
+
     /** Raeumt auf (zaehlt rteference herunter. */
     virtual ~GeometryListIterator() {
       if (list != 0) {
@@ -99,7 +99,7 @@ class GeometryListIterator : public Iterator<Geometry*> {
   private:
     /** Liste. */
     GeometryList* list;
-    
+
     /** stl-Iteartor. */
     GeometryList::iterator i;
 
@@ -121,17 +121,17 @@ class GeometryListIterator : public Iterator<Geometry*> {
  * @author cK, $Author: koestlin $
  */
 class Shape3D : public Leaf {
-	
-	public:
+
+  public:
     /** Erzeugt ein neues Shape3d mit einer Geometrie und einem Material.
-		 *
-		 * Mit dem Material und der Appearance ist SG-Objectmaessig zu
-		 * verfahren. 
+     *
+     * Mit dem Material und der Appearance ist SG-Objectmaessig zu
+     * verfahren.
      *
      * @param geom Geometrie.
      * @param m Material.
      */
-		Shape3D(Geometry* _geom, Appearance* _app);
+    Shape3D(Geometry* _geom, Appearance* _app);
 
     /** Erzeugt ein leeres Shape3d.
      */
@@ -140,8 +140,8 @@ class Shape3D : public Leaf {
     void accept(Visitor* v);
 
     /** Fuegt eine Geometrie hinzu.
-		 *
-		 * SG-maessig.
+     *
+     * SG-maessig.
      *
      * @param geom Geometrie.
      */
@@ -156,24 +156,24 @@ class Shape3D : public Leaf {
     void setFirstGeometry(Geometry* geom);
 
     /** Setzt das Material.
-		 *
-		 * SG-maessiges Setzen.
+     *
+     * SG-maessiges Setzen.
      *
      * @param m Material.
      */
     void setAppearance(Appearance* m);
 
     /** Liefert die Appearance.
-		 *
-		 * SG-maessiges liefern.
+     *
+     * SG-maessiges liefern.
      *
      * @return Appearance* app.
      */
     Appearance* getAppearance();
 
     /** Liefert die erste Geometrie.
-		 *
-		 * SG-maessiges liefern.
+     *
+     * SG-maessiges liefern.
      *
      * @return Geometry* Die Geometry.
      */
@@ -204,13 +204,13 @@ class Shape3D : public Leaf {
      */
     std::string toString();
 
-    /** Die Geometrie. Sollte eignetlich nur fuer Visitoren 
+    /** Die Geometrie. Sollte eignetlich nur fuer Visitoren
      * und deren unterklassen sichtbar sein.
      */
     UpdateObject<GeometryList> geom;
-   
-    /** Material. Sollte eigentlich nur fuer Visitoren und 
-     * deren Unterklassen sichtbar sein. 
+
+    /** Material. Sollte eigentlich nur fuer Visitoren und
+     * deren Unterklassen sichtbar sein.
      */
     UpdateObject<Appearance> app;
 
@@ -227,7 +227,7 @@ class Shape3D : public Leaf {
      * Fall 2 update noch nciht durchgefuehrt. newOnes enthaelt schon die Daten, und evtl. noch mehr
      *   deshalb nichts machen.
      */
-    GeometryList* copyAndSet(GeometryList* currentOnes, 
+    GeometryList* copyAndSet(GeometryList* currentOnes,
                              GeometryList* newOnes);
 
 };

@@ -18,7 +18,7 @@
  * </ul>
  *
  * @todo Wahrscheinlich muss man das Pixelformat noch besser ausdefinieren
- *       koennen. 
+ *       koennen.
  *
  * @version $Revision: 1.3 $, $Date: 2001/09/13 13:11:08 $
  *
@@ -39,13 +39,13 @@ class IMAGE_API Image {
 
   /** Raeumt auf. */
   virtual ~Image();
-  
+
   /** Liefert die Breite.
    *
    * @return int Breite.
    */
   unsigned int getWidth();
-  
+
   /** Liefert die Hoehe.
    *
    * @return int Hoehe.
@@ -55,31 +55,31 @@ class IMAGE_API Image {
   /** Loescht das Bild.
    */
   void clear();
-  
+
   /** Liefert den Datenpuffer.
    *
    * @return DataBuffer* Datenpuffer.
    */
   DataBuffer* getBuffer();
-  
+
   /** Liefert das Pixelformat.
    *
    * @return PixelFormat* format.
    */
   PixelFormat& getFormat();
 
-	/** Liefert die Daten zu einem Pixel (und den darauffolgenden).
-	 *
-	 * @param xIdx XPositon (bei 0 beginnend).
-	 * @param yIdx YPosition (bei 0 beginnend).
-	 *
-	 * @return unsigned char* Pointer direkt in die Bilddaten.
-	 */
+  /** Liefert die Daten zu einem Pixel (und den darauffolgenden).
+   *
+   * @param xIdx XPositon (bei 0 beginnend).
+   * @param yIdx YPosition (bei 0 beginnend).
+   *
+   * @return unsigned char* Pointer direkt in die Bilddaten.
+   */
   unsigned char* getData(int xIdx, int yIdx) {
     return((unsigned char*)data->getData((yIdx * getWidth() + xIdx) * format.bytePerPixel));
   }
 
-  /** Setzt die alphawerte des ganzen bildes. 
+  /** Setzt die alphawerte des ganzen bildes.
    *
    * @param v Neuer alphawert.
    */
@@ -96,7 +96,7 @@ class IMAGE_API Image {
    *
    * @return Image* Neue Image.
    */
-	Image* getRect(int left, int top, int width, int height);
+  Image* getRect(int left, int top, int width, int height);
 
   /** Liefert einen Teil des Bildes als neues Bild.
    *
@@ -118,12 +118,12 @@ class IMAGE_API Image {
   unsigned int getRowStride() {
     return(width * format.bytePerPixel);
   }
-	
+
  private:
-  
+
   /** Breite. */
   unsigned int width;
-  
+
   /** Hoehe. */
   unsigned int height;
 
@@ -133,7 +133,7 @@ class IMAGE_API Image {
   /** Die eigentlichen Bilddaten. */
   DataBuffer* data;
   bool fOwnData;
-  
+
 };
 
 #endif // _Image_h_

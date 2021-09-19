@@ -22,6 +22,8 @@
 
 #include "ExifDateHandler.h"
 #include "DeleteFileHandler.h"
+#include <sgtools/nodeComponents/geom/CubeGeometry.h>
+#include <projects/glview/RotationBehavior.h>
 
 File* getDir(File* dirOrFile) {
   if (dirOrFile->isDirectory() == true) {
@@ -31,6 +33,8 @@ File* getDir(File* dirOrFile) {
   }
 }
 
+
+
 /** Imageviewer mainprogramm.
  *
  * Usage: glview fileName
@@ -38,6 +42,7 @@ File* getDir(File* dirOrFile) {
  * @param argc Anzahl commandozeilenargumente.
  * @param args Commandozeilenargumente.
  */
+/*
 int main(int argc, char** args) {
   try {
     if (argc != 2) {
@@ -111,3 +116,4 @@ int main(int argc, char** args) {
 
   return 0;
 }
+*/

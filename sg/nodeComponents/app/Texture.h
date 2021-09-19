@@ -42,11 +42,11 @@ class Texture : public NodeComponent {
       v->visit(this);
     }
 
-		/** Liefert das SGImage zurueck.
-		 *
-		 * @return SGImage* Bild.
-		 */
-		virtual SGImage* getImage();
+    /** Liefert das SGImage zurueck.
+     *
+     * @return SGImage* Bild.
+     */
+    virtual SGImage* getImage();
 
     /** Bild. */
     UpdateObject<SGImage> image;

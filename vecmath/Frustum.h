@@ -17,7 +17,7 @@
  *
  * Anmerkung: Berechnung fuer far und near clipping plane vertauscht.
  * wegen Problemen mit Abstandsberechnung ???
- * 
+ *
  * <p>
  * Curriculum Vitae:
  * <ul>
@@ -33,7 +33,7 @@
  * @version $Revision: 1.3 $, $Date: 2001/07/17 14:22:45 $
  */
 class Frustum {
-   
+
   public:
 
     /**
@@ -41,7 +41,7 @@ class Frustum {
      */
     Frustum();
 
-    /** 
+    /**
      * Destruktor raeumt auf
      */
     ~Frustum();
@@ -58,7 +58,7 @@ class Frustum {
      * Testet, ob Sphere in Frustum und gibt Entferung zur
      * near clipping plane zurueck.
      *
-     * Die Sphere ist nicht im Frustum, wenn sie weiter 
+     * Die Sphere ist nicht im Frustum, wenn sie weiter
      * als radius auf der Aussenseite einer Ebene liegt.
      *
      * @param bSphere Kugel.
@@ -67,7 +67,7 @@ class Frustum {
      */
     double sphereInFrustumDistance(BoundingSphere* bSphere);
 
-    /** Testet, ob eine Kugel mit Mittelpunkt x, y, z und radius 
+    /** Testet, ob eine Kugel mit Mittelpunkt x, y, z und radius
      * im Frustum liegt.
      *
      * @param x xKoordinate.
@@ -79,7 +79,7 @@ class Frustum {
      */
     double sphereInFrustumDistance(float x, float y, float z, float radius);
 
-    
+
     /** (siehe sphereInFrustumDistance).
      *
      * @param bSphere die BoundingSphere
@@ -88,7 +88,7 @@ class Frustum {
      */
     bool sphereInFrustum(BoundingSphere* bSphere);
 
-    /** siehe speherInFrustumDistance. 
+    /** siehe speherInFrustumDistance.
      *
      * @param x xKoordinate.
      * @param y yKoordinate.
@@ -97,9 +97,9 @@ class Frustum {
      */
     bool sphereInFrustum(float x, float y, float z, float radius);
 
-    
-    /** gibt Koeffizienten der 6 Ebenen aus 
-     * 
+
+    /** gibt Koeffizienten der 6 Ebenen aus
+     *
      * @return string (Koeffizienten)
      */
     std::string toString() {
@@ -115,11 +115,11 @@ class Frustum {
       help << std::ends;
 
       std::string res = std::string(help.str());
-		  return(res);
+      return(res);
     }
-  
-  private: 
-    
+
+  private:
+
     /** Ebenen. frustumPlanes[5] ist die nearClipping plane. */
     Plane frustumPlanes[6];
 

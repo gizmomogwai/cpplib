@@ -17,7 +17,7 @@
 #include <assert.h>
 
 
-/** Erster Versuch einer Engine ... es ist noch nicht gewiss, 
+/** Erster Versuch einer Engine ... es ist noch nicht gewiss,
  * was so eine Engine alles koennen muss!
  *
  * <p>
@@ -33,14 +33,14 @@
  */
 class GLUTEngine : public Engine {
 
-	public:	
-		/** Erzeugt die Engine mit einer gewissen anfangsgroesse.
-		 *
-		 * @@param _width gewuenschte Breite.
-		 * @@param _height gewuenschte Hoehe.
+  public:
+    /** Erzeugt die Engine mit einer gewissen anfangsgroesse.
+     *
+     * @@param _width gewuenschte Breite.
+     * @@param _height gewuenschte Hoehe.
      * @@param _windowName name des Fensters.
-		 */
-    GLUTEngine(int argc, char** args, 
+     */
+    GLUTEngine(int argc, char** args,
                int _width, int _height,
                std::string windowName);
 
@@ -75,7 +75,7 @@ class GLUTEngine : public Engine {
      * @@param y Y-Positoin.
      */
     static void staticSpecialPressed(int key, int x, int y);
-		
+
     /** Beendet alles. */
     void quit() {
       std::cout << "GlutEngine::quit - so jetzt raus" << std::endl;
@@ -99,17 +99,16 @@ class GLUTEngine : public Engine {
       std::cout << "hier" << std::endl;
     }
 
-	private:
+  private:
     /** Engineinstance. */
     static GLUTEngine* instance;
 
     /** Soll die Visitorloop unterbrochen werden. */
     static bool forceRedisplay;
-    
+
     /** The GLUT Window */
     int fWindow;
 
 };
 
 #endif // _GLUTEngine_h_
-

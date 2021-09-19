@@ -15,6 +15,7 @@
 #include <sg/nodeComponents/geom/TriangleArray.h>
 #include <sg/nodes/Group.h>
 #include <sg/nodes/Node.h>
+#include <sg/nodes/TGroup.h>
 #include <sg/nodes/Root.h>
 #include <sg/nodes/SGObserver.h>
 #include <sg/nodes/Shape3D.h>
@@ -24,7 +25,12 @@
 #include <util/profile/Profiler.h>
 #include <util/profile/PrintProfileVisitor.h>
 
-const int SGUpdateThread::textureSize = 512;
+#include <projects/glview/RotationBehavior.h>
+#include <lang/Math.h>
+
+#include <sg/nodeComponents/geom/TeapotGeometry.h>
+
+const int SGUpdateThread::textureSize = 64;
 
 SGUpdateThread::SGUpdateThread(Root* _root,
                                SGObserver* _observer,
@@ -43,9 +49,11 @@ SGUpdateThread::SGUpdateThread(Root* _root,
   assert(observer != 0);
   assert(file != 0);
   assert(navigator != 0);
+  setupTileGeometry();
 }
 
 SGUpdateThread::~SGUpdateThread() {
+  tileGeometry->releaseReference();
   delete file;
 }
 
@@ -60,26 +68,27 @@ void SGUpdateThread::run() {
   delete this;
 }
 
-
-
-Shape3D* SGUpdateThread::shapeForImage(int height,
-                                       int i, int j,
-                                       Image* image) {
-  //ProfileObject profiler("shapeImage");
-
-  TriangleArray* geom = new TriangleArray(FAN, 1);
+void SGUpdateThread::setupTileGeometry() {
+  tileGeometry = new TriangleArray(FAN, 1);
   Array3f* coords = new Array3f(4);
-  float xPos = i * (textureSize-1);
-  float yPos = j * (textureSize-1);
-  coords->set(3, xPos + 0.5f,
-                 height - yPos - 0.5f, 0);
-  coords->set(2, xPos + textureSize - 0.5f,
-                 height - yPos - 0.5f, 0);
-  coords->set(1, xPos + textureSize - 0.5f,
-                 height - (yPos + textureSize - 0.5f), 0);
-  coords->set(0, xPos + 0.5f,
-                 height - (yPos + textureSize - 0.5f), 0);
-  geom->setCoordinates(coords);
+  double half = (textureSize - 1)/2.0f;
+  coords->set(3,
+              0-half,
+              textureSize-1.0f-half,
+              0);
+  coords->set(2,
+              textureSize - 1.0f-half,
+              textureSize - 1.0f-half,
+              0);
+  coords->set(1,
+              textureSize - 1.0f-half,
+              0-half,
+              0);
+  coords->set(0,
+              0-half,
+              0-half,
+              0);
+  tileGeometry->setCoordinates(coords);
   coords->releaseReference();
 
   Array2f* texCoords = new Array2f(4);
@@ -88,8 +97,14 @@ Shape3D* SGUpdateThread::shapeForImage(int height,
   texCoords->set(2, 1.0f-pixel, pixel);
   texCoords->set(1, 1.0f-pixel, 1.0f-pixel);
   texCoords->set(0, pixel,      1.0f-pixel);
-  geom->setTextureCoordinates(texCoords, 0);
+  tileGeometry->setTextureCoordinates(texCoords, 0);
   texCoords->releaseReference();
+}
+
+Shape3D* SGUpdateThread::shapeForImage(int height,
+                                       int i, int j,
+                                       Image* image) {
+  //ProfileObject profiler("shapeImage");
 
   Appearance* app = new Appearance(1);
   SGImage* sgImage = new SGImage(image);
@@ -99,8 +114,7 @@ Shape3D* SGUpdateThread::shapeForImage(int height,
   app->setTexture(texture, 0);
   texture->releaseReference();
 
-  Shape3D* shape = new Shape3D(geom, app);
-  geom->releaseReference();
+  auto shape = new Shape3D(tileGeometry, app);
   app->releaseReference();
 
   return shape;
@@ -119,19 +133,49 @@ void SGUpdateThread::createShape(Image* image,
     part = image->getClippedRect(xPos, yPos, textureSize, textureSize);
   }
 
-  Shape3D* shape = shapeForImage(image->getHeight(),
-                                 xCount, yCount, part);
-  res->addChild(shape);
+  auto shape = shapeForImage(image->getHeight(),
+                             xCount, yCount, part);
+
+  auto translationTransformation = new TGroup();
+  auto rotationTransformation = new TGroup();
+  auto rotation = (new RotationBehavior(rotationTransformation))->setDelta(Math::toRadians(1));
+  rotationTransformation->addChild(rotation);
+
+  auto transform = new Transform3D();
+  transform->setTranslation(new Vector3f(0.5+xCount*(textureSize-1), image->getHeight()-(0.5+yCount*(textureSize-1)), -500));
+  translationTransformation->setTransform(transform);
+
+  translationTransformation->addChild(rotationTransformation);
+  rotationTransformation->releaseReference();
+
+  rotationTransformation->addChild(shape);
   shape->releaseReference();
+
+  res->addChild(translationTransformation);
+  translationTransformation->releaseReference();
 }
 
+/*
+  create from an imagefile:
+    - each image is split into tiles
+    - a tile is textureSize-1 in width and height (because of bilinear filtering the tile needs to go from pixel 0.5 till textureSize - 0.5)
+      so the geometry goes from 0.5+n*(textureSize-1) ... 0.5+(n+1)(textureSize-1)
+    - the texture of a tile is textureSize in width and height from 0..textureSize-1, textureSize-1..2*(textureSize-1)
+    - texturecoordinates are always the same, as the image is cut into pieces ...
+      from the middle of the first pixel to the middle of the last pixel
+      0.5/textureSize .. 1 - 0.5 / texturesize
+    e.g. textureSize 4:
+      geometry  0.5,3.5       3.5,6.5   6.5,9.5    9.5,12.5
+      texture   0,1,2,3       3,4,5,6   6,7,8,9    9,10,11,12
+                1/8...1-1/8
+ */
 void SGUpdateThread::buildViewGraph(File* file) {
 
   //ProfileObject profiler("buildViewGraph");
 
   std::cout << "Working on: " << file->toString() << std::endl;
 
-   setDummy(observer, 0);
+  setDummy(observer, 0);
 
   loadProgress->load();
   root->setChild(loadProgress, 1);
@@ -153,12 +197,12 @@ void SGUpdateThread::buildViewGraph(File* file) {
     xCount = 0;
     while (xPos + textureSize < image->getWidth()) {
 
-      createShape(image, xPos, yPos, xCount, yCount, res, false);
-      xPos += textureSize - 1;
+      //createShape(image, xPos, yPos, xCount, yCount, res, false);
+      xPos += textureSize -1;
       xCount++;
     }
 
-    yPos += textureSize - 1;
+    yPos += textureSize -1;
     yCount++;
   }
 
@@ -173,7 +217,7 @@ void SGUpdateThread::buildViewGraph(File* file) {
   xCount = lastXCount;
   yCount = 0;
   while (yPos + textureSize < image->getHeight()) {
-    createShape(image, xPos, yPos, xCount, yCount, res, true);
+    //createShape(image, xPos, yPos, xCount, yCount, res, true);
     yPos += textureSize - 1;
     yCount++;
   }
@@ -184,7 +228,7 @@ void SGUpdateThread::buildViewGraph(File* file) {
   yPos = lastYPos;
   yCount = lastYCount;
   while (xPos + textureSize < image->getWidth()) {
-    createShape(image, xPos, yPos, xCount, yCount, res, true);
+    //createShape(image, xPos, yPos, xCount, yCount, res, true);
     xPos += textureSize - 1;
     xCount++;
   }
@@ -197,12 +241,34 @@ void SGUpdateThread::buildViewGraph(File* file) {
   yPos = lastYPos;
   xCount = lastXCount;
   yCount = lastYCount;
-  createShape(image, xPos, yPos, xCount, yCount, res, true);
+  //createShape(image, xPos, yPos, xCount, yCount, res, true);
 
   //delete(profiler2);
 
   navigator->setImage(image);
-  delete(image);
+  delete image;
+
+  auto translation = new TGroup();
+  auto transform = new Transform3D();
+  transform->setTranslation(new Vector3f(100, 100, -500));
+  translation->setTransform(transform);
+
+  auto teapotGeometry = new TeapotGeometry();
+  auto teapotAppearance = new Appearance(0);
+  auto teapotMaterial = new Material();
+  auto red = Color3f(1,0,0);
+  teapotMaterial->setColor(&red);
+  teapotMaterial->setLighting(false);
+  teapotAppearance->setMaterial(teapotMaterial);
+
+  auto teapot = new Shape3D(teapotGeometry, teapotAppearance);
+  teapotGeometry->releaseReference();
+  teapotAppearance->releaseReference();
+  translation->addChild(teapot);
+  teapot->releaseReference();
+
+  res->addChild(translation);
+  translation->releaseReference();
 
   observer->setChild(res, 0);
   res->releaseReference();

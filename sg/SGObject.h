@@ -10,7 +10,7 @@
 
 #include <util/RefCountedObject.h>
 
-/** Oberklasse aller Elemente die im Szenengraphen haengen, oder 
+/** Oberklasse aller Elemente die im Szenengraphen haengen, oder
  * von Leafs verwendet werden.
  *
  * Allgemein gilt fuer alle SG-Objecte folgendes:
@@ -23,7 +23,7 @@
  *          machen, da sie nicht weiss, was mit diesem Object geschieht.
  *     <li> Die Applikation muss das Object mit releaseReference freigeben,
  *          wenn sie es nicht mehr benoetigt.
- *     <li> Auch wenn die Applikation eine reference auf das in den 
+ *     <li> Auch wenn die Applikation eine reference auf das in den
  *          szenegraph hineingesetzte objekt behaelt werden aenderungen nur
  *          dann garantiert aufgenommen, wenn ein neuerliches setzen passiert.
  *   </ul>
@@ -39,9 +39,9 @@
  * </ul>
  *
  * <p>
- * Es koennen CustomDaten an jedes Object gehangt werden. Diese Daten sind 
- * vor allem fuer die Visitoren bestimmt. Mit dem Einhaengen der Daten 
- * geht das DatenObject in den Besitz des SGObjects ueber. Die DatenObjecte 
+ * Es koennen CustomDaten an jedes Object gehangt werden. Diese Daten sind
+ * vor allem fuer die Visitoren bestimmt. Mit dem Einhaengen der Daten
+ * geht das DatenObject in den Besitz des SGObjects ueber. Die DatenObjecte
  * werden spaetestens im Destructor zerstoehrt.
  *
  * <p>

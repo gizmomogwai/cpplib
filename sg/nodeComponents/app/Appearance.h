@@ -54,24 +54,24 @@ class Appearance : public NodeComponent {
     int getMaxMultiTextures();
 
     /** Setzt die Polygonattribute.
-		 *
-		 * SG-maessig
+     *
+     * SG-maessig
      *
      * @param pAtts PolygonAttribute.
      */
     virtual void setPolygonAttributes(PolygonAttributes* _pAtts);
 
     /** Setzt die RenderingAttribute.
-		 *
-		 * SG-maessig
+     *
+     * SG-maessig
      *
      * @param rAtts RenderingAttribute.
      */
     virtual void setRenderingAttributes(RenderingAttributes* _rAtts);
 
     /** Setzt die Textur.
-		 *
-		 * SG-maessig.
+     *
+     * SG-maessig.
      *
      * @param _texture Texturdaten.
      * @param _tNr Multitexturnr.
@@ -79,8 +79,8 @@ class Appearance : public NodeComponent {
     virtual void setTexture(Texture* _texture, int _tNr);
 
     /** Setzt die TexGenattribute.
-		 *
-		 * SG-maessig
+     *
+     * SG-maessig
      *
      * @param _texGen Texturgenerierungsattribute.
      * @param _tNr Multitexturnr.
@@ -88,8 +88,8 @@ class Appearance : public NodeComponent {
     virtual void setTexGen(TexGen* _texGen, int _tNr);
 
     /** Liefert die PolygonAttribute.
-		 *
-		 * SG-maessig
+     *
+     * SG-maessig
      *
      * @return PolygonAttributes* Attribute.
      */
@@ -104,8 +104,8 @@ class Appearance : public NodeComponent {
     virtual RenderingAttributes* getRenderingAttributes();
 
     /** Liefert die Textur.
-		 *
-		 * SG-maessig
+     *
+     * SG-maessig
      *
      * @param _texNr Multitexturnr.
      *
@@ -127,8 +127,8 @@ class Appearance : public NodeComponent {
 
     /** Liefert die Texturgenerierungsattribute.
      *
-		 * SG-maessig
-		 *
+     * SG-maessig
+     *
      * @param _texNr Multitexturnr.
      *
      * @return TexGen* Texturegenerierungsparameter.

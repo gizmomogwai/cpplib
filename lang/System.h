@@ -17,18 +17,18 @@
  * @author cK, $Author: gizmo $
  */
 class System {
-  
+
  public:
   /** Faehrt das System herunter. */
   static void shutdown();
-  
+
   /** Startet das System neu. */
   static void reboot();
 
 //  static float getCurrentTimeMicros();
-  
+
  private:
-  
+
 #ifdef _WIN32
   /** Hilfsmethode fuer WIN32.
    *
@@ -36,5 +36,5 @@ class System {
    */
   static void exitWindows(UINT mode);
 #endif
-  
+
 };

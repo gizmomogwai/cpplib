@@ -17,7 +17,7 @@
 /** Betrachter einer Szene.
  *
  * Der Betrachter soll durch die Szene bewegt werden koennen.
- * Und zwar in Weltkoordinaten, aber auch mit den Koordinaten, die 
+ * Und zwar in Weltkoordinaten, aber auch mit den Koordinaten, die
  * relativ zur Blickrichtung sind (also in Richtung der Kamera gehen).
  *
  * <p>
@@ -38,7 +38,7 @@
  * @author cK, $Author: koestlin $
  */
 class SGObserver : public ProjectionGroup {
-  
+
  public:
   /** Erzeugt einen neuen SGObserver mit Ausrichtung entlang der
    * Z-Achse.
@@ -48,18 +48,18 @@ class SGObserver : public ProjectionGroup {
   void accept(Visitor* v) {
     v->visit(this);
   }
-      
-  /** Bewegt den Beobachter in Weltcoordinaten. 
+
+  /** Bewegt den Beobachter in Weltcoordinaten.
    *
    * SG-maessiges Setzen.
    *
    * @param pos Position, geht nicht in den Besitz des Observers ueber.
    */
   virtual void setTranslation(Vector3f* pos);
-  
+
   /** Liefert die Transformation.
    *
-   * Die Transformation sollte als readonly behandelt werden, 
+   * Die Transformation sollte als readonly behandelt werden,
    * muss aber mit releaseReference befreit werden.
    *
    * @return RCTransform3D* die Transformation.
@@ -67,24 +67,24 @@ class SGObserver : public ProjectionGroup {
   virtual RCTransform3D* getTransform() {
     return(transform.get());
   }
-  
+
   /** Liefert die Translation.
    *
    * @return Vector3f* Die Translation, geht in den Besitz des Callers ueber.
    */
   virtual Vector3f* getTranslation();
-  
+
   /** Berechnet die Transformation, wie sie zum rendern benoetigt wird.
    */
   virtual void calcTransform();
 
   /** Setzt die Transformation komplett.
    *
-   * Dabei ist transformation so definiert, dass in der 
-   * rotationsmatrix z.b. eine eulermatrix steht und in dem 
-   * translationsteil die translation in weltkoordinaten .. wenn 
-   * es sein muss, muss man also mit calcTransform die transformation 
-   * berechnen, die opengl bracuht und kann das dann mit 
+   * Dabei ist transformation so definiert, dass in der
+   * rotationsmatrix z.b. eine eulermatrix steht und in dem
+   * translationsteil die translation in weltkoordinaten .. wenn
+   * es sein muss, muss man also mit calcTransform die transformation
+   * berechnen, die opengl bracuht und kann das dann mit
    * getCameraTransform holen.
    *
    * SG-maessiges setzen.
@@ -99,7 +99,7 @@ class SGObserver : public ProjectionGroup {
    * @return RCTransform3D* transformation.
    */
   virtual RCTransform3D* getCameraTransform();
-  
+
   /** Transformation. */
   UpdateObject<RCTransform3D> transform;
 
@@ -118,17 +118,17 @@ class SGObserver : public ProjectionGroup {
 
   /** Frustum des Betrachters. */
   Frustum* frustum;
-    
+
  protected:
   /** Raeumt auf. */
   virtual ~SGObserver();
-  
+
  private:
-  /** Endgueltige Transformation, sollte nur von UpdateVisitor 
-   * gesetzt werden. 
+  /** Endgueltige Transformation, sollte nur von UpdateVisitor
+   * gesetzt werden.
    */
   RCTransform3D* result;
-  
+
 };
 
 #endif // _SGObserver_h_

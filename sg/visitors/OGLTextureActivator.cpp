@@ -79,9 +79,7 @@ void OGLTextureActivator::activate(Texture* texture) {
 
       sgImage->releaseReference();
     }
-
   } else {
-
     OGLTextureID* id = (OGLTextureID*)help;
     glBindTexture(GL_TEXTURE_2D, id->id);
     assert(OglTools::checkOglState(__FILE__, __LINE__));

@@ -12,11 +12,11 @@
 /** Oberklasse aller Behaviors.
  *
  * Ein Behavior kann irgendwo in den Graphen gehaengt werden,
- * koennte gecullt werden (man weiss aber die semantik davon 
+ * koennte gecullt werden (man weiss aber die semantik davon
  * noch nicht genau).
- * Ein Behavior hat eine statisches Condition-Object (das nicht 
- * geaendert werden kann), das jedes Frame ausgewertet werden 
- * muss. Das Ergebnis dieser Berechnung stoesst die Ausfuehrung 
+ * Ein Behavior hat eine statisches Condition-Object (das nicht
+ * geaendert werden kann), das jedes Frame ausgewertet werden
+ * muss. Das Ergebnis dieser Berechnung stoesst die Ausfuehrung
  * des Behaviors an.
  *
  * <p>
@@ -40,7 +40,7 @@ class Behavior : public Leaf {
 
     /** Erzeugt ein neues Behavior ohne Condition.
      *
-     * Die Condition kann mit der protecteden Methode setCondition 
+     * Die Condition kann mit der protecteden Methode setCondition
      * gesetzt werden, wenn man sich darueber klar ist was man macht.
      */
     Behavior();
@@ -52,12 +52,12 @@ class Behavior : public Leaf {
       v->visit(this);
     }
 
-    /** Methode, die die eigentliche Aufgabe, bei 
+    /** Methode, die die eigentliche Aufgabe, bei
      * wohlwollender Condition ausfuehrt.
      */
     virtual void processStimulus() = 0;
 
-    /** Condition, die das Behavior steuert (eigentlich 
+    /** Condition, die das Behavior steuert (eigentlich
      * private aber fuer die Visitoren public).
      */
     WakeupCondition* condition;

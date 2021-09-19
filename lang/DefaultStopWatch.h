@@ -16,7 +16,7 @@
 
 #endif
 
-/** StopWatch, die auf GetTickCount arbeitet. 
+/** StopWatch, die auf GetTickCount arbeitet.
  *
  * <p>
  * Curriculum Vitae:
@@ -32,25 +32,25 @@
 class DefaultStopWatch : public StopWatch {
 
  public:
-	/** Erzeugt die neue Stopuhr. */
-	DefaultStopWatch();
+  /** Erzeugt die neue Stopuhr. */
+  DefaultStopWatch();
 
-	/** Raeumt auf. */
-	virtual ~DefaultStopWatch();
+  /** Raeumt auf. */
+  virtual ~DefaultStopWatch();
 
-	void start();
+  void start();
 
-	void stop();
+  void stop();
 
-	double getDelta();
+  double getDelta();
 
  private:
 #ifdef WIN32
-	/** Startzeit. **/
-	DWORD startTime;
+  /** Startzeit. **/
+  DWORD startTime;
 
-	/** Endzeit. **/
-	DWORD endTime;
+  /** Endzeit. **/
+  DWORD endTime;
 #endif // WIN32
 
 #ifdef LINUX

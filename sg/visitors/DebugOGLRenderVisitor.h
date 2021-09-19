@@ -1,5 +1,4 @@
-#ifndef _DebugOGLRenderVisitor_h_
-#define _DebugOGLRenderVisitor_h_
+#pragma once
 
 #include <assert.h>
 #include <sg/math/RCTransform3D.h>
@@ -19,7 +18,7 @@
 #include <lang/Integer.h>
 
 class OGLBoundRenderer : public BoundVisitor {
-  
+
   private:
     float hue;
     TGroup* tg;
@@ -48,7 +47,7 @@ class OGLBoundRenderer : public BoundVisitor {
 //      std::cout << std::hex << b << std::endl;
       Point3f* minP = b->getMin();
       Point3f* maxP = b->getMax();
-  
+
       glDisable(GL_TEXTURE_2D);
       assert(glGetError() == GL_NO_ERROR);
 
@@ -102,14 +101,14 @@ class OGLBoundRenderer : public BoundVisitor {
 
 class DebugOGLRenderVisitor : public OGLRenderVisitor {
 
-	public:
+  public:
 
-		std::string toString() {
-			return "DebugOGLRenderVisitor";			
-		}
-		
-		DebugOGLRenderVisitor() : OGLRenderVisitor(0) {
-		}
+    std::string toString() {
+      return "DebugOGLRenderVisitor";
+    }
+
+    DebugOGLRenderVisitor() : OGLRenderVisitor(0) {
+    }
 
     void visit(Root* root) {
 //      std::cout << " +++ Root started" << std::endl;
@@ -124,18 +123,18 @@ class DebugOGLRenderVisitor : public OGLRenderVisitor {
         b->accept(&boundRenderer);
       }
     }
-    
-		void visit(Shape3D* shape) {
+
+    void visit(Shape3D* shape) {
 
 //      printMatrices();
 //      RCTransform3D* local2World = shape->getLocal2World();
 //      std::cout << "local2World" << local2World->toString() << std::endl;
 //      local2World->releaseReference();
-			
-			OGLRenderVisitor::visit(shape);
+
+      OGLRenderVisitor::visit(shape);
 
       visit((Node*)shape);
-		}
+    }
 
     void visit(TGroup* tg) {
       OGLRenderVisitor::visit(tg);
@@ -151,7 +150,5 @@ class DebugOGLRenderVisitor : public OGLRenderVisitor {
 
   private:
     OGLBoundRenderer boundRenderer;
-	
-};
 
-#endif // _DebugOGLRenderVisitor_h_
+};

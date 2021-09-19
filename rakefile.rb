@@ -18,3 +18,4 @@ cxx(Dir['**/project.rb'], 'out', "gcc", './') do |tc|
   tc[:LINKER].update(flags)
   # tc[:TARGET_OS] = :UNIX | OSX | :WINDOWS
 end
+

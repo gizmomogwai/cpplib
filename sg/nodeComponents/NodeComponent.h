@@ -26,10 +26,10 @@ class NodeComponent : public SGObject {
       return("NodeComponent");
     }
 
-  protected:    
+  protected:
     /** Raeumt auf. */
     virtual ~NodeComponent() {}
-      
+
 };
 
 #endif // _NodeComponent_h_

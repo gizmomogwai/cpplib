@@ -28,16 +28,16 @@
 class TeapotGeometry : public Geometry {
  public:
 
-	void accept(Visitor* v);
+  void accept(Visitor* v);
 
   std::string toString() {
     return("Teapot");
   }
 
  protected:
-	/** Raeumt auf. */
-	virtual ~TeapotGeometry();
-    
+  /** Raeumt auf. */
+  virtual ~TeapotGeometry();
+
 };
 
 #endif // _TeapotGeometry_h_

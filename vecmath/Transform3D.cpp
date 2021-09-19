@@ -96,7 +96,7 @@ void Transform3D::setEulerXYZ(Vector3f* v) {
   matrix.m02 = ad * e + b * f;
   matrix.m12 = -ad * f + b * e;
   matrix.m22 = a * c;
- 
+
 }
 
 
@@ -128,7 +128,7 @@ Vector3f* Transform3D::getEuler() {
     float y = indices.idx1;
     angleZ = atan2(y, x);
   }
-  
+
   angleX = clamp(angleX);
   angleY = clamp(angleY);
   angleZ = clamp(angleZ);
@@ -143,13 +143,13 @@ Vector3f* Transform3D::getEuler() {
 
 float Transform3D::clamp(float v) {
   const float PI = (const float)3.1415926535;
-	/*
-		while (v < 0) {
+  /*
+    while (v < 0) {
     v += 2*PI;
-		}
-		while (v > 2*PI) {
+    }
+    while (v > 2*PI) {
     v -= 2*PI;
-		}
+    }
   */
   return(v);
 }
@@ -162,7 +162,7 @@ void Transform3D::setRotation(Transform3D* t3d) {
     }
     matrix.m01 = t3d->matrix.m01;
     matrix.m02 = t3d->matrix.m02;
-  
+
     matrix.m10 = t3d->matrix.m10;
     matrix.m11 = t3d->matrix.m11;
     matrix.m12 = t3d->matrix.m12;
@@ -190,7 +190,7 @@ void Transform3D::getTranslation(Vector3f* v) {
 
 
 void Transform3D::lookAt(Vector3f* eye, Vector3f* at, Vector3f* up) {
-  
+
   Vector3f zAxis;
   zAxis.sub(at, eye);
   zAxis.normalize();
@@ -205,7 +205,7 @@ void Transform3D::lookAt(Vector3f* eye, Vector3f* at, Vector3f* up) {
   yAxis.cross(&xAxis, &zAxis);
   yAxis.normalize();
   yAxis.scale(-1);
-    
+
   setID();
 
   matrix.m00 = xAxis.dx;
@@ -249,7 +249,7 @@ void Transform3D::lookAt(Vector3f* x, Vector3f* y, Vector3f* z, Vector3f* t) {
   matrix.m30 = t->dx * x->dx + t->dy * x->dy + t->dz * x->dz;
   matrix.m31 = t->dx * y->dx + t->dy * y->dy + t->dz * y->dz;
   matrix.m32 = t->dx * z->dx + t->dy * z->dy + t->dz * z->dz;
-} 
+}
 
 
 void Transform3D::lookAt(Transform3D* t) {
@@ -272,7 +272,7 @@ Transform3D* Transform3D::invertAffine() {
 
 Transform3D* Transform3D::fake() {
   Transform3D* res = new Transform3D();
-  
+
   res->m[ 0] = m[ 0];
   res->m[ 5] = m[ 5];
   res->m[10] = m[10];
@@ -306,13 +306,13 @@ void Transform3D::setScale(Vector3f* scale) {
 
 
 void Transform3D::set(float scale, Vector3f* translation) {
-	setID();
-	indices.idx0 = scale;
-	indices.idx5 = scale;
-	indices.idx10 = scale;
-	indices.idx12 = translation->dx;
-	indices.idx13 = translation->dy;
-	indices.idx14 = translation->dz;
+  setID();
+  indices.idx0 = scale;
+  indices.idx5 = scale;
+  indices.idx10 = scale;
+  indices.idx12 = translation->dx;
+  indices.idx13 = translation->dy;
+  indices.idx14 = translation->dz;
 }
 
 
@@ -330,8 +330,8 @@ std::string Transform3D::toString() {
   std::ostringstream help;
   help << "Transform3D\n";
   for (int i=0; i<4; i++) {
-    help << m[i+0] << ", \t" << m[i+4] << ", \t" 
-				 << m[i+8] << ", \t" << m[i+12] << std::endl;
+    help << m[i+0] << ", \t" << m[i+4] << ", \t"
+         << m[i+8] << ", \t" << m[i+12] << std::endl;
   }
   help << std::ends;
 
@@ -514,7 +514,7 @@ void Transform3D::transformInplace(Point3f* p) {
 //  m13 = f1 * m2[ 4] + f2 * m2[ 5] + f3 * m2[ 6] + f4 * m2[ 7];
 //  m23 = f1 * m2[ 8] + f2 * m2[ 9] + f3 * m2[10] + f4 * m2[11];
 //  m33 = f1 * m2[12] + f2 * m2[13] + f3 * m2[14] + f4 * m2[15];
-//  
+//
 //
 ///*
 //  // 5800
@@ -653,11 +653,3 @@ void Transform3D::transpose() {
     }
   }
 }
-
-
-
-
-
-
-
-

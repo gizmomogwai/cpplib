@@ -23,17 +23,17 @@
  */
 template <class T> class TemplateTupelArray : public NodeComponent {
  public:
-	/** Erzeugt ein neues Array von Ts.
-	 *
-	 * @param _size Anzahl von Tupel.
-	 * @param _tupelSize Anzahl von Ts pro Tupel.
-	 */
+  /** Erzeugt ein neues Array von Ts.
+   *
+   * @param _size Anzahl von Tupel.
+   * @param _tupelSize Anzahl von Ts pro Tupel.
+   */
    TemplateTupelArray(int _size, int _tupelSize)
      : maxIdx(_size*_tupelSize),
        data(new T[maxIdx]),
        tupelSize(_tupelSize),
        size(_size) {
-	}
+  }
 
   /** Alternativer Konstructor, der ein von jemandem anderen Initialisiertes array
    * verarbeitet.
@@ -46,56 +46,56 @@ template <class T> class TemplateTupelArray : public NodeComponent {
     : maxIdx(_size*_tupelSize), data(_data), tupelSize(_tupelSize), size(_size)  {
   }
 
-	/** Liefert die Anzahl von Tupel
-	 *
-	 * @return int Tupelanzahl.
-	 */
-	int getSize() {
-		return(size);
-	}
+  /** Liefert die Anzahl von Tupel
+   *
+   * @return int Tupelanzahl.
+   */
+  int getSize() {
+    return(size);
+  }
 
-	/** Liefert die Adresse des iten Tupels.
-	 *
-	 * @param idx Index des Tupels.
-	 *
-	 * @return float* Adresse des Tupels.
-	 */
-	T* get(int idx) {
-		return(&(data[idx * tupelSize]));
-	}
+  /** Liefert die Adresse des iten Tupels.
+   *
+   * @param idx Index des Tupels.
+   *
+   * @return float* Adresse des Tupels.
+   */
+  T* get(int idx) {
+    return(&(data[idx * tupelSize]));
+  }
 
-	/** Setzt einen Index direkt.
-	 *
-	 * @param idx Index.
-	 * @param v Wert.
-	 */
-	void set(int idx, T v) {
-		if ((idx < maxIdx) && (idx >= 0)) {
-			data[idx] = v;
-		} else {
-			throw(Exception("Arrayf::set - out Of Bounds", __FILE__, __LINE__));
-		}
-	}
+  /** Setzt einen Index direkt.
+   *
+   * @param idx Index.
+   * @param v Wert.
+   */
+  void set(int idx, T v) {
+    if ((idx < maxIdx) && (idx >= 0)) {
+      data[idx] = v;
+    } else {
+      throw(Exception("Arrayf::set - out Of Bounds", __FILE__, __LINE__));
+    }
+  }
 
  protected:
-	/** Raeumt auf. */
-	virtual ~TemplateTupelArray() {
-		delete[](data);
-	}
+  /** Raeumt auf. */
+  virtual ~TemplateTupelArray() {
+    delete[](data);
+  }
 
 
  private:
-	/** Maximalindex ins array. */
-	int maxIdx;
+  /** Maximalindex ins array. */
+  int maxIdx;
 
-	/** Daten. */
-	T* data;
+  /** Daten. */
+  T* data;
 
-	/** Anzahl von floats pro tupel. */
-	int tupelSize;
+  /** Anzahl von floats pro tupel. */
+  int tupelSize;
 
-	/** Anzahl von Tupeln. */
-	int size;
+  /** Anzahl von Tupeln. */
+  int size;
 
 };
 
