@@ -13,7 +13,7 @@
 class Group;
 
 /** Oberklasse aller Elemente, die direkt in den Szenegraph gehaengt
- * werden. 
+ * werden.
  *
  * Es ist zu entscheiden, was hier alles als direktes attribut gefuehrt
  * werden sollte, und was generisch angehaengt werden soll.
@@ -57,15 +57,15 @@ class Node : public SGObject {
     /** Setzt die local2World-Transformation.
      * Sollte normalerweise von einem Visitor aus verwendet werden.
      *
-     * @param t3d Transformation, darf danach nicht mehr schreibend 
+     * @param t3d Transformation, darf danach nicht mehr schreibend
      *        verwendet werden.
      */
     virtual void setLocal2World(RCTransform3D* t3d);
 
-    /** Bequemlichkeitsmethode, um eine unrefgecountete 
-		 * Transformation zu setzen.
-		 *
-		 * Vorsicht .. das ist definitiv per value.
+    /** Bequemlichkeitsmethode, um eine unrefgecountete
+     * Transformation zu setzen.
+     *
+     * Vorsicht .. das ist definitiv per value.
      *
      * @param t3d Transform3D.
      */
@@ -93,19 +93,19 @@ class Node : public SGObject {
     /** Vater des Knotens. */
     Group* parent;
 
-  	/** Setzt das Bound-Object.
-	   *
-  	 * @param _bound Bound. Caller verliert den Besitz.
-	   */
-  	void setBound(Bound* _bound);
-  
-  	/** Liefert das Bound-Object.
-	   *
-  	 * @return Bound* Bound bleibt im Besitz des Nodes.
-  	 */
-  	Bound* getBound() {
-	  	return(bound);
-  	}
+    /** Setzt das Bound-Object.
+     *
+     * @param _bound Bound. Caller verliert den Besitz.
+     */
+    void setBound(Bound* _bound);
+
+    /** Liefert das Bound-Object.
+     *
+     * @return Bound* Bound bleibt im Besitz des Nodes.
+     */
+    Bound* getBound() {
+      return(bound);
+    }
 
   protected:
     /** Virtueller Aufraeumer. */

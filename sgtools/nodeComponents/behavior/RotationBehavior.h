@@ -1,5 +1,4 @@
-#ifndef _RotationBehavior_h_
-#define _RotationBehavior_h_
+#pragma once
 
 #include <sg/nodes/Behavior.h>
 class TGroup;
@@ -23,7 +22,7 @@ public:
    *
    * @param tg TransformGruppe, die manipuliert werden soll.
    */
-  RotationBehavior(TGroup* tg, float delta=0.0f);
+  RotationBehavior(TGroup* tg, float delta=0.0f, float offset=0.0f);
 
   void processStimulus();
 
@@ -47,5 +46,3 @@ protected:
   float delta;
 
 };
-
-#endif // _RotationBehavior_h_

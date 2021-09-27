@@ -1,5 +1,4 @@
-#ifndef _SGObject_h_
-#define _SGObject_h_
+#pragma once
 
 #include <string>
 #include <map>
@@ -107,5 +106,3 @@ class SGObject : public Visited, public RefCountedObject {
     std::map<void*, CustomData*>* customData;
 
 };
-
-#endif // _SGObject_h_

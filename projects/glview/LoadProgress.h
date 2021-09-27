@@ -1,11 +1,11 @@
 #ifndef _LoadProgress_h_
 #define _LoadProgress_h_
 
-#include "RotationBehavior.h"
+#include "sgtools/nodeComponents/behavior/RotationBehavior.h"
 #include <sg/nodes/SGObserver.h>
 
 /** Szenengraphast, der dargestellt wird, wenn ein bild geladen und
- * bearbeitet wird. 
+ * bearbeitet wird.
  *
  * <p>
  * Curriculum Vitae:
@@ -20,22 +20,22 @@
 class LoadProgress : public SGObserver {
 
 public:
-	/** Erzeugt den Szenegraphenteil. */
-	LoadProgress();
+  /** Erzeugt den Szenegraphenteil. */
+  LoadProgress();
 
   void load() {
     rot->setDelta(0.01f);
-  } 
+  }
 
   void error() {
     rot->setDelta(0.0f);
   }
 
 protected:
-	/** Raeumt auf. */
-	virtual ~LoadProgress() {
+  /** Raeumt auf. */
+  virtual ~LoadProgress() {
     rot->releaseReference();
-	}
+  }
 
 private:
   RotationBehavior* rot;

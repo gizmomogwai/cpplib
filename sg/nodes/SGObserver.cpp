@@ -16,14 +16,14 @@ SGObserver::SGObserver() : frustum(new Frustum()) {
 
 
 SGObserver::~SGObserver() {
-  delete(frustum);
+  delete frustum;
   result->releaseReference();
 }
 
 
 Frustum* SGObserver::getFrustum() {
 
-  return(frustum);
+  return frustum;
 }
 
 
@@ -57,7 +57,7 @@ Vector3f* SGObserver::getTranslation() {
     res = new Vector3f(t3d->matrix.m30, t3d->matrix.m31, t3d->matrix.m32);
     t3d->releaseReference();
   }
-  return(res);
+  return res;
 }
 
 
@@ -71,7 +71,7 @@ void SGObserver::calcTransform() {
   Transform3D* help = t3d->invertAffine();
   result = new RCTransform3D(help);
   t3d->releaseReference();
-  delete(help);
+  delete help;
 }
 
 
@@ -82,7 +82,7 @@ void SGObserver::setTransform(RCTransform3D* t3d) {
 
 RCTransform3D* SGObserver::getCameraTransform() {
   result->addReference();
-  return(result);
+  return result;
 }
 
 
@@ -107,6 +107,6 @@ void SGObserver::calculateFrustum(int width, int height) {
       t3d->releaseReference();
     }
     //std::cout << p->toString() << std::endl;
-    delete(p);
+    delete p;
   }
 }

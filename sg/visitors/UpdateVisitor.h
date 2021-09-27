@@ -1,10 +1,9 @@
-#ifndef _UpdateVisitor_h_
-#define _UpdateVisitor_h_
+#pragma once
 
 #include <sg/visitors/Visitor.h>
 
 
-/** Visitor, der in den Retained-Objekten vorgenommene Aenderungen in den 
+/** Visitor, der in den Retained-Objekten vorgenommene Aenderungen in den
  * Szenegraphen integriert.
  *
  * <p>
@@ -30,7 +29,7 @@ class UpdateVisitor : public Visitor {
 
   public:
     /** Erzeugt einen neuen Visitor, der alles macht, was zu einem update
-	 * noetig ist.
+   * noetig ist.
      */
     UpdateVisitor();
 
@@ -42,7 +41,7 @@ class UpdateVisitor : public Visitor {
     void visit(SGObserver* observer);
 
     void visit(SGObject* sgo);
-    
+
     void visit(Node* n);
 
     void visit(Group* g);
@@ -74,7 +73,5 @@ class UpdateVisitor : public Visitor {
 
     /** Hoehe des Canvases. */
     int height;
-			
-};
 
-#endif // _UpdateVisitor_h_
+};

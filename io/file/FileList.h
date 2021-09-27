@@ -1,5 +1,4 @@
-#ifndef FileList_h_
-#define FileList_h_
+#pragma once
 
 #include <vector>
 
@@ -25,9 +24,6 @@ class FileList : public std::vector<File*> {
  public:
   /** Raeumt alle Referencen in der Liste auf. */
   virtual ~FileList();
-  
+
   FileList* duplicate();
 };
-
-#endif // FileList_h_
-

@@ -61,7 +61,7 @@ void UpdateVisitor::visit(Node* node) {
 
 void UpdateVisitor::visit(Group* g) {
   visit((Node*)g);
-  
+
   g->childs->update();
   NodeListIterator* i = g->getChilds();
   while (i->hasNext() == true) {

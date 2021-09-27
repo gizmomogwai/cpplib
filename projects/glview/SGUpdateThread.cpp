@@ -25,12 +25,13 @@
 #include <util/profile/Profiler.h>
 #include <util/profile/PrintProfileVisitor.h>
 
-#include <projects/glview/RotationBehavior.h>
+#include <sgtools/nodeComponents/behavior/RotationBehavior.h>
 #include <lang/Math.h>
 
 #include <sg/nodeComponents/geom/TeapotGeometry.h>
+#include <sg/visitors/UpdateVisitor.h>
 
-const int SGUpdateThread::textureSize = 64;
+const int SGUpdateThread::textureSize = 128;
 
 SGUpdateThread::SGUpdateThread(Root* _root,
                                SGObserver* _observer,
@@ -73,7 +74,7 @@ void SGUpdateThread::setupTileGeometry() {
   Array3f* coords = new Array3f(4);
   double half = (textureSize - 1)/2.0f;
   coords->set(3,
-              0-half,
+              -half,
               textureSize-1.0f-half,
               0);
   coords->set(2,
@@ -82,11 +83,11 @@ void SGUpdateThread::setupTileGeometry() {
               0);
   coords->set(1,
               textureSize - 1.0f-half,
-              0-half,
+              -half,
               0);
   coords->set(0,
-              0-half,
-              0-half,
+              -half,
+              -half,
               0);
   tileGeometry->setCoordinates(coords);
   coords->releaseReference();
@@ -142,7 +143,7 @@ void SGUpdateThread::createShape(Image* image,
   rotationTransformation->addChild(rotation);
 
   auto transform = new Transform3D();
-  transform->setTranslation(new Vector3f(0.5+xCount*(textureSize-1), image->getHeight()-(0.5+yCount*(textureSize-1)), -500));
+  transform->setTranslation(new Vector3f(0.5+xCount*(textureSize-1), image->getHeight() - (0.5+yCount*(textureSize-1)), 0));
   translationTransformation->setTransform(transform);
 
   translationTransformation->addChild(rotationTransformation);
@@ -197,7 +198,7 @@ void SGUpdateThread::buildViewGraph(File* file) {
     xCount = 0;
     while (xPos + textureSize < image->getWidth()) {
 
-      //createShape(image, xPos, yPos, xCount, yCount, res, false);
+      createShape(image, xPos, yPos, xCount, yCount, res, false);
       xPos += textureSize -1;
       xCount++;
     }
@@ -217,7 +218,7 @@ void SGUpdateThread::buildViewGraph(File* file) {
   xCount = lastXCount;
   yCount = 0;
   while (yPos + textureSize < image->getHeight()) {
-    //createShape(image, xPos, yPos, xCount, yCount, res, true);
+    createShape(image, xPos, yPos, xCount, yCount, res, true);
     yPos += textureSize - 1;
     yCount++;
   }
@@ -228,7 +229,7 @@ void SGUpdateThread::buildViewGraph(File* file) {
   yPos = lastYPos;
   yCount = lastYCount;
   while (xPos + textureSize < image->getWidth()) {
-    //createShape(image, xPos, yPos, xCount, yCount, res, true);
+    createShape(image, xPos, yPos, xCount, yCount, res, true);
     xPos += textureSize - 1;
     xCount++;
   }
@@ -241,40 +242,21 @@ void SGUpdateThread::buildViewGraph(File* file) {
   yPos = lastYPos;
   xCount = lastXCount;
   yCount = lastYCount;
-  //createShape(image, xPos, yPos, xCount, yCount, res, true);
+  createShape(image, xPos, yPos, xCount, yCount, res, true);
 
-  //delete(profiler2);
+  // delete(profiler2);
 
   navigator->setImage(image);
   delete image;
 
-  auto translation = new TGroup();
-  auto transform = new Transform3D();
-  transform->setTranslation(new Vector3f(100, 100, -500));
-  translation->setTransform(transform);
-
-  auto teapotGeometry = new TeapotGeometry();
-  auto teapotAppearance = new Appearance(0);
-  auto teapotMaterial = new Material();
-  auto red = Color3f(1,0,0);
-  teapotMaterial->setColor(&red);
-  teapotMaterial->setLighting(false);
-  teapotAppearance->setMaterial(teapotMaterial);
-
-  auto teapot = new Shape3D(teapotGeometry, teapotAppearance);
-  teapotGeometry->releaseReference();
-  teapotAppearance->releaseReference();
-  translation->addChild(teapot);
-  teapot->releaseReference();
-
-  res->addChild(translation);
-  translation->releaseReference();
-
   observer->setChild(res, 0);
+  auto visitor = UpdateVisitor();
+  res->accept(&visitor);
+  std::cout << "Childs: " << res->getChildCount() << std::endl;
+
   res->releaseReference();
 
   setDummy(root, 1);
-
 }
 
 void SGUpdateThread::setDummy(Group* g, int idx) {

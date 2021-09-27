@@ -12,6 +12,12 @@
 #include <sgtools/KeyEvent.h>
 #include <vecmath/ParallelProjection.h>
 
+ParallelProjection* getProjection(float factor) {
+  auto projection = new ParallelProjection(factor);
+  projection->nearClipping = -100;
+  projection->farClipping = 100;
+  return projection;
+}
 ImageViewNavigator::ImageViewNavigator(Root* _root,
                                        RenderVisitor* _renderVisitor,
                                        File* _dir)
@@ -25,9 +31,8 @@ ImageViewNavigator::ImageViewNavigator(Root* _root,
   std::cout << "ImageViewNavigator - start" << std::endl;
 
   observer = new SGObserver();
-
-  observer->setParallel(new ParallelProjection(factor));
-  //observer->setCamera(new Camera(75, 1.0, 10, 10000));
+  observer->setParallel(getProjection(factor));
+  //  observer->setCamera(new Camera(75, 1.0, 10, 10000));
 
   root->addChild(observer);
 
@@ -74,7 +79,7 @@ void ImageViewNavigator::setTranslation(bool init) {
   if (factor < 0.01f) {
     factor = 0.01f;
   }
-  observer->setParallel(new ParallelProjection(factor));
+  observer->setParallel(getProjection(factor));
 
   float canvasWidth = renderVisitor->getImageWidth();
   float canvasHeight = renderVisitor->getImageHeight();

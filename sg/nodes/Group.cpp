@@ -20,7 +20,7 @@ Group::~Group() {
 }
 
 void Group::clearParents(NodeList* list) {
-std::cout << "Group:clearParents" << std::endl;
+  std::cout << "Group:clearParents" << std::endl;
   if (list != 0) {
     ListIterator<Node*> i(list);
     while (i.hasNext() == true) {
@@ -45,7 +45,7 @@ void Group::addChild(Node* newOne) {
   NodeList* current = childs->get();
 
   newOnes = copyAndSet(current, newOnes);
-  
+
   newOne->setParent(this);
   newOne->addReference();
   newOnes->push_back(newOne);
@@ -60,7 +60,7 @@ void Group::addChild(Node* newOne) {
 
 void Group::setChild(Node* n, int idx) {
   AutoMutex(childs->m);
-  
+
   NodeList* newOnes = childs->getNew();
   NodeList* current = childs->get();
 
@@ -79,7 +79,7 @@ void Group::setChild(Node* n, int idx) {
 
 void Group::removeChild(Node* n) {
   AutoMutex(childs->m);
-  
+
   NodeList* newOnes = childs->getNew();
 
   NodeList* current = childs->get();
@@ -123,7 +123,7 @@ int Group::getChildCount() {
 NodeList* Group::copyAndSet(NodeList* oldOne, NodeList* newOne) {
   NodeList* res = newOne;
   if (res == 0) {
-    res = new NodeList();  
+    res = new NodeList();
     if (oldOne != 0) {
       ListIterator<Node*> i(oldOne);
       while (i.hasNext() == true) {
@@ -131,12 +131,12 @@ NodeList* Group::copyAndSet(NodeList* oldOne, NodeList* newOne) {
         help->addReference();
         res->push_back(help);
       }
-    }   
+    }
     childs->set(res);
   } else {
     res->addReference();
   }
-  // damit am ende der remove oder addchild 
+  // damit am ende der remove oder addchild
   // releaseReference aufgerufen werden kann
   return res;
 }

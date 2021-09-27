@@ -1,10 +1,7 @@
-#ifndef _Texture_h_
-#define _Texture_h_
+#pragma once
 
 #include <sg/nodeComponents/NodeComponent.h>
-
 #include <sg/nodeComponents/app/SGImage.h>
-
 #include <util/UpdateObject.h>
 
 /** Texturklasse im Szenegraphen.
@@ -74,5 +71,3 @@ class Texture : public NodeComponent {
     virtual ~Texture();
 
 };
-
-#endif // _Texture_h_

@@ -23,7 +23,6 @@
 #include "ExifDateHandler.h"
 #include "DeleteFileHandler.h"
 #include <sgtools/nodeComponents/geom/CubeGeometry.h>
-#include <projects/glview/RotationBehavior.h>
 
 File* getDir(File* dirOrFile) {
   if (dirOrFile->isDirectory() == true) {
@@ -42,7 +41,6 @@ File* getDir(File* dirOrFile) {
  * @param argc Anzahl commandozeilenargumente.
  * @param args Commandozeilenargumente.
  */
-/*
 int main(int argc, char** args) {
   try {
     if (argc != 2) {
@@ -59,8 +57,7 @@ int main(int argc, char** args) {
     File arg(args[1]);
     File* dir = getDir(&arg);
 
-    ImageViewNavigator* navigator =
-      new ImageViewNavigator(root, renderer, dir);
+    ImageViewNavigator* navigator = new ImageViewNavigator(root, renderer, dir);
     engine->setRoot(root);
 
     SGObserver* iotdObserver = new SGObserver();
@@ -116,4 +113,3 @@ int main(int argc, char** args) {
 
   return 0;
 }
-*/
