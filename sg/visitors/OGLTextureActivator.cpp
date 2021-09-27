@@ -33,12 +33,11 @@ void OGLTextureActivator::texImage(Image* image, int nOfChannels, int format) {
 void OGLTextureActivator::activate(Texture* texture) {
   assert(texture != 0);
 
-  void* help = texture->getCustomData((void *)this);
+  auto help = texture->getCustomData((void *)this);
   if (help == 0) {
-
-    SGImage* sgImage = texture->getImage();
+    auto sgImage = texture->getImage();
     if (sgImage != 0) {
-      Image* image = sgImage->getImage();
+      auto image = sgImage->getImage();
       if (image != 0) {
         GLuint id;
 
@@ -71,7 +70,7 @@ void OGLTextureActivator::activate(Texture* texture) {
                         GL_LINEAR);
         assert(OglTools::checkOglState(__FILE__, __LINE__));
 
-        OGLTextureID* tID = new OGLTextureID(this, id);
+        auto tID = new OGLTextureID(this, id);
         registered.push_back(tID);
 
         texture->setCustomData((void *)this, tID);
@@ -80,7 +79,7 @@ void OGLTextureActivator::activate(Texture* texture) {
       sgImage->releaseReference();
     }
   } else {
-    OGLTextureID* id = (OGLTextureID*)help;
+    auto id = (OGLTextureID*)help;
     glBindTexture(GL_TEXTURE_2D, id->id);
     assert(OglTools::checkOglState(__FILE__, __LINE__));
   }

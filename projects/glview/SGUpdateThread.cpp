@@ -30,20 +30,24 @@
 
 #include <sg/nodeComponents/geom/TeapotGeometry.h>
 #include <sg/visitors/UpdateVisitor.h>
+#include <projects/glview/Animation.h>
+#include "Animation.h"
 
-const int SGUpdateThread::textureSize = 128;
+const int SGUpdateThread::textureSize = 256;
 
 SGUpdateThread::SGUpdateThread(Root* _root,
                                SGObserver* _observer,
                                File* _file,
                                ImageViewNavigator* _navigator,
-                               LoadProgress* _loadProgress)
+                               LoadProgress* _loadProgress,
+                               Animations& _animations)
   : Thread(),
     observer(_observer),
     root(_root),
     file(new File(_file)),
     loadProgress(_loadProgress),
-    navigator(_navigator) {
+    navigator(_navigator),
+    animations(_animations) {
 
   Profiler::getInstance()->clear();
 
@@ -121,10 +125,49 @@ Shape3D* SGUpdateThread::shapeForImage(int height,
   return shape;
 }
 
+class AnimatedTGroup : public TGroup {
+public:
+  AnimatedTGroup(Animation* _out) : out(_out) {}
+  ~AnimatedTGroup() {
+    delete out;
+  }
+  Animation* out;
+};
+class RotateAnimation : public Animation {
+public:
+  RotateAnimation(const std::function<void (void)> _done, TGroup* _rotationGroup, float _start, float _end, int _delay) : Animation(_done), rotationGroup(_rotationGroup), alpha(_start), end(_end), delay(_delay) {
+    rotationGroup->addReference();
+  }
+  ~RotateAnimation() {
+    std::cout << "~RotateAnimation\n";
+    rotationGroup->releaseReference();
+  }
+  bool step() {
+    if (delay > 0) {
+      delay--;
+      return false;
+    }
+    auto transform = new Transform3D();
+    alpha = min(alpha + Math::toRadians(3), end);
+    transform->rotY(alpha);
+    rotationGroup->setTransform(transform);
+    return alpha == end;
+  }
+  std::string toString() const {
+    return "RotateAnimation";
+  }
+private:
+  TGroup* rotationGroup;
+  float alpha;
+  float end;
+  int delay;
+};
+
 void SGUpdateThread::createShape(Image* image,
                                  int xPos, int yPos,
                                  int xCount, int yCount,
-                                 Group* res, bool clipped) {
+                                 Group* res, bool clipped,
+                                 AnimationGroup& animationGroup) {
   //ProfileObject profiler("zerstueckeln");
 
   Image* part;
@@ -137,10 +180,10 @@ void SGUpdateThread::createShape(Image* image,
   auto shape = shapeForImage(image->getHeight(),
                              xCount, yCount, part);
 
-  auto translationTransformation = new TGroup();
   auto rotationTransformation = new TGroup();
-  auto rotation = (new RotationBehavior(rotationTransformation))->setDelta(Math::toRadians(1));
-  rotationTransformation->addChild(rotation);
+  auto outAnimation = new RotateAnimation([]{}, rotationTransformation, Math::toRadians(0), Math::toRadians(90), xCount+yCount);
+  animationGroup.add(outAnimation);
+  auto translationTransformation = new AnimatedTGroup(outAnimation);
 
   auto transform = new Transform3D();
   transform->setTranslation(new Vector3f(0.5+xCount*(textureSize-1), image->getHeight() - (0.5+yCount*(textureSize-1)), 0));
@@ -148,14 +191,15 @@ void SGUpdateThread::createShape(Image* image,
 
   translationTransformation->addChild(rotationTransformation);
   rotationTransformation->releaseReference();
-
   rotationTransformation->addChild(shape);
+
   shape->releaseReference();
 
   res->addChild(translationTransformation);
   translationTransformation->releaseReference();
 }
 
+void* ANIM = reinterpret_cast<void*>(1);
 /*
   create from an imagefile:
     - each image is split into tiles
@@ -169,17 +213,20 @@ void SGUpdateThread::createShape(Image* image,
       geometry  0.5,3.5       3.5,6.5   6.5,9.5    9.5,12.5
       texture   0,1,2,3       3,4,5,6   6,7,8,9    9,10,11,12
                 1/8...1-1/8
+
+
+
+   observer->childs[0] ist das neue bild, observer->childs[1] ist das alte bild
  */
 void SGUpdateThread::buildViewGraph(File* file) {
 
+  try {
   //ProfileObject profiler("buildViewGraph");
 
   std::cout << "Working on: " << file->toString() << std::endl;
 
-  setDummy(observer, 0);
-
-  loadProgress->load();
-  root->setChild(loadProgress, 1);
+  //loadProgress->load();
+  //root->setChild(loadProgress, 1);
 
   cutTime = 0.0f;
 
@@ -187,7 +234,9 @@ void SGUpdateThread::buildViewGraph(File* file) {
 
   //ProfileObject* profiler2 = new ProfileObject("cutImage");
 
-  Group* res = new Group();
+  Group* res = new Group(file->toString());
+  auto animationGroup = new AnimationGroup([=](){res->parent->removeChild(res);});
+  res->setCustomData(ANIM, animationGroup);
 
   int yPos = 0;
   int yCount = 0;
@@ -198,7 +247,7 @@ void SGUpdateThread::buildViewGraph(File* file) {
     xCount = 0;
     while (xPos + textureSize < image->getWidth()) {
 
-      createShape(image, xPos, yPos, xCount, yCount, res, false);
+      createShape(image, xPos, yPos, xCount, yCount, res, false, *animationGroup);
       xPos += textureSize -1;
       xCount++;
     }
@@ -218,7 +267,7 @@ void SGUpdateThread::buildViewGraph(File* file) {
   xCount = lastXCount;
   yCount = 0;
   while (yPos + textureSize < image->getHeight()) {
-    createShape(image, xPos, yPos, xCount, yCount, res, true);
+    createShape(image, xPos, yPos, xCount, yCount, res, true, *animationGroup);
     yPos += textureSize - 1;
     yCount++;
   }
@@ -229,7 +278,7 @@ void SGUpdateThread::buildViewGraph(File* file) {
   yPos = lastYPos;
   yCount = lastYCount;
   while (xPos + textureSize < image->getWidth()) {
-    createShape(image, xPos, yPos, xCount, yCount, res, true);
+    createShape(image, xPos, yPos, xCount, yCount, res, true, *animationGroup);
     xPos += textureSize - 1;
     xCount++;
   }
@@ -242,26 +291,46 @@ void SGUpdateThread::buildViewGraph(File* file) {
   yPos = lastYPos;
   xCount = lastXCount;
   yCount = lastYCount;
-  createShape(image, xPos, yPos, xCount, yCount, res, true);
+  createShape(image, xPos, yPos, xCount, yCount, res, true, *animationGroup);
 
   // delete(profiler2);
 
   navigator->setImage(image);
   delete image;
 
-  observer->setChild(res, 0);
-  auto visitor = UpdateVisitor();
-  res->accept(&visitor);
-  std::cout << "Childs: " << res->getChildCount() << std::endl;
-
+  observer->addChildInFront(res);
   res->releaseReference();
 
-  setDummy(root, 1);
+  auto visitor = UpdateVisitor();
+  observer->accept(&visitor);
+  auto childs = observer->getChildsAsList();
+
+  std::cout << "Childs:\n";
+  for (auto child : *childs) {
+    std::cout << "  " << child->toString() << std::endl;
+  }
+
+  if (childs->size() == 2) {
+    auto newImageI = childs->begin();
+    newImageI++;
+    auto oldImage = *newImageI;
+    auto anim = reinterpret_cast<Animation*>(oldImage->getCustomData(ANIM));
+    if (anim == nullptr) {
+      observer->removeChild(oldImage);
+    } else {
+      animations.run(anim);
+    }
+  }
+
+  // setDummy(root, 1);
+  } catch (...) {
+    std::cout << "Problem in sgupdatethread" << std::endl;
+  }
 }
 
 void SGUpdateThread::setDummy(Group* g, int idx) {
   std::cout << "SGUpdateThread.setDummy - start" << std::endl;
-  Node* dummy = new Node();
+  auto dummy = new Group();
   g->setChild(dummy, idx);
   dummy->releaseReference();
   std::cout << "SGUpdateThread.setDummy - finished" << std::endl;

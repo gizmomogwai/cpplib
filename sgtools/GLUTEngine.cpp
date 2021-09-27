@@ -70,23 +70,21 @@ private:
 Stats stats;
 void GLUTEngine::staticDisplayFunc() {
   try {
+    if (GLUTEngine::instance->root == nullptr) return;
+
     ListIterator<Visitor*> i(&(GLUTEngine::instance->visitors));
-    while (i.hasNext() == true) {
+    while (i.hasNext()) {
       Visitor* visitor = i.next();
 
-      if (GLUTEngine::instance->root != 0) {
-        // hier zeitmessung einbauen
-        /*
-        auto stopWatch = new HPStopWatch();
-        stopWatch->start();
-        */
-        GLUTEngine::instance->root->accept(visitor);
-        /*
-        stopWatch->stop();
-        std::cout << "Visitor: " << visitor->toString() << " took " << stopWatch->getDelta() << std::endl;
-        delete stopWatch;
-        */
-      }
+      // hier zeitmessung einbauen
+      auto stopWatch = HPStopWatch();
+      stopWatch.start();
+
+      GLUTEngine::instance->root->accept(visitor);
+
+      stopWatch.stop();
+      //std::cout << "Visitor: " << visitor->toString() << " took " << stopWatch.getDelta() << std::endl;
+
       if (forceRedisplay == true) {
         forceRedisplay = false;
         break;

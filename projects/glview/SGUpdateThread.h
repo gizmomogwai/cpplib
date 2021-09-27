@@ -1,16 +1,17 @@
-#ifndef _SGUpdateThread_h_
-#define _SGUpdateThread_h_
+#pragma once
 
 #include <lang/Thread.h>
+class Animations;
+class AnimationGroup;
 class File;
 class Group;
 class Image;
 class ImageViewNavigator;
+class LoadProgress;
 class Node;
 class Root;
 class SGObserver;
 class Shape3D;
-class LoadProgress;
 class TriangleArray;
 
 /** Thread der fuer das Laden eines Bildes und das updaten
@@ -43,7 +44,8 @@ public:
                  SGObserver* observer,
                  File* file,
                  ImageViewNavigator* navigator,
-                 LoadProgress* loadProgress);
+                 LoadProgress* loadProgress,
+                 Animations& animations);
 
   /** Raeumt auf. */
   virtual ~SGUpdateThread();
@@ -116,7 +118,7 @@ private:
   void createShape(Image* image,
                    int xPos, int yPos,
                    int xCount, int yCount,
-                   Group* res, bool clipped);
+                   Group* res, bool clipped, AnimationGroup& animations);
 
   /** Baut einen Szenegraphen.
    *
@@ -124,6 +126,5 @@ private:
    */
   void buildViewGraph(File* file);
 
+  Animations& animations;
 };
-
-#endif // _SGUpdateThread_h_

@@ -4,8 +4,7 @@
 
 #include <assert.h>
 
-Group::Group() : Node() {
-  childs = new UpdateObject<NodeList>();
+Group::Group(const std::string& _name) : Node(), name(_name), childs(new UpdateObject<NodeList>()) {
 }
 
 Group::~Group() {
@@ -35,9 +34,33 @@ void Group::accept(Visitor* v) {
   v->visit(this);
 }
 
+void Group::addChildInFront(Node* newOne) {
+  if (newOne == nullptr) {
+    throw Exception("Group::insertChild - newOne == nullptr", __FILE__, __LINE__);
+  }
+  AutoMutex(childs->m);
+
+  NodeList* newOnes = childs->getNew();
+  NodeList* current = childs->get();
+
+  newOnes = copyAndSet(current, newOnes);
+
+  newOne->setParent(this);
+  newOne->addReference();
+  newOnes->push_front(newOne);
+
+  if (newOnes != 0) {
+    newOnes->releaseReference();
+  }
+  if (current != 0) {
+    current->releaseReference();
+  }
+
+}
+
 void Group::addChild(Node* newOne) {
-  if (newOne == 0) {
-    throw(Exception("Group::addChild - newOne == 0", __FILE__, __LINE__));
+  if (newOne == nullptr) {
+    throw Exception("Group::addChild - newOne == nullptr", __FILE__, __LINE__);
   }
   AutoMutex(childs->m);
 
@@ -104,7 +127,7 @@ NodeListIterator* Group::getChilds() {
 
 std::string Group::toString() {
   std::ostringstream out;
-  out << "Group[" << getChildCount() << "]" << std::ends;
+  out << "Group[" << name << ", " << getChildCount() << "]" << std::ends;
   std::string res(out.str());
   return(res);
 }

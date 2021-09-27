@@ -155,7 +155,7 @@ class Group : public Node {
   public:
     /** Erzeugt ein neues Objekt.
      */
-    Group();
+    Group(const std::string& name="");
 
     void accept(Visitor* v);
 
@@ -166,6 +166,7 @@ class Group : public Node {
      * @param n Neues Kind.
      */
     virtual void addChild(Node* n);
+    virtual void addChildInFront(Node* newOne);
 
     /** Fuegt einen Knoten an ein Stelle hinzu.
      *
@@ -231,7 +232,7 @@ class Group : public Node {
      * @param list NodeList, die am ende per releaseReference aufgeraeumt wird.
      */
     void clearParents(NodeList* list);
-
+    const std::string name;
 };
 
 #endif // _Group_h_

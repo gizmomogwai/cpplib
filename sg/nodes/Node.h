@@ -34,7 +34,7 @@ class Group;
  */
 class Node : public SGObject {
 
-  public:
+public:
     /** Erzeugt einen neuen Node.
      */
     Node();
@@ -107,6 +107,9 @@ class Node : public SGObject {
       return(bound);
     }
 
+  std::string getName() const {
+    return name;
+  }
   protected:
     /** Virtueller Aufraeumer. */
     virtual ~Node();
@@ -118,6 +121,7 @@ class Node : public SGObject {
     /** BoundingObjekt des Knotens. */
     Bound* bound;
 
+    std::string name;
 };
 
 #endif // _Node_h_

@@ -5,8 +5,8 @@
 #include <sg/nodes/TGroup.h>
 #include <vecmath/Transform3D.h>
 
-RotationBehavior::RotationBehavior(TGroup* _tg, float _delta)
-  : tg(_tg), angle(0), delta(_delta) {
+RotationBehavior::RotationBehavior(TGroup* _tg, float _delta, float _offset)
+  : tg(_tg), angle(_offset), delta(_delta) {
 
   setCondition(new WakeupOnElapsedFrames(1));
 }

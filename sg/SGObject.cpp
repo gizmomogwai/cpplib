@@ -1,29 +1,29 @@
 #include <sg/SGObject.h>
 
-SGObject::SGObject() : customData(0) {
+SGObject::SGObject() : customData(nullptr) {
 }
 
 SGObject::~SGObject() {
-  if (customData != 0) {
+  if (customData != nullptr) {
     std::map<void*, CustomData*>::iterator i = customData->begin();
     while (i != customData->end()) {
-      delete(i->second);
+      delete i->second;
       i++;
     }
-    delete(customData);
+    delete customData;
   }
 }
 
 void* SGObject::getCustomData(void* key) {
-  if (customData == 0) {
-    return(0);
+  if (customData == nullptr) {
+    return nullptr;
   }
 
   std::map<void*, CustomData*>::iterator found = customData->find(key);
   if (found == customData->end()) {
-    return(0);
+    return nullptr;
   } else {
-    return(found->second);
+    return found->second;
   }
 }
 
@@ -35,7 +35,7 @@ void SGObject::setCustomData(void* key, CustomData* value) {
 
   std::map<void*, CustomData*>::iterator found = customData->find(key);
   if (found != customData->end()) {
-    delete(found->second);
+    delete found->second;
     customData->erase(found);
   }
 

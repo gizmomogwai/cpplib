@@ -71,7 +71,7 @@ void OGLRenderVisitor::visit(Root* root) {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   assert(OglTools::checkOglState(__FILE__, __LINE__));
 
-  glFrontFace(GL_CW);
+  glFrontFace(GL_CCW);
   assert(OglTools::checkOglState(__FILE__, __LINE__));
 
   glCullFace(GL_BACK);
@@ -84,13 +84,13 @@ void OGLRenderVisitor::visit(Root* root) {
   glDisable(GL_DITHER);
   assert(OglTools::checkOglState(__FILE__, __LINE__));
 
-  glEnable(GL_DEPTH_TEST);
+  glDisable(GL_DEPTH_TEST);
   assert(OglTools::checkOglState(__FILE__, __LINE__));
+
+  //  glDepthFunc(GL_LESS);
+  //assert(OglTools::checkOglState(__FILE__, __LINE__));
 
   glDisable(GL_LIGHTING);
-  assert(OglTools::checkOglState(__FILE__, __LINE__));
-
-  glDepthFunc(GL_LESS);
   assert(OglTools::checkOglState(__FILE__, __LINE__));
 
   glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
@@ -497,11 +497,7 @@ void OGLRenderVisitor::startApp(Appearance* app) {
   }
 
   RenderingAttributes* rAtts = app->getRenderingAttributes();
-  if (rAtts == 0) {
-    glEnable(GL_DEPTH_TEST);
-    glDepthFunc(GL_LESS);
-    glDepthMask(GL_TRUE);
-  } else {
+  if (rAtts != nullptr) {
     // depth test
     if (rAtts->zBufferRead == true) {
       glEnable(GL_DEPTH_TEST);

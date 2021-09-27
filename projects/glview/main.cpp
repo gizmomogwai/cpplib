@@ -23,6 +23,7 @@
 #include "ExifDateHandler.h"
 #include "DeleteFileHandler.h"
 #include <sgtools/nodeComponents/geom/CubeGeometry.h>
+#include "Animation.h"
 
 File* getDir(File* dirOrFile) {
   if (dirOrFile->isDirectory() == true) {
@@ -32,8 +33,20 @@ File* getDir(File* dirOrFile) {
   }
 }
 
+class AnimationVisitor : public Visitor {
+public:
+  AnimationVisitor(Animations& _animations) : animations(_animations) {}
+  ~AnimationVisitor() {}
+  void visit(Root* root) {
+    animations.animate();
+  }
+  std::string toString() {
+    return "AnimationVisitor";
+  }
+private:
+  Animations& animations;
 
-
+};
 /** Imageviewer mainprogramm.
  *
  * Usage: glview fileName
@@ -47,8 +60,10 @@ int main(int argc, char** args) {
       throw(Exception("Usage: glview fileName"));
     }
     Engine* engine = new GLUTEngine(argc, args, 512, 512, "glView");
-    engine->addVisitor(new UpdateVisitor());
+    Animations animations;
+    engine->addVisitor(new AnimationVisitor(animations));
     engine->addVisitor(new BehaviorVisitor());
+    engine->addVisitor(new UpdateVisitor());
     OGLRenderVisitor* renderer = new OGLRenderVisitor(new GLUTFontManager());
     engine->addVisitor(renderer);
 
@@ -57,7 +72,7 @@ int main(int argc, char** args) {
     File arg(args[1]);
     File* dir = getDir(&arg);
 
-    ImageViewNavigator* navigator = new ImageViewNavigator(root, renderer, dir);
+    ImageViewNavigator* navigator = new ImageViewNavigator(root, renderer, dir, animations);
     engine->setRoot(root);
 
     SGObserver* iotdObserver = new SGObserver();

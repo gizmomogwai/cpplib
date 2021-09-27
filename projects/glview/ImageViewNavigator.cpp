@@ -11,6 +11,7 @@
 
 #include <sgtools/KeyEvent.h>
 #include <vecmath/ParallelProjection.h>
+#include "Animation.h"
 
 ParallelProjection* getProjection(float factor) {
   auto projection = new ParallelProjection(factor);
@@ -20,14 +21,16 @@ ParallelProjection* getProjection(float factor) {
 }
 ImageViewNavigator::ImageViewNavigator(Root* _root,
                                        RenderVisitor* _renderVisitor,
-                                       File* _dir)
+                                       File* _dir,
+                                       Animations& _animations)
   :
     observer(0),
     root(_root),
     factor(1),
     renderVisitor(_renderVisitor),
     dir(_dir),
-    loadProgress(0) {
+    loadProgress(0),
+    animations(_animations) {
   std::cout << "ImageViewNavigator - start" << std::endl;
 
   observer = new SGObserver();
@@ -36,14 +39,17 @@ ImageViewNavigator::ImageViewNavigator(Root* _root,
 
   root->addChild(observer);
 
-  Node* dummy = new Node();
-  observer->addChild(dummy);
-  dummy->releaseReference();
-
   loadProgress = new LoadProgress();
   root->addChild(loadProgress);
 
   files = dir->list();
+  std::sort(files->begin(), files->end(),  [](File* f1, File* f2) {
+      return f1->toString() < f2->toString();
+    });
+  std::cout << "Files:\n";
+  for (auto file: *files) {
+    std::cout << file->toString() << std::endl;
+  }
   fileIterator = files->begin();
   auto visitor = UpdateVisitor();
   root->accept(&visitor);
@@ -113,6 +119,7 @@ void ImageViewNavigator::setTranslation(bool init) {
   }
 
   Vector3f translation(posX, posY, 0);
+  std::cout << "posX: " << posX << " posY: " << posY << std::endl;
   observer->setTranslation(&translation);
 }
 
@@ -188,12 +195,9 @@ void ImageViewNavigator::move(float dx, float dy) {
 }
 
 void ImageViewNavigator::showImage(File* f) {
-  std::cout << "ImageViewNavigator - showImage" << std::endl;
   informSelectionListener(f);
-
-  std::cout << "ImageViewNavigator - showImage" << std::endl;
   SGUpdateThread* updater =
-    new SGUpdateThread(root, observer, f, this, loadProgress);
+    new SGUpdateThread(root, observer, f, this, loadProgress, animations);
   updater->start();
 }
 

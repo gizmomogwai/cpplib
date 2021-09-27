@@ -13,6 +13,7 @@ class RenderVisitor;
 class Root;
 class SGObserver;
 class LoadProgress;
+class Animations;
 
 /** Navigator des Bildanzeigers... kann raus, reinzoomen und pannen.
  * kann bild weiter und zurueck.
@@ -38,7 +39,8 @@ public:
    */
   ImageViewNavigator(Root* _root,
                      RenderVisitor* _renderVisitor,
-                     File* _dir);
+                     File* _dir,
+                     Animations& animations);
 
   /** Raeumt auf. */
   virtual ~ImageViewNavigator();
@@ -128,6 +130,7 @@ private:
   /** Liste der selectionlistener */
   std::list<SelectionListener*> fSelectionListeners;
 
+  Animations& animations;
 };
 
 #endif // _ImageViewNavigator_h_
