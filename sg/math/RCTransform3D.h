@@ -1,5 +1,4 @@
-#ifndef _RCTransform3D_h_
-#define _RCTransform3D_h_
+#pragma once
 
 #include <vecmath/Transform3D.h>
 #include <util/RefCountedObject.h>
@@ -17,23 +16,21 @@
  * @author cK, $Author: koestlin $
  */
 class RCTransform3D : public Transform3D, public RefCountedObject {
-	public:
-	/** Erzeugt eine auf ID-initialisierte Transformation. */
-	RCTransform3D() : Transform3D() {
-	}
-	
-	/** Erzeugt eine RC aus einer normalen Transformation.
-	 *
-	 * @param t3d Zu uebernehmende Transformation.
-	 */
-	RCTransform3D(Transform3D* t3d) : Transform3D(t3d) {
-	}
-	
- protected:
-	/** Raeumt auf. */
-	virtual ~RCTransform3D() {
-	}
-	
-};
+  public:
+  /** Erzeugt eine auf ID-initialisierte Transformation. */
+  RCTransform3D() : Transform3D() {
+  }
 
-#endif // _RCTransform3D_h_
+  /** Erzeugt eine RC aus einer normalen Transformation.
+   *
+   * @param t3d Zu uebernehmende Transformation.
+   */
+  RCTransform3D(Transform3D* t3d) : Transform3D(t3d) {
+  }
+
+ protected:
+  /** Raeumt auf. */
+  virtual ~RCTransform3D() {
+  }
+
+};

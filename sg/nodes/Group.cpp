@@ -4,7 +4,7 @@
 
 #include <assert.h>
 
-Group::Group(const std::string& _name) : Node(), name(_name), childs(new UpdateObject<NodeList>()) {
+Group::Group() : Node(), childs(new UpdateObject<NodeList>()) {
 }
 
 Group::~Group() {
@@ -127,7 +127,7 @@ NodeListIterator* Group::getChilds() {
 
 std::string Group::toString() {
   std::ostringstream out;
-  out << "Group[" << name << ", " << getChildCount() << "]" << std::ends;
+  out << "Group[" << getName() << ", " << getChildCount() << "]" << std::ends;
   std::string res(out.str());
   return(res);
 }

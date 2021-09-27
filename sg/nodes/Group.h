@@ -155,7 +155,7 @@ class Group : public Node {
   public:
     /** Erzeugt ein neues Objekt.
      */
-    Group(const std::string& name="");
+    Group();
 
     void accept(Visitor* v);
 
@@ -232,7 +232,6 @@ class Group : public Node {
      * @param list NodeList, die am ende per releaseReference aufgeraeumt wird.
      */
     void clearParents(NodeList* list);
-    const std::string name;
 };
 
 #endif // _Group_h_

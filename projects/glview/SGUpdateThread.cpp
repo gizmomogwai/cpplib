@@ -19,6 +19,7 @@
 #include <sg/nodes/Root.h>
 #include <sg/nodes/SGObserver.h>
 #include <sg/nodes/Shape3D.h>
+#include <sg/visitors/Visitors.h>
 #include "LoadProgress.h"
 
 #include <util/profile/ProfileObject.h>
@@ -139,7 +140,6 @@ public:
     rotationGroup->addReference();
   }
   ~RotateAnimation() {
-    std::cout << "~RotateAnimation\n";
     rotationGroup->releaseReference();
   }
   bool step() {
@@ -202,127 +202,124 @@ void SGUpdateThread::createShape(Image* image,
 void* ANIM = reinterpret_cast<void*>(1);
 /*
   create from an imagefile:
-    - each image is split into tiles
-    - a tile is textureSize-1 in width and height (because of bilinear filtering the tile needs to go from pixel 0.5 till textureSize - 0.5)
-      so the geometry goes from 0.5+n*(textureSize-1) ... 0.5+(n+1)(textureSize-1)
-    - the texture of a tile is textureSize in width and height from 0..textureSize-1, textureSize-1..2*(textureSize-1)
-    - texturecoordinates are always the same, as the image is cut into pieces ...
-      from the middle of the first pixel to the middle of the last pixel
-      0.5/textureSize .. 1 - 0.5 / texturesize
-    e.g. textureSize 4:
-      geometry  0.5,3.5       3.5,6.5   6.5,9.5    9.5,12.5
-      texture   0,1,2,3       3,4,5,6   6,7,8,9    9,10,11,12
-                1/8...1-1/8
+  - each image is split into tiles
+  - a tile is textureSize-1 in width and height (because of bilinear filtering the tile needs to go from pixel 0.5 till textureSize - 0.5)
+  so the geometry goes from 0.5+n*(textureSize-1) ... 0.5+(n+1)(textureSize-1)
+  - the texture of a tile is textureSize in width and height from 0..textureSize-1, textureSize-1..2*(textureSize-1)
+  - texturecoordinates are always the same, as the image is cut into pieces ...
+  from the middle of the first pixel to the middle of the last pixel
+  0.5/textureSize .. 1 - 0.5 / texturesize
+  e.g. textureSize 4:
+  geometry  0.5,3.5       3.5,6.5   6.5,9.5    9.5,12.5
+  texture   0,1,2,3       3,4,5,6   6,7,8,9    9,10,11,12
+  1/8...1-1/8
 
 
-
-   observer->childs[0] ist das neue bild, observer->childs[1] ist das alte bild
- */
+  observer->childs[0] ist das neue bild, observer->childs[1] ist das alte bild
+*/
 void SGUpdateThread::buildViewGraph(File* file) {
-
   try {
-  //ProfileObject profiler("buildViewGraph");
+    std::cout << "Working on: " << file->toString() << std::endl;
 
-  std::cout << "Working on: " << file->toString() << std::endl;
+    //loadProgress->load();
+    //root->setChild(loadProgress, 1);
 
-  //loadProgress->load();
-  //root->setChild(loadProgress, 1);
+    cutTime = 0.0f;
 
-  cutTime = 0.0f;
+    auto image = ImageReader::readImage(file);
 
-  Image* image = ImageReader::readImage(file);
+    auto res = new Group();
+    if (observer->getChildCount() == 1) {
+      res->setName("newImage");
+    } else {
+      res->setName("currentImage");
+    }
+    auto outAnimations = new AnimationGroup([=](){
+      auto newImage = findByName(res->parent, "newImage");
+      res->parent->removeChild(res);
+      if (newImage) {
+        newImage->setName("currentImage");
+      }
+    });
+    res->setCustomData(ANIM, outAnimations);
 
-  //ProfileObject* profiler2 = new ProfileObject("cutImage");
+    int yPos = 0;
+    int yCount = 0;
+    int xPos = 0;
+    int xCount = 0;
+    while (yPos + textureSize < image->getHeight()) {
+      xPos = 0;
+      xCount = 0;
+      while (xPos + textureSize < image->getWidth()) {
 
-  Group* res = new Group(file->toString());
-  auto animationGroup = new AnimationGroup([=](){res->parent->removeChild(res);});
-  res->setCustomData(ANIM, animationGroup);
+        createShape(image, xPos, yPos, xCount, yCount, res, false, *outAnimations);
+        xPos += textureSize -1;
+        xCount++;
+      }
 
-  int yPos = 0;
-  int yCount = 0;
-  int xPos = 0;
-  int xCount = 0;
-  while (yPos + textureSize < image->getHeight()) {
+      yPos += textureSize -1;
+      yCount++;
+    }
+
+    int lastXCount = xCount;
+    int lastYCount = yCount;
+    int lastXPos = xPos;
+    int lastYPos = yPos;
+
+    // letzte spalte runter
+    xPos = lastXPos;
+    yPos = 0;
+    xCount = lastXCount;
+    yCount = 0;
+    while (yPos + textureSize < image->getHeight()) {
+      createShape(image, xPos, yPos, xCount, yCount, res, true, *outAnimations);
+      yPos += textureSize - 1;
+      yCount++;
+    }
+
+    // letzte zeile
     xPos = 0;
     xCount = 0;
+    yPos = lastYPos;
+    yCount = lastYCount;
     while (xPos + textureSize < image->getWidth()) {
-
-      createShape(image, xPos, yPos, xCount, yCount, res, false, *animationGroup);
-      xPos += textureSize -1;
+      createShape(image, xPos, yPos, xCount, yCount, res, true, *outAnimations);
+      xPos += textureSize - 1;
       xCount++;
     }
 
-    yPos += textureSize -1;
-    yCount++;
-  }
+    lastXPos = xPos;
+    lastXCount = xCount;
 
-  int lastXCount = xCount;
-  int lastYCount = yCount;
-  int lastXPos = xPos;
-  int lastYPos = yPos;
+    // ecke
+    xPos = lastXPos;
+    yPos = lastYPos;
+    xCount = lastXCount;
+    yCount = lastYCount;
+    createShape(image, xPos, yPos, xCount, yCount, res, true, *outAnimations);
 
-  // letzte spalte runter
-  xPos = lastXPos;
-  yPos = 0;
-  xCount = lastXCount;
-  yCount = 0;
-  while (yPos + textureSize < image->getHeight()) {
-    createShape(image, xPos, yPos, xCount, yCount, res, true, *animationGroup);
-    yPos += textureSize - 1;
-    yCount++;
-  }
+    navigator->setImage(image);
+    delete image;
 
-  // letzte zeile
-  xPos = 0;
-  xCount = 0;
-  yPos = lastYPos;
-  yCount = lastYCount;
-  while (xPos + textureSize < image->getWidth()) {
-    createShape(image, xPos, yPos, xCount, yCount, res, true, *animationGroup);
-    xPos += textureSize - 1;
-    xCount++;
-  }
+    observer->addChildInFront(res);
+    res->releaseReference();
 
-  lastXPos = xPos;
-  lastXCount = xCount;
+    auto visitor = UpdateVisitor();
+    observer->accept(&visitor);
 
-  // ecke
-  xPos = lastXPos;
-  yPos = lastYPos;
-  xCount = lastXCount;
-  yCount = lastYCount;
-  createShape(image, xPos, yPos, xCount, yCount, res, true, *animationGroup);
-
-  // delete(profiler2);
-
-  navigator->setImage(image);
-  delete image;
-
-  observer->addChildInFront(res);
-  res->releaseReference();
-
-  auto visitor = UpdateVisitor();
-  observer->accept(&visitor);
-  auto childs = observer->getChildsAsList();
-
-  std::cout << "Childs:\n";
-  for (auto child : *childs) {
-    std::cout << "  " << child->toString() << std::endl;
-  }
-
-  if (childs->size() == 2) {
-    auto newImageI = childs->begin();
-    newImageI++;
-    auto oldImage = *newImageI;
-    auto anim = reinterpret_cast<Animation*>(oldImage->getCustomData(ANIM));
-    if (anim == nullptr) {
-      observer->removeChild(oldImage);
-    } else {
-      animations.run(anim);
+    auto childs = observer->getChildsAsList();
+    if (childs->size() == 2) {
+      auto currentImage = dynamic_cast<Node*>(findByName(observer, "currentImage"));
+      if (currentImage) {
+        auto anim = reinterpret_cast<Animation*>(currentImage->getCustomData(ANIM));
+        if (anim == nullptr) {
+          observer->removeChild(currentImage);
+        } else {
+          animations.run(anim);
+        }
+      }
     }
-  }
-
-  // setDummy(root, 1);
+    // setDummy(root, 1);
   } catch (...) {
     std::cout << "Problem in sgupdatethread" << std::endl;
   }

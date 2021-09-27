@@ -1,5 +1,4 @@
-#ifndef _TGroup_h_
-#define _TGroup_h_
+#pragma once
 
 #include <string>
 
@@ -79,7 +78,7 @@ class TGroup : public Group {
 
     std::string toString() {
       std::ostringstream out;
-      out << "TGroup[" << getChildCount() << "]" << std::ends;
+      out << "TGroup[" << getName() << ", " << getChildCount() << "]" << std::ends;
       std::string res(out.str());
       return(res);
     }
@@ -93,6 +92,3 @@ class TGroup : public Group {
     }
 
 };
-
-
-#endif // _TGroup_h_

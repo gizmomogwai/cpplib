@@ -1,14 +1,11 @@
-#ifndef _Node_h_
-#define _Node_h_
+#pragma once
 
 #include <string>
 
 #include <sg/SGObject.h>
-#include <vecmath/bounds/Bound.h>
-
-#include <sg/visitors/Visitor.h>
-
 #include <sg/math/RCTransform3D.h>
+#include <vecmath/bounds/Bound.h>
+#include <sg/visitors/Visitor.h>
 
 class Group;
 
@@ -107,9 +104,6 @@ public:
       return(bound);
     }
 
-  std::string getName() const {
-    return name;
-  }
   protected:
     /** Virtueller Aufraeumer. */
     virtual ~Node();
@@ -120,8 +114,4 @@ public:
 
     /** BoundingObjekt des Knotens. */
     Bound* bound;
-
-    std::string name;
 };
-
-#endif // _Node_h_

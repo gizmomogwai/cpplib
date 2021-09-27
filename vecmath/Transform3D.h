@@ -1,10 +1,8 @@
-#ifndef _Transform3D_h_
-#define _Transform3D_h_
+#pragma once
 
 #include <string>
 #include <string.h>
 
-#include <sg/nodeComponents/NodeComponent.h>
 #include <vecmath/Vector3f.h>
 #include <vecmath/Point4f.h>
 #include <vecmath/Point3f.h>
@@ -422,5 +420,3 @@ class Transform3D {
   Transform3D* fake();
 
 };
-
-#endif // _Transfrom3D_h_

@@ -98,6 +98,14 @@ class SGObject : public Visited, public RefCountedObject {
      */
     void setCustomData(void* key, CustomData* value);
 
+    std::string getName() const {
+      return name;
+    }
+
+    void setName(std::string _name) {
+      name = _name;
+    }
+
   protected:
     /** Virtueller Deconstructor. */
     virtual ~SGObject();
@@ -105,4 +113,5 @@ class SGObject : public Visited, public RefCountedObject {
     /** CustomDaten. */
     std::map<void*, CustomData*>* customData;
 
+    std::string name;
 };

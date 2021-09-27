@@ -17,7 +17,7 @@ PrintVisitor::PrintVisitor() {
 }
 
 PrintVisitor::~PrintVisitor() {
-  
+
 //  std::cout << "PrintVisitor::~PrintVisitor" << std::endl;
 }
 
@@ -35,16 +35,16 @@ void PrintVisitor::visit(SGObserver* observer) {
 
 void PrintVisitor::visit(Node* node) {
 
-  std::cout << prefix.substr(0, prefix.size()) << " +-" 
+  std::cout << prefix.substr(0, prefix.size()) << " +-"
     << node->toString() << std::endl;
-//  std::cout << prefix.substr(0, prefix.size()-1) << "+-" 
+//  std::cout << prefix.substr(0, prefix.size()-1) << "+-"
 //    << node->toString() << std::endl;
 
 }
 
 void PrintVisitor::visit(Group* group) {
   visit((Node*)group);
-  
+
   std::string oldPrefix = prefix;
   std::ostringstream help;
   if (group->getChildCount() > 1) {
@@ -52,7 +52,7 @@ void PrintVisitor::visit(Group* group) {
   } else {
     help << prefix << "  " << std::ends;
   }
-  
+
   prefix = std::string(help.str());
 
   if (group->getChildCount() < 10) {
@@ -77,11 +77,11 @@ void PrintVisitor::visit(Leaf* l) {
 }
 
 void PrintVisitor::visit(Shape3D* shape) {
-  std::cout << prefix.substr(0, prefix.size()) << " +-" 
+  std::cout << prefix.substr(0, prefix.size()) << " +-"
     << shape->toString() << " (" << shape->getGeometryCount() << ") " << std::endl;
 
   std::string oldPrefix = prefix;
-  
+
   prefix += "  ";
   Visitor::visit(shape);
   prefix = oldPrefix;
@@ -114,7 +114,7 @@ void PrintVisitor::visit(Texture* texture) {
     std::cout << prefix << "Texture: ("
       << sgImage->getImage()->getWidth() << " x "
       << sgImage->getImage()->getHeight() << ")" << std::endl;
-      
+
     sgImage->releaseReference();
   } else {
     std::cout << "image == 0" << std::endl;

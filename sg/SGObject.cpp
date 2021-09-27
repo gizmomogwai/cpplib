@@ -1,6 +1,6 @@
 #include <sg/SGObject.h>
 
-SGObject::SGObject() : customData(nullptr) {
+SGObject::SGObject() : customData(nullptr), name("not set") {
 }
 
 SGObject::~SGObject() {

@@ -1,5 +1,4 @@
-#ifndef _PrintVisitor_h_
-#define _PrintVisitor_h_
+#pragma once
 
 #include <string>
 
@@ -11,7 +10,7 @@
  * Curriculum Vitae:
  * <ul>
  *   <li> 2000-11-25, cK, Created.
- *   <li> 2001-03-02, cKgS, SGObserver hinzugefuegt .. 
+ *   <li> 2001-03-02, cKgS, SGObserver hinzugefuegt ..
  *        muss avber noch besser gemacht werden.
  *   <li> 2001-05-02, cK, An shape3d.addGeometry angepasst.
  * </ul>
@@ -21,7 +20,7 @@
  * @author cK, $Author: koestlin $
  */
 class PrintVisitor : public Visitor {
-   
+
   public:
     /** Erzeugt den Visitor. */
     PrintVisitor();
@@ -45,7 +44,7 @@ class PrintVisitor : public Visitor {
 
     void visit(Geometry* geom);
 
-    void visit(Texture* texture);    
+    void visit(Texture* texture);
 
     void visit(Behavior* b);
 
@@ -55,10 +54,8 @@ class PrintVisitor : public Visitor {
 
   private:
     /** Prefix fuer eine Zeile, wird bei durchgehen durch den Graphen
-		 * veraendert. 
-		 */ 
+     * veraendert.
+     */
     std::string prefix;
 
 };
-
-#endif // _PrintVisitor_h_
