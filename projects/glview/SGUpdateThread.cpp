@@ -181,7 +181,11 @@ void SGUpdateThread::createShape(Image* image,
                              xCount, yCount, part);
 
   auto rotationTransformation = new TGroup();
+  rotationTransformation->addChild(shape);
+  shape->releaseReference();
+
   auto outAnimation = new RotateAnimation([]{}, rotationTransformation, Math::toRadians(0), Math::toRadians(90), xCount+yCount);
+  // auto outAnimation = new RotateAnimation([]{}, rotationTransformation, Math::toRadians(0), Math::toRadians(90), static_cast<int>(Math::random(50)));
   animationGroup.add(outAnimation);
   auto translationTransformation = new AnimatedTGroup(outAnimation);
 
@@ -191,9 +195,6 @@ void SGUpdateThread::createShape(Image* image,
 
   translationTransformation->addChild(rotationTransformation);
   rotationTransformation->releaseReference();
-  rotationTransformation->addChild(shape);
-
-  shape->releaseReference();
 
   res->addChild(translationTransformation);
   translationTransformation->releaseReference();

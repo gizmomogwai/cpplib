@@ -1,7 +1,5 @@
 #include <sg/nodes/SGObserver.h>
-
 #include <util/ReleaseRefCountedObject.h>
-
 
 SGObserver::SGObserver() : frustum(new Frustum()) {
   result = new RCTransform3D();
@@ -14,18 +12,14 @@ SGObserver::SGObserver() : frustum(new Frustum()) {
   calcTransform();
 }
 
-
 SGObserver::~SGObserver() {
   delete frustum;
   result->releaseReference();
 }
 
-
 Frustum* SGObserver::getFrustum() {
-
   return frustum;
 }
-
 
 void SGObserver::setTranslation(Vector3f* v) {
   RCTransform3D* ori = transform.getNew();
@@ -48,7 +42,6 @@ void SGObserver::setTranslation(Vector3f* v) {
   setTransform(t3d);
 }
 
-
 Vector3f* SGObserver::getTranslation() {
   Vector3f* res = 0;
 
@@ -59,7 +52,6 @@ Vector3f* SGObserver::getTranslation() {
   }
   return res;
 }
-
 
 void SGObserver::calcTransform() {
   if (result != 0) {
@@ -74,17 +66,14 @@ void SGObserver::calcTransform() {
   delete help;
 }
 
-
 void SGObserver::setTransform(RCTransform3D* t3d) {
   transform.set(t3d);
 }
-
 
 RCTransform3D* SGObserver::getCameraTransform() {
   result->addReference();
   return result;
 }
-
 
 void SGObserver::calculateFrustum(int width, int height) {
 
@@ -96,7 +85,7 @@ void SGObserver::calculateFrustum(int width, int height) {
 
   } else if (parallel != 0) {
 
-//    parallel->setSize(width, height);
+    //    parallel->setSize(width, height);
     p = parallel->getProjection();
   }
 

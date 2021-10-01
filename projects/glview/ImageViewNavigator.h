@@ -131,6 +131,12 @@ private:
   std::list<SelectionListener*> fSelectionListeners;
 
   Animations& animations;
+
+  void toggleAutoFactor() {
+    autoFactor = !autoFactor;
+  }
+  
+  bool autoFactor;
 };
 
 #endif // _ImageViewNavigator_h_

@@ -38,12 +38,12 @@ class Math {
     /** Erzeugt Zufallszahl zwischen 0 und max.
      *
      * @param max Maximalwert der Zufallszahl.
-     * 
+     *
      * @return float Zufallszahl.
      */
-    static float random(float max) { 
+    static float random(float max) {
       float help = (float)rand();
       return(help / RAND_MAX * max);
     }
-  
+
 };

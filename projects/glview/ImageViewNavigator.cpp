@@ -19,23 +19,23 @@ ParallelProjection* getProjection(float factor) {
   projection->farClipping = 100;
   return projection;
 }
+
 ImageViewNavigator::ImageViewNavigator(Root* _root,
                                        RenderVisitor* _renderVisitor,
                                        File* _dir,
                                        Animations& _animations)
   :
-    observer(0),
+    observer(new SGObserver()),
     root(_root),
     factor(1),
     renderVisitor(_renderVisitor),
     dir(_dir),
     loadProgress(0),
-    animations(_animations) {
+    animations(_animations),
+    autoFactor(true) {
   std::cout << "ImageViewNavigator - start" << std::endl;
 
-  observer = new SGObserver();
   observer->setParallel(getProjection(factor));
-  //  observer->setCamera(new Camera(75, 1.0, 10, 10000));
 
   root->addChild(observer);
 
@@ -46,10 +46,12 @@ ImageViewNavigator::ImageViewNavigator(Root* _root,
   std::sort(files->begin(), files->end(),  [](File* f1, File* f2) {
       return f1->toString() < f2->toString();
     });
+  /*
   std::cout << "Files:\n";
   for (auto file: *files) {
     std::cout << file->toString() << std::endl;
   }
+  */
   fileIterator = files->begin();
   auto visitor = UpdateVisitor();
   root->accept(&visitor);
@@ -81,14 +83,19 @@ void ImageViewNavigator::setImage(Image* i) {
 }
 
 void ImageViewNavigator::setTranslation(bool init) {
+  float canvasWidth = renderVisitor->getImageWidth();
+  float canvasHeight = renderVisitor->getImageHeight();
+  std::cout << "Canvas: " << canvasWidth << "x" << canvasHeight << std::endl;
+  if (autoFactor) {
+    float xFactor = canvasWidth / imageWidth;
+    float yFactor = canvasHeight / imageHeight;
+    factor = min(xFactor, yFactor);
+  }
 
   if (factor < 0.01f) {
     factor = 0.01f;
   }
   observer->setParallel(getProjection(factor));
-
-  float canvasWidth = renderVisitor->getImageWidth();
-  float canvasHeight = renderVisitor->getImageHeight();
 
   if (init == true) {
     centerImage(imageWidth, imageHeight);
@@ -96,29 +103,29 @@ void ImageViewNavigator::setTranslation(bool init) {
     if (imageWidth * factor > canvasWidth) {
       float maxX = (imageWidth * factor - canvasWidth / 2.0f) / factor;
       float minX = canvasWidth / 2.0f / factor;
-      if (posX > maxX) {
-        posX = maxX;
-      } else if (posX < minX) {
-        posX = minX;
-      }
+      posX = max(min(posX, maxX), minX);
     } else {
       centerImageX(imageWidth);
     }
 
     if (imageHeight * factor > canvasHeight) {
-      float maxYPos = (imageHeight * factor - canvasHeight / 2.0f) / factor;
-      float minYPos = canvasHeight / 2.0f / factor;
-      if (posY > maxYPos) {
-        posY = maxYPos;
-      } else if (posY < minYPos) {
-        posY = minYPos;
-      }
+      float maxY = (imageHeight * factor - canvasHeight / 2.0f) / factor;
+      float minY = canvasHeight / 2.0f / factor;
+      posY = max(min(posY, maxY), minY);
     } else {
       centerImageY(imageHeight);
     }
   }
 
-  Vector3f translation(posX, posY, 0);
+  /*
+    4032 3024
+
+2016 1512
+
+
+
+   */
+  Vector3f translation(0, 0, 0);
   std::cout << "posX: " << posX << " posY: " << posY << std::endl;
   observer->setTranslation(&translation);
 }
@@ -163,13 +170,13 @@ void ImageViewNavigator::keyPressed(KeyEvent* e) {
   } else if (e->keyPressed(KeyEvent::PAGE_UP)) {
     prevImage();
   } else if (e->keyPressed('1')) {
-    setFactor(0.06125f);
+    setFactor(1.0f/16);
   } else if (e->keyPressed('2')) {
-    setFactor(0.125f);
+    setFactor(1.0f/8);
   } else if (e->keyPressed('3')) {
-    setFactor(0.25f);
+    setFactor(1.0f/4);
   } else if (e->keyPressed('4')) {
-    setFactor(0.5f);
+    setFactor(1.0f/2);
   } else if (e->keyPressed('5')) {
     setFactor(1.0f);
   } else if (e->keyPressed('6')) {
@@ -180,10 +187,14 @@ void ImageViewNavigator::keyPressed(KeyEvent* e) {
     setFactor(8.0f);
   } else if (e->keyPressed('9')) {
     setFactor(16.0f);
+  } else if (e->keyPressed('a')) {
+    toggleAutoFactor();
+    setTranslation();
   }
 }
 
 void ImageViewNavigator::setFactor(float newFactor) {
+  autoFactor = false;
   factor = newFactor;
   setTranslation();
 }

@@ -1,5 +1,4 @@
-#ifndef _SGObserver_h_
-#define _SGObserver_h_
+#pragma once
 
 #include <sg/math/RCTransform3D.h>
 #include <vecmath/Transform3D.h>
@@ -130,5 +129,3 @@ class SGObserver : public ProjectionGroup {
   RCTransform3D* result;
 
 };
-
-#endif // _SGObserver_h_

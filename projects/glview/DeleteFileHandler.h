@@ -1,5 +1,4 @@
-#ifndef DeleteFileHandler_h_
-#define DeleteFileHandler_h_
+#pragma once
 
 #include "SelectionListener.h"
 #include <sgtools/KeyListener.h>
@@ -8,26 +7,24 @@
 #include "ImageViewNavigator.h"
 
 class DeleteFileHandler : public SelectionListener {
-	public:
-		DeleteFileHandler(Engine* engine, ImageViewNavigator* navigator);
-		
-		virtual ~DeleteFileHandler() {
-		  std::cout << "~DeleteFileHandler" << std::endl;
-		}
-		
-		void deleteFile();
-	
+  public:
+    DeleteFileHandler(Engine* engine, ImageViewNavigator* navigator);
+
+    virtual ~DeleteFileHandler() {
+      std::cout << "~DeleteFileHandler" << std::endl;
+    }
+
+    void deleteFile();
+
 };
 
 class DeleteFileListener : public KeyListener {
-  
+
   public:
     DeleteFileListener(DeleteFileHandler* handler) : fHandler(handler) {}
     virtual ~DeleteFileListener() {}
     void keyPressed(KeyEvent* e);
   private:
     DeleteFileHandler* fHandler;
-    
-};
 
-#endif // DeleteFileHandler_h_
+};

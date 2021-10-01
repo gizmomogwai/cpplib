@@ -49,7 +49,7 @@ class Root : public Group {
   protected:
     /** Raeumt auf. */
     virtual ~Root() {
-      std::cout << "Root" << std::endl;
+      std::cout << "Root[imageWidth=" << imageWidth << ", imageHeight=" << imageHeight << "]\n";
     }
 
 };

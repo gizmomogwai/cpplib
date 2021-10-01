@@ -175,7 +175,8 @@ void OGLRenderVisitor::visit(ProjectionGroup* pGroup) {
     float f = pGroup->parallel->factor;
     float halfWidth = imageWidth / 2.0f / f;
     float halfHeight = imageHeight / 2.0f / f;
-
+    std::cout << "halfWidth: " << halfWidth << std::endl;
+    std::cout << "halfHeight: " << halfHeight << std::endl;
     glOrtho(-halfWidth, halfWidth, -halfHeight, halfHeight, pGroup->parallel->nearClipping, pGroup->parallel->farClipping);
     assert(OglTools::checkOglState(__FILE__, __LINE__));
 
