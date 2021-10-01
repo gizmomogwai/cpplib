@@ -163,6 +163,53 @@ private:
   int delay;
 };
 
+void createDebugShape(Image* image, Group* res) {
+  float factor = 5;
+  Image* i = image->getRect(0, 0, 256, 256);
+
+  Appearance* app = new Appearance(1);
+  SGImage* sgImage = new SGImage(i);
+  Texture* texture = new Texture(sgImage);
+  texture->setTextureWrap(false, false);
+  sgImage->releaseReference();
+  app->setTexture(texture, 0);
+  texture->releaseReference();
+
+  auto tileGeometry = new TriangleArray(FAN, 1);
+  Array3f* coords = new Array3f(4);
+  coords->set(3,
+              0,
+              256*factor,
+              0);
+  coords->set(2,
+              256*factor,
+              256*factor,
+              0);
+  coords->set(1,
+              256*factor,
+              0,
+              0);
+  coords->set(0,
+              0,
+              0,
+              0);
+  tileGeometry->setCoordinates(coords);
+  coords->releaseReference();
+
+  Array2f* texCoords = new Array2f(4);
+  texCoords->set(3, 0, 0);
+  texCoords->set(2, 1, 0);
+  texCoords->set(1, 1, 1);
+  texCoords->set(0, 0, 1);
+  tileGeometry->setTextureCoordinates(texCoords, 0);
+  texCoords->releaseReference();
+
+  auto shape = new Shape3D(tileGeometry, app);
+  app->releaseReference();
+  tileGeometry->releaseReference();
+  res->addChild(shape);
+  shape->releaseReference();
+}
 void SGUpdateThread::createShape(Image* image,
                                  int xPos, int yPos,
                                  int xCount, int yCount,
@@ -190,7 +237,7 @@ void SGUpdateThread::createShape(Image* image,
   auto translationTransformation = new AnimatedTGroup(outAnimation);
 
   auto transform = new Transform3D();
-  transform->setTranslation(new Vector3f(0.5+xCount*(textureSize-1), image->getHeight() - (0.5+yCount*(textureSize-1)), 0));
+  transform->setTranslation(new Vector3f((0.5+xCount)*(textureSize-1), image->getHeight() - ((0.5+yCount)*(textureSize-1)), 0));
   translationTransformation->setTransform(transform);
 
   translationTransformation->addChild(rotationTransformation);
@@ -216,6 +263,9 @@ void* ANIM = reinterpret_cast<void*>(1);
   1/8...1-1/8
 
 
+pixel        0          1           2          3          4         5          6
+       |-----x-----|----------|----------|-----x-----|----------|--------|-----x-----|
+geom        0.5                               3.5                             6.5
   observer->childs[0] ist das neue bild, observer->childs[1] ist das alte bild
 */
 void SGUpdateThread::buildViewGraph(File* file) {
@@ -252,7 +302,6 @@ void SGUpdateThread::buildViewGraph(File* file) {
       xPos = 0;
       xCount = 0;
       while (xPos + textureSize < image->getWidth()) {
-
         createShape(image, xPos, yPos, xCount, yCount, res, false, *outAnimations);
         xPos += textureSize -1;
         xCount++;

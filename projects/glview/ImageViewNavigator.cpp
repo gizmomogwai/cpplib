@@ -33,8 +33,6 @@ ImageViewNavigator::ImageViewNavigator(Root* _root,
     loadProgress(0),
     animations(_animations),
     autoFactor(true) {
-  std::cout << "ImageViewNavigator - start" << std::endl;
-
   observer->setParallel(getProjection(factor));
 
   root->addChild(observer);
@@ -43,24 +41,15 @@ ImageViewNavigator::ImageViewNavigator(Root* _root,
   root->addChild(loadProgress);
 
   files = dir->list();
-  std::sort(files->begin(), files->end(),  [](File* f1, File* f2) {
+  std::sort(files->begin(), files->end(), [](File* f1, File* f2) {
       return f1->toString() < f2->toString();
     });
-  /*
-  std::cout << "Files:\n";
-  for (auto file: *files) {
-    std::cout << file->toString() << std::endl;
-  }
-  */
   fileIterator = files->begin();
   auto visitor = UpdateVisitor();
   root->accept(&visitor);
-
-  std::cout << "ImageViewNavigator - exit" << std::endl;
 }
 
 ImageViewNavigator::~ImageViewNavigator() {
-  std::cout << "~ImageViewNavigator" << std::endl;
   /*
   observer->releaseReference();
 
@@ -85,11 +74,11 @@ void ImageViewNavigator::setImage(Image* i) {
 void ImageViewNavigator::setTranslation(bool init) {
   float canvasWidth = renderVisitor->getImageWidth();
   float canvasHeight = renderVisitor->getImageHeight();
-  std::cout << "Canvas: " << canvasWidth << "x" << canvasHeight << std::endl;
   if (autoFactor) {
-    float xFactor = canvasWidth / imageWidth;
-    float yFactor = canvasHeight / imageHeight;
-    factor = min(xFactor, yFactor);
+    factor = min(
+                   canvasWidth / imageWidth,
+                   canvasHeight / imageHeight
+                 );
   }
 
   if (factor < 0.01f) {
@@ -117,16 +106,7 @@ void ImageViewNavigator::setTranslation(bool init) {
     }
   }
 
-  /*
-    4032 3024
-
-2016 1512
-
-
-
-   */
-  Vector3f translation(0, 0, 0);
-  std::cout << "posX: " << posX << " posY: " << posY << std::endl;
+  Vector3f translation(posX, posY, 0);
   observer->setTranslation(&translation);
 }
 
