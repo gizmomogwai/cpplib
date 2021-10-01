@@ -36,6 +36,7 @@ void GLUTEngine::setSize(int _width, int _height) {
 #include <lang/HPStopWatch.h>
 class Stats {
 public:
+  const static int COUNT = 500;
   Stats() : count(0), stopWatch(new HPStopWatch()) {
   }
   ~Stats() {
@@ -44,21 +45,20 @@ public:
   void tick() {
     auto now = stopWatch->getCurrent();
     stats.push_back(now);
-    while (stats.size() > 100) {
+    while (stats.size() >COUNT) {
       stats.pop_front();
     }
     count++;
   }
   void dump() {
-    if (stats.size() == 100) {
-      auto i = stats.begin();
-      auto startTime = *i;
-      for (int idx=0; idx<99; idx++) {
-        i++;
-      }
-      auto endTime = *i;
-      std::cout << "time for 100 frames: " << (endTime - startTime) << std::endl;
-      std::cout << "time per frame: " << (endTime - startTime) / 100.0 << std::endl;
+    if (stats.size() == COUNT) {
+      auto i1 = stats.begin();
+      auto startTime = *i1;
+      auto i2 = stats.rbegin();
+      auto endTime = *i2;
+      std::cout << "time for " << COUNT << " frames: " << (endTime - startTime) << std::endl;
+      std::cout << "time per frame: " << (endTime - startTime) / static_cast<float>(COUNT) << std::endl;
+      stats.clear();
     }
   }
   int count;
