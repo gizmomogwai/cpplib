@@ -4,22 +4,22 @@
 #include <cassert>
 
 Image* ImageOperations::rotateLeft(Image& original) {
-  
+
   PixelFormat& format = original.getFormat();
   Image* res = new Image(original.getHeight(), original.getWidth(), format.bitPerPixel);
   int bytePerPixel = format.bytePerPixel;
-  
+
   for (unsigned int j=0; j<original.getHeight(); j++) {
     unsigned char* data = original.getData(0, j);
     unsigned char* targetData = res->getData(j, res->getHeight()-1);
     for (unsigned int i=0; i<original.getWidth(); i++) {
       memcpy(targetData, data, bytePerPixel);
-      
+
       targetData -= res->getRowStride();
       data += bytePerPixel;
     }
   }
-  
+
   return res;
 }
 
@@ -45,25 +45,24 @@ Image* ImageOperations::rotateRight(Image& original) {
 
 Image* ImageOperations::getThumbnail(Image& original, int width) {
   float factor = ((float)width) / ((float)original.getWidth());
-  
+
   int newWidth = width;
   int newHeight = (int)(original.getHeight() * factor);
 
   PixelFormat& format = original.getFormat();
   unsigned int bytePerPixel = format.bytePerPixel;
   unsigned int bitPerPixel = format.bitPerPixel;
-
   Image* res = new Image(newWidth, newHeight, bitPerPixel);
 
   float xPixelsPerPixel = ((float)original.getWidth()) / ((float)width);
-  float yPixelsPerPixel = xPixelsPerPixel;
+  float yPixelsPerPixel = ((float)original.getHeight()) / ((float)newHeight);
 
   unsigned char* target = res->getData(0, 0);
   for (unsigned int j=0; j<res->getHeight(); j++) {
     for (unsigned int i=0; i<res->getWidth(); i++) {
       unsigned int startX = (int)(xPixelsPerPixel * i);
       unsigned int startY = (int)(yPixelsPerPixel * j);
-      
+
       unsigned int endX = (int)(xPixelsPerPixel * (i+1));
       unsigned int endY = (int)(yPixelsPerPixel * (j+1));
 
@@ -80,7 +79,7 @@ Image* ImageOperations::getThumbnail(Image& original, int width) {
     }
   }
 
-  return res;   
+  return res;
 }
 
 Image* ImageOperations::getImageAsRGBA(Image& image) {

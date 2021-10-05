@@ -1,5 +1,4 @@
-#ifndef ImageOperations_h_
-#define ImageOperations_h_
+#pragma once
 
 #include <image/ImageApi.h>
 
@@ -18,16 +17,14 @@ class IMAGE_API ImageOperations {
      * @return Image* new rotated image.
      */
     static Image* rotateRight(Image& original);
-    
+
     /** scales the image to a thumbnail.
      * @param image the image to scale.
      * @param width the width of the thumb (the height is proprtional).
      * @return Image* new resized image.
      */
     static Image* getThumbnail(Image& image, int width);
-    
+
     static Image* getImageAsRGBA(Image& image);
 
 };
-
-#endif

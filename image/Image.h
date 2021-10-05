@@ -76,7 +76,7 @@ class IMAGE_API Image {
    * @return unsigned char* Pointer direkt in die Bilddaten.
    */
   unsigned char* getData(int xIdx, int yIdx) {
-    return((unsigned char*)data->getData((yIdx * getWidth() + xIdx) * format.bytePerPixel));
+    return (unsigned char*)data->getData((yIdx * getWidth() + xIdx) * format.bytePerPixel);
   }
 
   /** Setzt die alphawerte des ganzen bildes.
