@@ -142,8 +142,9 @@ Vector3f* Transform3D::getEuler() {
 
 
 float Transform3D::clamp(float v) {
-  const float PI = (const float)3.1415926535;
   /*
+  const float PI = (const float)3.1415926535;
+  
     while (v < 0) {
     v += 2*PI;
     }
@@ -151,7 +152,7 @@ float Transform3D::clamp(float v) {
     v -= 2*PI;
     }
   */
-  return(v);
+  return v;
 }
 
 

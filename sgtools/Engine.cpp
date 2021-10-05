@@ -3,32 +3,38 @@
 #include <sg/nodes/Root.h>
 
 void Engine::quit() {
-  ListIterator<KeyListener*> i2(&keyListeners);
-  while (i2.hasNext() == true) {
-    delete(i2.next());
+  {
+    ListIterator<KeyListener*> i(&keyListeners);
+    while (i.hasNext()) {
+      delete i.next();
+    }
   }
 
-  ListIterator<EngineCleanUp*> i3(&cleanups);
-  while (i3.hasNext() == true) {
-    delete(i3.next());
+  {
+    ListIterator<EngineCleanUp*> i(&cleanups);
+    while (i.hasNext()) {
+      delete i.next();
+    }
   }
 
   std::cout << "Engine::quit releaseing root" << std::endl;
-  if (root != 0) {
+  if (root != nullptr) {
     root->releaseReference();
-    root = 0;
+    root = nullptr;
   }
 
-  ListIterator<Visitor*> i1(&visitors);
-  while (i1.hasNext() == true) {
-    delete(i1.next());
+  {
+    ListIterator<Visitor*> i(&visitors);
+    while (i.hasNext()) {
+      delete i.next();
+    }
   }
   std::cout << "Engine::quit fertig" << std::endl;
 }
 
 
 void Engine::setRoot(Root* _root) {
-  if (root != 0) {
+  if (root != nullptr) {
     root->releaseReference();
   }
   _root->addReference();

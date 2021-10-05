@@ -32,30 +32,19 @@
 
 OGLRenderVisitor::OGLRenderVisitor(OGLFontManager* _fontManager)
   : fontManager(_fontManager) {
-
+  /*
   std::cout << "OGLVendor:   " << glGetString(GL_VENDOR) << std::endl;
   std::cout << "OGLRenderer: " << glGetString(GL_RENDERER) << std::endl;
   std::cout << "OGLVersion:  " << glGetString(GL_VERSION) << std::endl;
   std::cout << "OGLExt:      " << glGetString(GL_EXTENSIONS) << std::endl;
-
-#ifdef WIN32
-  // linux kennt das schon in der lib von nvidia!
-  glActiveTextureARB = 0;
-  glActiveTextureARB =
-    (void (__stdcall *)(GLenum))(wglGetProcAddress("glActiveTextureARB"));
-//  assert(glActiveTextureARB != 0);
-  glClientActiveTextureARB = 0;
-  glClientActiveTextureARB =
-    (void (__stdcall *)(GLenum))(wglGetProcAddress("glClientActiveTextureARB"));
-//  assert(glClientActiveTextureARB != 0);
-#endif
+  */
 
 //  fFence = gluCheckExtension ("GL_APPLE_fence", strExt);
 
 }
 
 OGLRenderVisitor::~OGLRenderVisitor() {
-  if (fontManager != 0) {
+  if (fontManager != nullptr) {
     delete(fontManager);
     fontManager = 0;
   }
@@ -100,7 +89,6 @@ void OGLRenderVisitor::visit(Root* root) {
 
   imageWidth = root->imageWidth;
   imageHeight = root->imageHeight;
-
   NodeListIterator* i = root->getChilds();
   CleanUpObject<NodeListIterator> cleaner(i);
   while (i->hasNext() == true) {
@@ -126,7 +114,7 @@ void OGLRenderVisitor::visit(SGObserver* observer) {
   assert(OglTools::checkOglState(__FILE__, __LINE__));
 
   RCTransform3D* cameraTransform = observer->getCameraTransform();
-  if (cameraTransform != 0) {
+  if (cameraTransform != nullptr) {
     glMultMatrixf((GLfloat*)cameraTransform->m);
     assert(OglTools::checkOglState(__FILE__, __LINE__));
     cameraTransform->releaseReference();
@@ -142,8 +130,6 @@ void OGLRenderVisitor::visit(SGObserver* observer) {
 }
 
 
-int lastLeft = 0xffffffff;
-int lastRight = 0xffffffff;
 void OGLRenderVisitor::visit(ProjectionGroup* pGroup) {
 
   glMatrixMode(GL_PROJECTION);
@@ -152,7 +138,7 @@ void OGLRenderVisitor::visit(ProjectionGroup* pGroup) {
   glLoadIdentity();
   assert(OglTools::checkOglState(__FILE__, __LINE__));
 
-  if (pGroup->camera != 0) {
+  if (pGroup->camera != nullptr) {
     float imageRatio = 1;
     if (imageHeight != 0) {
       imageRatio = (float)imageWidth / (float)imageHeight;
@@ -167,10 +153,8 @@ void OGLRenderVisitor::visit(ProjectionGroup* pGroup) {
     glMultMatrixf((GLfloat*)t3d->m);
     assert(OglTools::checkOglState(__FILE__, __LINE__));
 
-//    std::cout << "Selfcalculated" << std::endl;
-//    OGLRenderVisitor::printMatrices();
-
-  } else if (pGroup->parallel != 0) {
+    // OGLRenderVisitor::printMatrices();
+  } else if (pGroup->parallel != nullptr) {
 
     float f = pGroup->parallel->factor;
     float halfWidth = imageWidth / 2.0f / f;
@@ -179,8 +163,7 @@ void OGLRenderVisitor::visit(ProjectionGroup* pGroup) {
     assert(OglTools::checkOglState(__FILE__, __LINE__));
 
   } else {
-
-    throw(Exception("weder camera noch parallel angegeben", __FILE__, __LINE__));
+    throw Exception("weder camera noch parallel angegeben", __FILE__, __LINE__);
   }
 
   glMatrixMode(GL_MODELVIEW);
@@ -270,10 +253,10 @@ void OGLRenderVisitor::printMatrices() {
   glGetIntegerv(GL_MATRIX_MODE, &matrixMode);
 
   glGetFloatv(GL_MODELVIEW_MATRIX, t3d.m);
-//  std::cout << "modelview: " << t3d.toString() << std::endl;
+  std::cout << "modelview: " << t3d.toString() << std::endl;
 
   glGetFloatv(GL_PROJECTION_MATRIX, t3d.m);
-//  std::cout << "projection: " << t3d.toString() << std::endl;
+  std::cout << "projection: " << t3d.toString() << std::endl;
 
   glMatrixMode(matrixMode);
 }
@@ -303,7 +286,7 @@ void OGLRenderVisitor::visit(TGroup* tg) {
   assert(OglTools::checkOglState(__FILE__, __LINE__));
 
   RCTransform3D* t3d = tg->getTransform();
-  if (t3d != 0) {
+  if (t3d != nullptr) {
     glMultMatrixf((GLfloat*)t3d->m);
     assert(OglTools::checkOglState(__FILE__, __LINE__));
 
@@ -314,9 +297,8 @@ void OGLRenderVisitor::visit(TGroup* tg) {
 
   NodeListIterator* i = tg->getChilds();
   CleanUpObject<NodeListIterator> iteratorCleaner(i);
-  while (i->hasNext() == true) {
-    Node* child = i->next();
-    child->accept(this);
+  while (i->hasNext()) {
+    i->next()->accept(this);
   }
 
   glPopMatrix();
@@ -403,7 +385,7 @@ void OGLRenderVisitor::bringUpTexture(Texture* texture,
 
   tManager.activate(texture);
 
-  if (texGen != 0) {
+  if (texGen != nullptr) {
     glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_OBJECT_LINEAR);
     assert(OglTools::checkOglState(__FILE__, __LINE__));
 
@@ -434,7 +416,7 @@ void OGLRenderVisitor::bringUpTexture(Texture* texture,
   assert(OglTools::checkOglState(__FILE__, __LINE__));
 
   SGImage* image = texture->getImage();
-  if (image != 0) {
+  if (image != nullptr) {
     if (image->getFormat()->bitPerPixel == 32) {
       glEnable(GL_ALPHA_TEST);
       glAlphaFunc(GL_GREATER, 0.2f);
@@ -459,7 +441,7 @@ void OGLRenderVisitor::startApp(Appearance* app) {
   assert(OglTools::checkOglState(__FILE__, __LINE__));
 
   PolygonAttributes* pAtts = app->getPolygonAttributes();
-  if (pAtts != 0) {
+  if (pAtts != nullptr) {
     if (pAtts->polyMode == PolygonAttributes::POLYGON_FILL) {
       glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     } else if (pAtts->polyMode == PolygonAttributes::POLYGON_LINE) {
@@ -472,7 +454,7 @@ void OGLRenderVisitor::startApp(Appearance* app) {
   assert(OglTools::checkOglState(__FILE__, __LINE__));
 
   Material* material = app->getMaterial();
-  if (material != 0) {
+  if (material != nullptr) {
 
     if (material->lighted == true) {
       glEnable(GL_LIGHTING);
@@ -482,7 +464,7 @@ void OGLRenderVisitor::startApp(Appearance* app) {
     assert(OglTools::checkOglState(__FILE__, __LINE__));
 
     RCColor3f* color = material->getColor();
-    if (color != 0) {
+    if (color != nullptr) {
       glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
       glEnable(GL_COLOR_MATERIAL);
       glColor3fv(color->rgb);
@@ -527,14 +509,14 @@ void OGLRenderVisitor::startApp(Appearance* app) {
   if (maxMultis == 1) {
     // single texturing
     Texture* texture = app->getTexture(0);
-    if (texture != 0) {
+    if (texture != nullptr) {
       bringUpTexture(texture, app->getTexGen(0));
     }
   } else {
     // multitexturing
     for (int i=0; i<maxMultis; i++) {
       Texture* texture = app->getTexture(i);
-      if (texture != 0) {
+      if (texture != nullptr) {
         glActiveTextureARB(GL_TEXTURE0_ARB + i);
         assert(OglTools::checkOglState(__FILE__, __LINE__));
 
@@ -548,7 +530,7 @@ void OGLRenderVisitor::cleanUpTexture(Texture* texture, TexGen* texGen) {
   glDisable(GL_TEXTURE_2D);
   assert(OglTools::checkOglState(__FILE__, __LINE__));
 
-  if (texGen != 0) {
+  if (texGen != nullptr) {
     glDisable(GL_TEXTURE_GEN_S);
     assert(OglTools::checkOglState(__FILE__, __LINE__));
 
@@ -567,14 +549,14 @@ void OGLRenderVisitor::endApp(Appearance* app) {
   if (maxMultis == 1) {
     // single texturing
     Texture* texture = app->getTexture(0);
-    if (texture != 0) {
+    if (texture != nullptr) {
       cleanUpTexture(texture, app->getTexGen(0));
     }
   } else {
     // multitexturing
     for (int i=0; i<maxMultis; i++) {
       Texture* texture = app->getTexture(i);
-      if (texture != 0) {
+      if (texture != nullptr) {
         glActiveTextureARB(GL_TEXTURE0_ARB + i);
         assert(OglTools::checkOglState(__FILE__, __LINE__));
 
@@ -590,19 +572,19 @@ void OGLRenderVisitor::endApp(Appearance* app) {
 
 void OGLRenderVisitor::visit(Shape3D* shape3d) {
   Appearance* a = shape3d->app.get();
-  if (a != 0) {
+  if (a != nullptr) {
     startApp(a);
   }
 
   GeometryListIterator* g = shape3d->getGeometries();
   CleanUpObject<GeometryListIterator> cleaner(g);
-  if (g != 0) {
+  if (g != nullptr) {
     while (g->hasNext() == true) {
       g->next()->accept(this);
     }
   }
 
-  if (a != 0) {
+  if (a != nullptr) {
     endApp(a);
     a->releaseReference();
   }
@@ -669,18 +651,17 @@ void OGLRenderVisitor::visit(Geometry* geom) {
 }
 
 void OGLRenderVisitor::visit(TeapotGeometry* geom) {
-  glutWireSphere(50, 10, 10);
+  //glutWireSphere(50, 10, 10);
   //glutWireTeapot(50);
   assert(OglTools::checkOglState(__FILE__, __LINE__));
   //glutSolidTorus(1, 3.2, 10, 10);
 }
 
 void OGLRenderVisitor::visit(Text3D* text3d) {
-  if (fontManager != 0) {
+  if (fontManager != nullptr) {
     fontManager->render(text3d);
   }
 }
-
 
 void OGLRenderVisitor::activateTexCoordPointer(Array2f* tCoords) {
 
@@ -694,20 +675,20 @@ void OGLRenderVisitor::activateTexCoordPointer(Array2f* tCoords) {
 }
 
 void OGLRenderVisitor::bringUpTCoords(TriangleArray* tArray) {
-  if (tArray->textureCoords != 0) {
+  if (tArray->textureCoords != nullptr) {
     int max = tArray->getMaxMultiTextures();
     if (max == 1) {
-      if (tArray->textureCoords[0] != 0) {
+      if (tArray->textureCoords[0] != nullptr) {
         Array2f* tCoords = tArray->textureCoords[0]->get();
-        if (tCoords != 0) {
+        if (tCoords != nullptr) {
           activateTexCoordPointer(tCoords);
         }
       }
     } else {
       for (int i=0; i<max; i++) {
-        if (tArray->textureCoords[i] != 0) {
+        if (tArray->textureCoords[i] != nullptr) {
           Array2f* tCoords = tArray->textureCoords[i]->get();
-          if (tCoords != 0) {
+          if (tCoords != nullptr) {
             glClientActiveTextureARB(GL_TEXTURE0_ARB + i);
             assert(OglTools::checkOglState(__FILE__, __LINE__));
 
@@ -729,22 +710,22 @@ void OGLRenderVisitor::deactivateTexCoordPointer(Array2f* tCoords) {
 }
 
 void OGLRenderVisitor::cleanUpTCoords(TriangleArray* tArray) {
-  if (tArray->textureCoords != 0) {
+  if (tArray->textureCoords != nullptr) {
     int max = tArray->getMaxMultiTextures();
     if (max == 1) {
-      if (tArray->textureCoords[0] != 0) {
-        if (tArray->textureCoords[0] != 0) {
+      if (tArray->textureCoords[0] != nullptr) {
+        if (tArray->textureCoords[0] != nullptr) {
           Array2f* tCoords = tArray->textureCoords[0]->get();
-          if (tCoords != 0) {
+          if (tCoords != nullptr) {
             deactivateTexCoordPointer(tCoords);
           }
         }
       }
     } else {
       for (int i=0; i<max; i++) {
-        if (tArray->textureCoords[i] != 0) {
+        if (tArray->textureCoords[i] != nullptr) {
           Array2f* tCoords = tArray->textureCoords[i]->get();
-          if (tCoords != 0) {
+          if (tCoords != nullptr) {
             glClientActiveTextureARB(GL_TEXTURE0_ARB + i);
             assert(OglTools::checkOglState(__FILE__, __LINE__));
 
@@ -768,14 +749,14 @@ void OGLRenderVisitor::visit(IndexedTriangleArray* itArray) {
     Array3f* normals = 0;
     Array1i* indices = 0;
 
-    if (coords != 0) {
-      if (itArray->colors != 0) {
+    if (coords != nullptr) {
+      if (itArray->colors != nullptr) {
         colors = itArray->colors->get();
       }
-      if (itArray->normals != 0) {
+      if (itArray->normals != nullptr) {
         normals = itArray->normals->get();
       }
-      if (itArray->indices != 0) {
+      if (itArray->indices != nullptr) {
         indices = itArray->indices->get();
       }
 
@@ -788,7 +769,7 @@ void OGLRenderVisitor::visit(IndexedTriangleArray* itArray) {
       glVertexPointer(3, GL_FLOAT, 0, coords->get(0));
       assert(OglTools::checkOglState(__FILE__, __LINE__));
 
-      if (colors != 0) {
+      if (colors != nullptr) {
         glEnableClientState(GL_COLOR_ARRAY);
         assert(OglTools::checkOglState(__FILE__, __LINE__));
 
@@ -799,7 +780,7 @@ void OGLRenderVisitor::visit(IndexedTriangleArray* itArray) {
 
       bringUpTCoords(itArray);
 
-      if (normals != 0) {
+      if (normals != nullptr) {
         glEnableClientState(GL_NORMAL_ARRAY);
         assert(OglTools::checkOglState(__FILE__, __LINE__));
 
@@ -815,18 +796,18 @@ void OGLRenderVisitor::visit(IndexedTriangleArray* itArray) {
       glPopClientAttrib();
       assert(OglTools::checkOglState(__FILE__, __LINE__));
 
-      if (colors != 0) {
+      if (colors != nullptr) {
         colors->releaseReference();
       }
-      if (normals != 0) {
+      if (normals != nullptr) {
         normals->releaseReference();
       }
       cleanUpTCoords(itArray);
-      if (indices != 0) {
+      if (indices != nullptr) {
         indices->releaseReference();
       }
     }
-    if (coords != 0) {
+    if (coords != nullptr) {
       coords->releaseReference();
     }
   }
@@ -835,13 +816,13 @@ void OGLRenderVisitor::visit(IndexedTriangleArray* itArray) {
 GLenum OGLRenderVisitor::type2Enum(TriangleArrayType type) {
 
   if (type == TRIS) {
-    return(GL_TRIANGLES);
+    return GL_TRIANGLES;
   } else if (type == FAN) {
-    return(GL_TRIANGLE_FAN);
+    return GL_TRIANGLE_FAN;
   } else if (type == STRIP) {
-    return(GL_TRIANGLE_STRIP);
+    return GL_TRIANGLE_STRIP;
   } else {
-    throw(Exception("OGLRenderVisitor::type2Enum - type not supported", __FILE__, __LINE__));
+    throw Exception("OGLRenderVisitor::type2Enum - type not supported", __FILE__, __LINE__);
   }
 
 }
@@ -853,14 +834,14 @@ void OGLRenderVisitor::visit(TriangleArray* tArray) {
     Array3f* coords = tArray->coords->get();
     Array3f* colors = 0;
     Array3f* normals = 0;
-    if (tArray->colors != 0) {
+    if (tArray->colors != nullptr) {
       colors = tArray->colors->get();
     }
-    if (tArray->normals != 0) {
+    if (tArray->normals != nullptr) {
       normals = tArray->normals->get();
     }
 
-    if (coords != 0) {
+    if (coords != nullptr) {
       glPushClientAttrib(GL_CLIENT_ALL_ATTRIB_BITS);
       assert(OglTools::checkOglState(__FILE__, __LINE__));
 
@@ -870,7 +851,7 @@ void OGLRenderVisitor::visit(TriangleArray* tArray) {
       glVertexPointer(3, GL_FLOAT, 0, coords->get(0));
       assert(OglTools::checkOglState(__FILE__, __LINE__));
 
-      if (colors != 0) {
+      if (colors != nullptr) {
         glEnableClientState(GL_COLOR_ARRAY);
         assert(OglTools::checkOglState(__FILE__, __LINE__));
 
@@ -880,7 +861,7 @@ void OGLRenderVisitor::visit(TriangleArray* tArray) {
 
       bringUpTCoords(tArray);
 
-      if (normals != 0) {
+      if (normals != nullptr) {
         glEnableClientState(GL_NORMAL_ARRAY);
         assert(OglTools::checkOglState(__FILE__, __LINE__));
 
@@ -896,7 +877,7 @@ void OGLRenderVisitor::visit(TriangleArray* tArray) {
 
       } else {
         Array1i* stripVertexCounts = tArray->stripVertexCounts->get();
-        if (stripVertexCounts != 0) {
+        if (stripVertexCounts != nullptr) {
           int startIdx = 0;
           for (int count = 0; count < stripVertexCounts->getSize(); count++) {
             int length = *(stripVertexCounts->get(count));
@@ -914,13 +895,13 @@ void OGLRenderVisitor::visit(TriangleArray* tArray) {
       glPopClientAttrib();
       assert(OglTools::checkOglState(__FILE__, __LINE__));
     }
-    if (coords != 0) {
+    if (coords != nullptr) {
       coords->releaseReference();
     }
-    if (colors != 0) {
+    if (colors != nullptr) {
       colors->releaseReference();
     }
-    if (normals != 0) {
+    if (normals != nullptr) {
       normals->releaseReference();
     }
     cleanUpTCoords(tArray);
@@ -931,7 +912,7 @@ void OGLRenderVisitor::visit(TriangleArray* tArray) {
 
 void OGLRenderVisitor::visit(InterleavedTriangleArray* array) {
   VertexData* data = array->vertexData.get();
-  if (data != 0) {
+  if (data != nullptr) {
     glPushClientAttrib(GL_CLIENT_ALL_ATTRIB_BITS);
     assert(OglTools::checkOglState(__FILE__, __LINE__));
 
@@ -972,7 +953,7 @@ void OGLRenderVisitor::visit(InterleavedTriangleArray* array) {
 
 void OGLRenderVisitor::visit(IndexedInterleavedTriangleArray* array) {
   VertexData* data = array->vertexData.get();
-  if (data != 0) {
+  if (data != nullptr) {
     glPushClientAttrib(GL_CLIENT_ALL_ATTRIB_BITS);
     assert(OglTools::checkOglState(__FILE__, __LINE__));
 
@@ -1001,7 +982,7 @@ void OGLRenderVisitor::visit(IndexedInterleavedTriangleArray* array) {
 
     GLenum help = type2Enum(array->type);
     Array1i* indices = array->indices.get();
-    if (indices != 0) {
+    if (indices != nullptr) {
       glDrawElements(help, indices->getSize(), GL_UNSIGNED_INT, indices->get(0));
       assert(OglTools::checkOglState(__FILE__, __LINE__));
       indices->releaseReference();

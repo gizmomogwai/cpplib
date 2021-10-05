@@ -21,10 +21,10 @@ class OGLBoundRenderer : public BoundVisitor {
 
   private:
     float hue;
-    TGroup* tg;
+  //    TGroup* tg;
 
   public:
-    OGLBoundRenderer() : tg(0) {
+    OGLBoundRenderer() {
       reset();
     }
 

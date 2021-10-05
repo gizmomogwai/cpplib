@@ -67,7 +67,7 @@ void GLUTEngine::staticReshapeFunc(int _width, int _height) {
   glViewport(0, 0, _width, _height);
   assert(glGetError() == GL_NO_ERROR);
 
-  if (GLUTEngine::instance->root != 0) {
+  if (GLUTEngine::instance->root != nullptr) {
     GLUTEngine::instance->root->imageWidth = _width;
     GLUTEngine::instance->root->imageHeight = _height;
   }

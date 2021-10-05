@@ -1,6 +1,6 @@
 #include <string>
 
-#include <sgtools-glut/GLUTEngine.h>
+#include <sgtools/Engine.h>
 #include <sg/visitors/OGLRenderVisitor.h>
 #include <sg/visitors/UpdateVisitor.h>
 #include <sg/visitors/BehaviorVisitor.h>
@@ -12,11 +12,13 @@
 
 #include <sgtools/nodeComponents/behavior/RotationBehavior.h>
 
+extern Engine* setupEngine(int argc, char** args, int width, int height, const char* title);
+
 int main(int argc, char** args) {
-  Engine* engine = new GLUTEngine(argc, args, 512, 512, "glView");
+  Engine* engine = setupEngine(argc, args, 512, 512, "sghelloworld");
   engine->addVisitor(new UpdateVisitor());
   engine->addVisitor(new BehaviorVisitor());
-  engine->addVisitor(new OGLRenderVisitor(new GLUTFontManager()));
+  engine->addVisitor(new OGLRenderVisitor(nullptr));
 
   auto root = new Root();
   engine->setRoot(root);
@@ -24,7 +26,6 @@ int main(int argc, char** args) {
 
   auto observer = new SGObserver();
   auto all = new TGroup();
-
 
   if (std::string("camera") == args[1]) {
     observer->setCamera(new Camera(75, 1.0, 1, 1000));
@@ -52,8 +53,8 @@ int main(int argc, char** args) {
   all->addChild(new RotationBehavior(rotation, 0.03f));
   all->addChild(rotation);
 
-  //auto geometry = new CubeGeometry(50, 0);
-  auto geometry = new TeapotGeometry();
+  auto geometry = new CubeGeometry(50, 0);
+  // auto geometry = new TeapotGeometry();
   auto appearance = new Appearance(0);
   auto material = new Material();
   auto red = Color3f(1,0,0);

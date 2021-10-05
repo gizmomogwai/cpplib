@@ -4,7 +4,7 @@ c_flags = {
   FLAGS: [
     "-Ofast",
     "-g",
-    "-Wall", "-Wno-deprecated-declarations",
+    "-Wall", "-Wno-deprecated-declarations", "-Werror",
     "-DOPENEXIF_NO_IJG",
     "-fsanitize=address",
     "-fno-omit-frame-pointer",
@@ -16,7 +16,7 @@ cpp_flags = {
     "-std=c++11",
     "-Ofast",
     "-g",
-    "-Wall", "-Wno-deprecated-declarations",
+    "-Wall", "-Wno-deprecated-declarations", "-Werror",
     "-DOPENEXIF_NO_IJG",
     "-fsanitize=address",
     "-fno-omit-frame-pointer",
