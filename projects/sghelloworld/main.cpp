@@ -1,6 +1,6 @@
 #include <string>
 
-#include <sgtools/GLUTEngine.h>
+#include <sgtools-glut/GLUTEngine.h>
 #include <sg/visitors/OGLRenderVisitor.h>
 #include <sg/visitors/UpdateVisitor.h>
 #include <sg/visitors/BehaviorVisitor.h>

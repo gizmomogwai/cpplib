@@ -1,4 +1,4 @@
-#include <sgtools/GLUTKeyEvent.h>
+#include <sgtools-glut/GLUTKeyEvent.h>
 
 
 bool GLUTKeyEvent::keyPressed(unsigned int _key) {

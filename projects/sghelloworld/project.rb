@@ -1,5 +1,7 @@
 cxx_configuration do
-  exe "sghelloworld",
+  exe(
+    "sghelloworld",
     :sources => FileList["*.cpp"],
-    :dependencies => ["sgtools", "GLUT", "OpenGL"]
+    :dependencies => ["sgtools-glut"],
+  )
 end

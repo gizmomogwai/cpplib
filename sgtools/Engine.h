@@ -6,6 +6,7 @@
 #include <util/ListIterator.h>
 #include <sgtools/EngineCleanUp.h>
 #include <sgtools/KeyListener.h>
+#include <lang/HPStopWatch.h>
 class Root;
 
 /** Schnittstelle fuer alle Engines.
@@ -26,6 +27,41 @@ class Root;
 class Engine {
 
  public:
+  class Stats {
+  public:
+    const static int COUNT = 500;
+    Stats() : count(0), stopWatch(new HPStopWatch()) {
+    }
+    ~Stats() {
+      delete stopWatch;
+    }
+    void tick() {
+      auto now = stopWatch->getCurrent();
+      stats.push_back(now);
+      while (stats.size() >COUNT) {
+        stats.pop_front();
+      }
+      count++;
+    }
+    void dump() {
+      if (stats.size() == COUNT) {
+        auto i1 = stats.begin();
+        auto startTime = *i1;
+        auto i2 = stats.rbegin();
+        auto endTime = *i2;
+        std::cout << "time for " << COUNT << " frames: " << (endTime - startTime) << std::endl;
+        std::cout << "time per frame: " << (endTime - startTime) / static_cast<float>(COUNT) << std::endl;
+        stats.clear();
+      }
+    }
+    int count;
+  private:
+    HPStopWatch* stopWatch;
+    std::list<int64_t> stats;
+  };
+
+  Stats stats;
+
   /** Initialisiert die Engine. */
   Engine() : root(0) {
   }

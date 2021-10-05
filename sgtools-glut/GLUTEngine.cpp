@@ -1,4 +1,4 @@
-#include <sgtools/GLUTEngine.h>
+#include <sgtools-glut/GLUTEngine.h>
 
 #include <sg/visitors/Visitor.h>
 #include <sg/nodes/Root.h>
@@ -33,41 +33,6 @@ void GLUTEngine::setSize(int _width, int _height) {
   forceRedisplay = true;
 }
 
-#include <lang/HPStopWatch.h>
-class Stats {
-public:
-  const static int COUNT = 500;
-  Stats() : count(0), stopWatch(new HPStopWatch()) {
-  }
-  ~Stats() {
-    delete stopWatch;
-  }
-  void tick() {
-    auto now = stopWatch->getCurrent();
-    stats.push_back(now);
-    while (stats.size() >COUNT) {
-      stats.pop_front();
-    }
-    count++;
-  }
-  void dump() {
-    if (stats.size() == COUNT) {
-      auto i1 = stats.begin();
-      auto startTime = *i1;
-      auto i2 = stats.rbegin();
-      auto endTime = *i2;
-      std::cout << "time for " << COUNT << " frames: " << (endTime - startTime) << std::endl;
-      std::cout << "time per frame: " << (endTime - startTime) / static_cast<float>(COUNT) << std::endl;
-      stats.clear();
-    }
-  }
-  int count;
-private:
-  HPStopWatch* stopWatch;
-  std::list<int64_t> stats;
-};
-
-Stats stats;
 void GLUTEngine::staticDisplayFunc() {
   try {
     if (GLUTEngine::instance->root == nullptr) return;
@@ -76,14 +41,7 @@ void GLUTEngine::staticDisplayFunc() {
     while (i.hasNext()) {
       Visitor* visitor = i.next();
 
-      // hier zeitmessung einbauen
-      auto stopWatch = HPStopWatch();
-      stopWatch.start();
-
       GLUTEngine::instance->root->accept(visitor);
-
-      stopWatch.stop();
-      //std::cout << "Visitor: " << visitor->toString() << " took " << stopWatch.getDelta() << std::endl;
 
       if (forceRedisplay == true) {
         forceRedisplay = false;
@@ -93,9 +51,9 @@ void GLUTEngine::staticDisplayFunc() {
     glutSwapBuffers();
     glutPostRedisplay();
 
-    stats.tick();
-    if (stats.count % 50 == 0) {
-      stats.dump();
+    GLUTEngine::instance->stats.tick();
+    if (GLUTEngine::instance->stats.count % 50 == 0) {
+      GLUTEngine::instance->stats.dump();
     }
   }
   catch (Exception& e) {

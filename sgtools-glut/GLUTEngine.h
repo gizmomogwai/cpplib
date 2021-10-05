@@ -1,18 +1,13 @@
-#ifndef _GLUTEngine_h_
-#define _GLUTEngine_h_
+#pragma once
 
-#ifdef OSX
-  #include <GLUT/glut.h>
-#else
-  #include <GL/glut.h>
-#endif
+#include <GLUT/glut.h>
 
 #include <list>
 #include <util/ListIterator.h>
 
 #include <sgtools/Engine.h>
 #include <sgtools/KeyListener.h>
-#include <sgtools/GLUTKeyEvent.h>
+#include <sgtools-glut/GLUTKeyEvent.h>
 
 #include <assert.h>
 
@@ -90,11 +85,9 @@ class GLUTEngine : public Engine {
 
     /** Laessst die Engine losrennen. */
     void run() {
-    /*
-      if (root == 0) {
+      if (root == nullptr) {
         throw(Exception("GLUTEngine::run - vergessen root zu setzen???", __FILE__, __LINE__));
       }
-      */
       glutMainLoop();
       std::cout << "hier" << std::endl;
     }
@@ -110,5 +103,3 @@ class GLUTEngine : public Engine {
     int fWindow;
 
 };
-
-#endif // _GLUTEngine_h_

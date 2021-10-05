@@ -1,5 +1,7 @@
 cxx_configuration do
-  exe "glview",
+  exe(
+    "glview",
     :sources => FileList["*.cpp"],
-    :dependencies => ["net", "io", "sgtools", "image", "GLUT", "OpenGL"]
+    :dependencies => ["net", "io", "sgtools-glut", "image"],
+  )
 end

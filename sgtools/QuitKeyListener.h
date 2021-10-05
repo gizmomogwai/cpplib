@@ -1,5 +1,4 @@
-#ifndef _QuitKeyListener_h_
-#define _QuitKeyListener_h_
+#pragma once
 
 #include <sgtools/KeyListener.h>
 #include <sgtools/KeyEvent.h>
@@ -21,26 +20,23 @@
  */
 class QuitKeyListener : public KeyListener {
 
-	public:
+  public:
     /** Neuer Listener.
      *
      * @@param _engine Engine, die beendet werden soll.
      */
-		QuitKeyListener(Engine* _engine) : engine(_engine) {
-		}
-	
-		void keyPressed(KeyEvent* e) {
-		  if (((e->keyPressed('q') == true) && (e->ctrlPressed() == true)) ||
+    QuitKeyListener(Engine* _engine) : engine(_engine) {
+    }
+
+    void keyPressed(KeyEvent* e) {
+      if (((e->keyPressed('q') == true) && (e->ctrlPressed() == true)) ||
          (e->keyPressed((unsigned int)27) == true)) {
         engine->quit();
-		  }
-		}
+      }
+    }
 
-	private:
+  private:
     /** Zugehoerige Engine. */
-		Engine* engine;
+    Engine* engine;
 
 };
-
-#endif // _QuitKeyListener_h_
-

@@ -1,6 +1,6 @@
 #include <lang/HPStopWatch.h>
 
-#include <sgtools/GLUTEngine.h>
+#include <sgtools-glut/GLUTEngine.h>
 #include <sgtools/QuitKeyListener.h>
 
 #include <sg/visitors/OGLRenderVisitor.h>
