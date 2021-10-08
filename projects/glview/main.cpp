@@ -1,6 +1,5 @@
 #include <lang/HPStopWatch.h>
 
-#include <sgtools-glut/GLUTEngine.h>
 #include <sgtools/QuitKeyListener.h>
 
 #include <sg/visitors/OGLRenderVisitor.h>
@@ -24,6 +23,8 @@
 #include "DeleteFileHandler.h"
 #include <sgtools/nodeComponents/geom/CubeGeometry.h>
 #include "Animation.h"
+
+extern Engine* setupEngine(int argc, char** args, int width, int height, const char* title, Root* root);
 
 File* getDir(File* dirOrFile) {
   if (dirOrFile->isDirectory() == true) {
@@ -59,29 +60,30 @@ int main(int argc, char** args) {
     if (argc != 2) {
       throw(Exception("Usage: glview fileName"));
     }
-    Engine* engine = new GLUTEngine(argc, args, 512, 512, "glView");
+    auto root = new Root();
+
+    auto engine = setupEngine(argc, args, 512, 512, "glView", root);
     Animations animations;
     engine->addVisitor(new AnimationVisitor(animations));
     engine->addVisitor(new BehaviorVisitor());
     engine->addVisitor(new UpdateVisitor());
-    OGLRenderVisitor* renderer = new OGLRenderVisitor(new GLUTFontManager());
+    auto renderer = new OGLRenderVisitor(nullptr);
     engine->addVisitor(renderer);
 
-    Root* root = new Root();
 
     File arg(args[1]);
     File* dir = getDir(&arg);
 
-    ImageViewNavigator* navigator = new ImageViewNavigator(root, renderer, dir, animations);
+    auto navigator = new ImageViewNavigator(root, renderer, dir, animations);
     engine->setRoot(root);
 
-    SGObserver* iotdObserver = new SGObserver();
+    auto iotdObserver = new SGObserver();
 
-    InfoNode* infoNode = new InfoNode();
+    auto infoNode = new InfoNode();
 
-    SwitchableWatermark* iotd = new SwitchableWatermark(ImageReader::readImage(std::string("iotd.enabled.png")), 0, 50);
-    SwitchableWatermark* async = new SwitchableWatermark(ImageReader::readImage(std::string("async.png")), 0, 0);
-    SwitchableWatermark* thumb = new SwitchableWatermark(0, -1, -1);
+    auto iotd = new SwitchableWatermark(ImageReader::readImage(std::string("iotd.enabled.png")), 0, 50);
+    auto async = new SwitchableWatermark(ImageReader::readImage(std::string("async.png")), 0, 0);
+    auto thumb = new SwitchableWatermark(0, -1, -1);
     infoNode->addChild(iotd);
     infoNode->addChild(async);
     infoNode->addChild(thumb);
@@ -93,8 +95,6 @@ int main(int argc, char** args) {
     iotdObserver->releaseReference();
 
     root->releaseReference();
-
-
     IotdHandler handler(engine, navigator, iotd);
     ExifDateHandler exifDateHandler(engine, navigator, thumb, async);
 
@@ -108,7 +108,6 @@ int main(int argc, char** args) {
     //  DeleteFileHandler deleteFileHandler(engine, navigator);
 
     engine->addKeyListener(navigator);
-
     engine->addKeyListener(new QuitKeyListener(engine));
 
     if (arg.isDirectory() == true) {

@@ -1,5 +1,4 @@
-#ifndef _LoadProgress_h_
-#define _LoadProgress_h_
+#pragma once
 
 #include "sgtools/nodeComponents/behavior/RotationBehavior.h"
 #include <sg/nodes/SGObserver.h>
@@ -41,5 +40,3 @@ private:
   RotationBehavior* rot;
 
 };
-
-#endif // _LoadProgress_h_

@@ -37,8 +37,8 @@ ImageViewNavigator::ImageViewNavigator(Root* _root,
 
   root->addChild(observer);
 
-  loadProgress = new LoadProgress();
-  root->addChild(loadProgress);
+  //  loadProgress = new LoadProgress();
+  // root->addChild(loadProgress);
 
   files = dir->list();
   std::sort(files->begin(), files->end(), [](File* f1, File* f2) {
@@ -66,6 +66,7 @@ ImageViewNavigator::~ImageViewNavigator() {
 }
 
 void ImageViewNavigator::setImage(Image* i) {
+  std::cout << __FILE__ << ":" << __LINE__ << std::endl;
   imageWidth = i->getWidth();
   imageHeight = i->getHeight();
   setTranslation(true);
@@ -74,6 +75,7 @@ void ImageViewNavigator::setImage(Image* i) {
 void ImageViewNavigator::setTranslation(bool init) {
   float canvasWidth = renderVisitor->getImageWidth();
   float canvasHeight = renderVisitor->getImageHeight();
+
   if (autoFactor) {
     factor = min(
                    canvasWidth / imageWidth,
@@ -82,6 +84,7 @@ void ImageViewNavigator::setTranslation(bool init) {
   }
 
   if (factor < 0.01f) {
+    std::cout << "FALLING back to 0.01\n";
     factor = 0.01f;
   }
   observer->setParallel(getProjection(factor));

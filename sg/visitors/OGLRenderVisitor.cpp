@@ -89,6 +89,7 @@ void OGLRenderVisitor::visit(Root* root) {
 
   imageWidth = root->imageWidth;
   imageHeight = root->imageHeight;
+
   NodeListIterator* i = root->getChilds();
   CleanUpObject<NodeListIterator> cleaner(i);
   while (i->hasNext() == true) {

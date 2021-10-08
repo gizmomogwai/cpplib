@@ -37,7 +37,7 @@ class GLUTEngine : public Engine {
      */
     GLUTEngine(int argc, char** args,
                int _width, int _height,
-               std::string windowName);
+               std::string windowName, Root* root);
 
     /** Raeumt auf. */
     virtual ~GLUTEngine() {

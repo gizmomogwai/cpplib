@@ -69,11 +69,6 @@ private:
    */
   SGObserver* observer;
 
-  /** Gesamter Szenengraph .. hier koennen statusinfos eingehaengt
-   * werden.
-   */
-  Root* root;
-
   /** File das geladen werden soll. */
   File* file;
 

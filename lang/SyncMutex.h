@@ -8,22 +8,22 @@
  * von einem Java-Object nachbilden soll.
  *
  * In Java kann man auf einem Object warten bzw. notifizieren,
- * nur, wenn man vorher das object exklusiv besitzt (man es also 
+ * nur, wenn man vorher das object exklusiv besitzt (man es also
  * synchronisiert hat).
  *
  * Die semantik sollte eignetlich so sein:
  * <ul>
- *   <li> wait und notify koennen nur nach 
+ *   <li> wait und notify koennen nur nach
  *        einem lock aufgerufen werden.
- *   <li> wait muss blockieren, vorher jedoch das lock 
+ *   <li> wait muss blockieren, vorher jedoch das lock
  *        freigeben, damit vor dem notify wieder gelockt werden kann.
  * </ul>
  *
  * <h1>Win32</h1>
  * In Windows wird versucht das Verhalten mit einem Event (autoreset)
- * und einer Mutex nachzubilden. es wird setEvent verwendet 
- * (bleibt signalisiert, bis genau ein warter befreit wird) um 
- * das problem zu vermeiden, dass zwischen dem lock und 
+ * und einer Mutex nachzubilden. es wird setEvent verwendet
+ * (bleibt signalisiert, bis genau ein warter befreit wird) um
+ * das problem zu vermeiden, dass zwischen dem lock und
  * dem wait in wait ein notify verloren geht.
  *
  * <p>
@@ -52,13 +52,13 @@ class SyncMutex {
     /** Gibt die Mutex frei. */
     void unlock();
 
-    /** Wartet auf ein notify. 
-     * Vor diesem Aufruf, muss die Mutex gelockt werden! 
+    /** Wartet auf ein notify.
+     * Vor diesem Aufruf, muss die Mutex gelockt werden!
      */
     void wait();
 
-    /** Notifiziert genau einen Warter. 
-     * Vor diesem Aufruf, muss die Mutex gelockt werden! 
+    /** Notifiziert genau einen Warter.
+     * Vor diesem Aufruf, muss die Mutex gelockt werden!
      */
     void notify();
 

@@ -1,6 +1,4 @@
-#ifndef _GLUTKeyEvent_h_
-#define _GLUTKeyEvent_h_
-
+#pragma once
 
 #ifdef OSX
 #define GL_SILENCE_DEPRECATION
@@ -57,5 +55,3 @@ class GLUTKeyEvent : public KeyEvent {
   int modifiers;
 
 };
-
-#endif // _GLUTKeyEvent_h_

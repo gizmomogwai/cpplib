@@ -44,7 +44,6 @@ SGUpdateThread::SGUpdateThread(Root* _root,
                                Animations& _animations)
   : Thread(),
     observer(_observer),
-    root(_root),
     file(new File(_file)),
     loadProgress(_loadProgress),
     navigator(_navigator),

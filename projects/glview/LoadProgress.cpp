@@ -21,17 +21,17 @@ LoadProgress::LoadProgress() {
 
   Geometry* geom = new CubeGeometry(1, 0);
   Appearance* app = new Appearance(0);
-  PolygonAttributes* pAtts = 
+  PolygonAttributes* pAtts =
     new PolygonAttributes(PolygonAttributes::POLYGON_LINE);
   app->setPolygonAttributes(pAtts);
   pAtts->releaseReference();
 
-  RenderingAttributes* rAtts = 
+  RenderingAttributes* rAtts =
     new RenderingAttributes(false, false);
   app->setRenderingAttributes(rAtts);
   rAtts->releaseReference();
 
-  Shape3D* shape = new Shape3D(geom, app);  
+  Shape3D* shape = new Shape3D(geom, app);
   geom->releaseReference();
   app->releaseReference();
   tG->addChild(shape);

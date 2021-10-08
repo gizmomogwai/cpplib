@@ -10,7 +10,7 @@ bool GLUTEngine::forceRedisplay = false;
 
 GLUTEngine::GLUTEngine(int argc, char** args,
                        int _width, int _height,
-                       std::string windowName) {
+                       std::string windowName, Root* root) : Engine(root) {
   GLUTEngine::forceRedisplay = false;
   GLUTEngine::instance = this;
 

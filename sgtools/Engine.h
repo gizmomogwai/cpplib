@@ -1,5 +1,4 @@
-#ifndef _Engine_h_
-#define _Engine_h_
+#pragma once
 
 #include <sg/visitors/Visitor.h>
 #include <list>
@@ -7,7 +6,7 @@
 #include <sgtools/EngineCleanUp.h>
 #include <sgtools/KeyListener.h>
 #include <lang/HPStopWatch.h>
-class Root;
+#include <sg/nodes/Root.h>
 
 /** Schnittstelle fuer alle Engines.
  *
@@ -63,7 +62,8 @@ class Engine {
   Stats stats;
 
   /** Initialisiert die Engine. */
-  Engine() : root(0) {
+  Engine(Root* _root) : root(_root) {
+    root->addReference();
   }
 
   /** Raeumt auf. */
@@ -135,5 +135,3 @@ class Engine {
   Root* root;
 
 };
-
-#endif // _Engine_h_

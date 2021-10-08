@@ -1,5 +1,4 @@
-#ifndef _RenderVisitor_h_
-#define _RenderVisitor_h_
+#pragma once
 
 #include <sg/visitors/Visitor.h>
 #include <vecmath/Transform3D.h>
@@ -21,7 +20,7 @@ class RenderVisitor : public Visitor {
      * @return int Breite des Canvases.
      */
     int getImageWidth() {
-      return(imageWidth);
+      return imageWidth;
     }
 
     /** Liefert die Hoehe des Canvases.
@@ -29,7 +28,7 @@ class RenderVisitor : public Visitor {
      * @return int Hoehe des Canvases.
      */
     int getImageHeight() {
-      return(imageHeight);
+      return imageHeight;
     }
 
     /** Liefert den AspectRatio (x/y) des Canvases.
@@ -37,7 +36,7 @@ class RenderVisitor : public Visitor {
      * @return float aspectRatio.
      */
     float getAspectRatio() {
-      return(((float)imageWidth) / ((float)imageHeight));
+      return ((float)imageWidth) / ((float)imageHeight);
     }
 
     /** Transformation die die Billboardmatrix zur Camera in Richtung z-Achse
@@ -54,5 +53,3 @@ class RenderVisitor : public Visitor {
     int imageHeight;
 
 };
-
-#endif // _RenderVisitor_h_

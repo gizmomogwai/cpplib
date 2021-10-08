@@ -29,9 +29,13 @@ class QuitKeyListener : public KeyListener {
     }
 
     void keyPressed(KeyEvent* e) {
-      if (((e->keyPressed('q') == true) && (e->ctrlPressed() == true)) ||
-         (e->keyPressed((unsigned int)27) == true)) {
+      if ((e->keyPressed('q')) && (e->ctrlPressed())) {
         engine->quit();
+        return;
+      }
+      if (e->keyPressed(27)) {
+        engine->quit();
+        return;
       }
     }
 
